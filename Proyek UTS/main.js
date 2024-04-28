@@ -3267,7 +3267,166 @@ function main() {
     ); // Side faces
   }
 
+  object_vertex70 = [];
+  outerRad = 5;
+  innerRad = 5;
+  height = 0.5;
+  segments = 100;
+  object_vertex69.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+  object_vertex69.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+  var angleIncrement = (2 * Math.PI) / segments;
+  for (var i = 0; i <= segments; i++) {
+    // Change the condition to <= to include the last segment
+    var angle = i * angleIncrement;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
 
+    // Bottom circle vertex
+    var bottomX = outerRad * cosAngle;
+    var bottomY = outerRad * sinAngle;
+    var bottomZ = 0; // For the bottom circle
+    object_vertex69.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
+
+    // Top circle vertex
+    var topX = innerRad * cosAngle;
+    var topY = innerRad * sinAngle;
+    var topZ = height; // For the top circle
+    object_vertex69.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+  }
+  object_faces69 = [];
+  for (var i = 0; i < segments; i++) {
+    var index = i * 2 + 2;
+    object_faces69.push(index, index + 2, 0); // Bottom face
+    object_faces69.push(index + 1, 1, index + 3); // Top face
+    object_faces69.push(
+      index,
+      index + 1,
+      index + 3,
+      index,
+      index + 3,
+      index + 2
+    ); // Side faces
+  }
+
+  // road
+  var cube_vertex4 = [
+		// Front face
+		-80, -6, 0,   0, 0,
+		80, -6, 0,    1, 0,
+		80, 6, 0,     1, 1,
+		-80, 6, 0,    0, 1,
+		
+		// Back face
+		-80, -6, 0.5,   0, 0,
+		80, -6, 0.5,    1, 0,
+		80, 6, 0.5,     1, 1,
+		-80, 6, 0.5,    0, 1,
+		
+		// Top face
+		-80, 6, 0,    0, 0,
+		80, 6, 0,     1, 0,
+		80, 6, 0.5,     1, 1,
+		-80, 6, 0.5,    0, 1,
+		
+		// Bottom face
+		-80, -6, 0,   0, 0,
+		80, -6, 0,    1, 0,
+		80, -6, 0.5,    1, 1,
+		-80, -6, 0.5,   0, 1,
+		
+		// Right face
+		80, -6, 0,    0, 0,
+		80, 6, 0,     1, 0,
+		80, 6, 0.5,     1, 1,
+		80, -6, 0.5,    0, 1,
+		
+		// Left face
+		-80, -6, 0,   0, 0,
+		-80, -6, 0.5,   1, 0,
+		-80, 6, 0.5,    1, 1,
+		-80, 6, 0,    0, 1
+	  ];
+	
+	  cube_faces4 = [
+		0, 1, 2,
+		0, 2, 3,
+		
+		4, 5, 6,
+		4, 6, 7,
+		
+		8, 9, 10,
+		8, 10, 11,
+		
+		12, 13, 14,
+		12, 14, 15,
+		
+		16, 17, 18,
+		16, 18, 19,
+		
+		20, 21, 22,
+		20, 22, 23
+	
+	  ];
+
+  // bush 
+  var cube_vertex3 = [
+		// Front face
+		-20, -2, 0,   0, 0,
+		20, -2, 0,    1, 0,
+		20, 2, 0,     1, 1,
+		-20, 2, 0,    0, 1,
+		
+		// Back face
+		-20, -2, 3,   0, 0,
+		20, -2, 3,    1, 0,
+		20, 2, 3,     1, 1,
+		-20, 2, 3,    0, 1,
+		
+		// Top face
+		-20, 2, 0,    0, 0,
+		20, 2, 0,     1, 0,
+		20, 2, 3,     1, 1,
+		-20, 2, 3,    0, 1,
+		
+		// Bottom face
+		-20, -2, 0,   0, 0,
+		20, -2, 0,    1, 0,
+		20, -2, 3,    1, 1,
+		-20, -2, 3,   0, 1,
+		
+		// Right face
+		20, -2, 0,    0, 0,
+		20, 2, 0,     1, 0,
+		20, 2, 3,     1, 1,
+		20, -2, 3,    0, 1,
+		
+		// Left face
+		-20, -2, 0,   0, 0,
+		-20, -2, 3,   1, 0,
+		-20, 2, 3,    1, 1,
+		-20, 2, 0,    0, 1
+	  ];
+	
+	  cube_faces3 = [
+		0, 1, 2,
+		0, 2, 3,
+		
+		4, 5, 6,
+		4, 6, 7,
+		
+		8, 9, 10,
+		8, 10, 11,
+		
+		12, 13, 14,
+		12, 14, 15,
+		
+		16, 17, 18,
+		16, 18, 19,
+		
+		20, 21, 22,
+		20, 22, 23
+	
+	  ];
 
 	//wall
 	var cube_vertex2 = [
@@ -3565,6 +3724,33 @@ function main() {
   );
 
   land.setTexture("snow01.png");
+
+  var bush1 = new MyObjectTexture(
+    cube_vertex3,
+    cube_faces3,
+    shader_vertex_source_texture,
+    shader_fragment_source_texture
+  );
+
+  bush1.setTexture("grass.png");
+
+  var bush2 = new MyObjectTexture(
+    cube_vertex3,
+    cube_faces3,
+    shader_vertex_source_texture,
+    shader_fragment_source_texture
+  );
+
+  bush2.setTexture("grass.png");
+
+  var road = new MyObjectTexture(
+    cube_vertex4,
+    cube_faces4,
+    shader_vertex_source_texture,
+    shader_fragment_source_texture
+  );
+
+  road.setTexture("asphalt.jpg");
 
   var sticks = new MyObject(
     object_vertex2,
@@ -4343,7 +4529,7 @@ function main() {
     var ballMovingTowardsObject = (xCurve - nextXCurve) * direction4 > 0;
     // Move body_kyle and body only if the ball is moving towards the object
 
-    wall.setPosition(1.6, 0, 0, 0, 20, 2);
+    wall.setPosition(1.6, 0, 0, 0, 20, 1);
     land.setPosition(0, 0, 0, 0, -0, -4);
     land.scale(5);
     sticks.setPosition(0, 0, 0, 0, 0, 0);
@@ -4362,6 +4548,12 @@ function main() {
     for (var i = 0; i < sticks3.child.length; i++) {
       sticks3.child[i].setPosition(0, 0, 0, 0, 0, 2 + i * 1.5);
     }
+
+    bush1.setPosition(Math.PI / 2, Math.PI / 2, 0, -40, -1, -1);
+    bush2.setPosition(Math.PI / 2, Math.PI / 2, 0, 40, -1, -1);
+
+    road.setPosition(0, 0, 0, 0, -27, -2.9);
+
     rugbyball.setPosition(0, 0, 1.5, 0, 0, 0);
 
     //#endregion
@@ -4553,6 +4745,9 @@ function main() {
     front_sweater_right_kyle.setResponsiveRotation(PHI, THETA);
     wall.setResponsiveRotation(PHI, THETA);
     land.setResponsiveRotation(PHI, THETA);
+    bush1.setResponsiveRotation(PHI, THETA);
+    bush2.setResponsiveRotation(PHI, THETA);
+    road.setResponsiveRotation(PHI, THETA);
     sticks.setResponsiveRotation(PHI, THETA);
     for (var i = 0; i < sticks.child.length; i++) {
       sticks.child[i].setResponsiveRotation(PHI, THETA);
@@ -4631,6 +4826,15 @@ function main() {
 
     land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     land.draw();
+
+    bush1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    bush1.draw();
+
+    bush2.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    bush2.draw();
+
+    road.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    road.draw();
 
     merrygoaround.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     merrygoaround.draw();
