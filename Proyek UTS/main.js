@@ -3307,186 +3307,114 @@ function main() {
       index + 2
     ); // Side faces
   }
+  //kincir
+  object_vertex40 = tubeVertex(0.8, 0.1, 8, 3, 1, 0, 0);
+  object_faces40 = tubeFaces(3);
 
   // road
   var cube_vertex4 = [
-		// Front face
-		-80, -6, 0,   0, 0,
-		80, -6, 0,    1, 0,
-		80, 6, 0,     1, 1,
-		-80, 6, 0,    0, 1,
-		
-		// Back face
-		-80, -6, 0.5,   0, 0,
-		80, -6, 0.5,    1, 0,
-		80, 6, 0.5,     1, 1,
-		-80, 6, 0.5,    0, 1,
-		
-		// Top face
-		-80, 6, 0,    0, 0,
-		80, 6, 0,     1, 0,
-		80, 6, 0.5,     1, 1,
-		-80, 6, 0.5,    0, 1,
-		
-		// Bottom face
-		-80, -6, 0,   0, 0,
-		80, -6, 0,    1, 0,
-		80, -6, 0.5,    1, 1,
-		-80, -6, 0.5,   0, 1,
-		
-		// Right face
-		80, -6, 0,    0, 0,
-		80, 6, 0,     1, 0,
-		80, 6, 0.5,     1, 1,
-		80, -6, 0.5,    0, 1,
-		
-		// Left face
-		-80, -6, 0,   0, 0,
-		-80, -6, 0.5,   1, 0,
-		-80, 6, 0.5,    1, 1,
-		-80, 6, 0,    0, 1
-	  ];
-	
-	  cube_faces4 = [
-		0, 1, 2,
-		0, 2, 3,
-		
-		4, 5, 6,
-		4, 6, 7,
-		
-		8, 9, 10,
-		8, 10, 11,
-		
-		12, 13, 14,
-		12, 14, 15,
-		
-		16, 17, 18,
-		16, 18, 19,
-		
-		20, 21, 22,
-		20, 22, 23
-	
-	  ];
+    // Front face
+    -80, -6, 0, 0, 0, 80, -6, 0, 1, 0, 80, 6, 0, 1, 1, -80, 6, 0, 0, 1,
 
-  // bush 
+    // Back face
+    -80, -6, 0.5, 0, 0, 80, -6, 0.5, 1, 0, 80, 6, 0.5, 1, 1, -80, 6, 0.5, 0, 1,
+
+    // Top face
+    -80, 6, 0, 0, 0, 80, 6, 0, 1, 0, 80, 6, 0.5, 1, 1, -80, 6, 0.5, 0, 1,
+
+    // Bottom face
+    -80, -6, 0, 0, 0, 80, -6, 0, 1, 0, 80, -6, 0.5, 1, 1, -80, -6, 0.5, 0, 1,
+
+    // Right face
+    80, -6, 0, 0, 0, 80, 6, 0, 1, 0, 80, 6, 0.5, 1, 1, 80, -6, 0.5, 0, 1,
+
+    // Left face
+    -80, -6, 0, 0, 0, -80, -6, 0.5, 1, 0, -80, 6, 0.5, 1, 1, -80, 6, 0, 0, 1,
+  ];
+
+  cube_faces4 = [
+    0, 1, 2, 0, 2, 3,
+
+    4, 5, 6, 4, 6, 7,
+
+    8, 9, 10, 8, 10, 11,
+
+    12, 13, 14, 12, 14, 15,
+
+    16, 17, 18, 16, 18, 19,
+
+    20, 21, 22, 20, 22, 23,
+  ];
+
+  // bush
   var cube_vertex3 = [
-		// Front face
-		-20, -2, 0,   0, 0,
-		20, -2, 0,    1, 0,
-		20, 2, 0,     1, 1,
-		-20, 2, 0,    0, 1,
-		
-		// Back face
-		-20, -2, 3,   0, 0,
-		20, -2, 3,    1, 0,
-		20, 2, 3,     1, 1,
-		-20, 2, 3,    0, 1,
-		
-		// Top face
-		-20, 2, 0,    0, 0,
-		20, 2, 0,     1, 0,
-		20, 2, 3,     1, 1,
-		-20, 2, 3,    0, 1,
-		
-		// Bottom face
-		-20, -2, 0,   0, 0,
-		20, -2, 0,    1, 0,
-		20, -2, 3,    1, 1,
-		-20, -2, 3,   0, 1,
-		
-		// Right face
-		20, -2, 0,    0, 0,
-		20, 2, 0,     1, 0,
-		20, 2, 3,     1, 1,
-		20, -2, 3,    0, 1,
-		
-		// Left face
-		-20, -2, 0,   0, 0,
-		-20, -2, 3,   1, 0,
-		-20, 2, 3,    1, 1,
-		-20, 2, 0,    0, 1
-	  ];
-	
-	  cube_faces3 = [
-		0, 1, 2,
-		0, 2, 3,
-		
-		4, 5, 6,
-		4, 6, 7,
-		
-		8, 9, 10,
-		8, 10, 11,
-		
-		12, 13, 14,
-		12, 14, 15,
-		
-		16, 17, 18,
-		16, 18, 19,
-		
-		20, 21, 22,
-		20, 22, 23
-	
-	  ];
+    // Front face
+    -20, -2, 0, 0, 0, 20, -2, 0, 1, 0, 20, 2, 0, 1, 1, -20, 2, 0, 0, 1,
 
-	//wall
-	var cube_vertex2 = [
-		// Front face
-		-80, -4, 0,   0, 0,
-		80, -4, 0,    1, 0,
-		80, 4, 0,     1, 1,
-		-80, 4, 0,    0, 1,
-		
-		// Back face
-		-80, -4, 1,   0, 0,
-		80, -4, 1,    1, 0,
-		80, 4, 1,     1, 1,
-		-80, 4, 1,    0, 1,
-		
-		// Top face
-		-80, 4, 0,    0, 0,
-		80, 4, 0,     1, 0,
-		80, 4, 1,     1, 1,
-		-80, 4, 1,    0, 1,
-		
-		// Bottom face
-		-80, -4, 0,   0, 0,
-		80, -4, 0,    1, 0,
-		80, -4, 1,    1, 1,
-		-80, -4, 1,   0, 1,
-		
-		// Right face
-		80, -4, 0,    0, 0,
-		80, 4, 0,     1, 0,
-		80, 4, 1,     1, 1,
-		80, -4, 1,    0, 1,
-		
-		// Left face
-		-80, -4, 0,   0, 0,
-		-80, -4, 1,   1, 0,
-		-80, 4, 1,    1, 1,
-		-80, 4, 0,    0, 1
-	  ];
-	
-	  cube_faces2 = [
-		0, 1, 2,
-		0, 2, 3,
-		
-		4, 5, 6,
-		4, 6, 7,
-		
-		8, 9, 10,
-		8, 10, 11,
-		
-		12, 13, 14,
-		12, 14, 15,
-		
-		16, 17, 18,
-		16, 18, 19,
-		
-		20, 21, 22,
-		20, 22, 23
-	
-	  ];
+    // Back face
+    -20, -2, 3, 0, 0, 20, -2, 3, 1, 0, 20, 2, 3, 1, 1, -20, 2, 3, 0, 1,
+
+    // Top face
+    -20, 2, 0, 0, 0, 20, 2, 0, 1, 0, 20, 2, 3, 1, 1, -20, 2, 3, 0, 1,
+
+    // Bottom face
+    -20, -2, 0, 0, 0, 20, -2, 0, 1, 0, 20, -2, 3, 1, 1, -20, -2, 3, 0, 1,
+
+    // Right face
+    20, -2, 0, 0, 0, 20, 2, 0, 1, 0, 20, 2, 3, 1, 1, 20, -2, 3, 0, 1,
+
+    // Left face
+    -20, -2, 0, 0, 0, -20, -2, 3, 1, 0, -20, 2, 3, 1, 1, -20, 2, 0, 0, 1,
+  ];
+
+  cube_faces3 = [
+    0, 1, 2, 0, 2, 3,
+
+    4, 5, 6, 4, 6, 7,
+
+    8, 9, 10, 8, 10, 11,
+
+    12, 13, 14, 12, 14, 15,
+
+    16, 17, 18, 16, 18, 19,
+
+    20, 21, 22, 20, 22, 23,
+  ];
+
+  //wall
+  var cube_vertex2 = [
+    // Front face
+    -80, -4, 0, 0, 0, 80, -4, 0, 1, 0, 80, 4, 0, 1, 1, -80, 4, 0, 0, 1,
+
+    // Back face
+    -80, -4, 1, 0, 0, 80, -4, 1, 1, 0, 80, 4, 1, 1, 1, -80, 4, 1, 0, 1,
+
+    // Top face
+    -80, 4, 0, 0, 0, 80, 4, 0, 1, 0, 80, 4, 1, 1, 1, -80, 4, 1, 0, 1,
+
+    // Bottom face
+    -80, -4, 0, 0, 0, 80, -4, 0, 1, 0, 80, -4, 1, 1, 1, -80, -4, 1, 0, 1,
+
+    // Right face
+    80, -4, 0, 0, 0, 80, 4, 0, 1, 0, 80, 4, 1, 1, 1, 80, -4, 1, 0, 1,
+
+    // Left face
+    -80, -4, 0, 0, 0, -80, -4, 1, 1, 0, -80, 4, 1, 1, 1, -80, 4, 0, 0, 1,
+  ];
+
+  cube_faces2 = [
+    0, 1, 2, 0, 2, 3,
+
+    4, 5, 6, 4, 6, 7,
+
+    8, 9, 10, 8, 10, 11,
+
+    12, 13, 14, 12, 14, 15,
+
+    16, 17, 18, 16, 18, 19,
+
+    20, 21, 22, 20, 22, 23,
+  ];
 
   //land
   var cube_vertex = [
@@ -3708,15 +3636,15 @@ function main() {
   );
 
   // Sun
-  var object_vertex_sun = sphereVertex(100, 100, 5,5, 5, 1, 1, 0);
+  var object_vertex_sun = sphereVertex(100, 100, 5, 5, 5, 1, 1, 0);
   var object_faces_sun = sphereFaces(100, 100);
 
   var sun = new MyObject(
-	object_vertex_sun,
-	object_faces_sun,
-	shader_vertex_source,
-	shader_fragment_source
-  )
+    object_vertex_sun,
+    object_faces_sun,
+    shader_vertex_source,
+    shader_fragment_source
+  );
 
   var wall = new MyObjectTexture(
     cube_vertex2,
@@ -3788,6 +3716,15 @@ function main() {
   object_vertex2 = tubeVertex(0.5, 0.5, 6, 50, 0.5451, 0.2706, 0.0745);
   object_faces2 = tubeFaces(50);
   var sticks3 = new MyObject(
+    object_vertex2,
+    object_faces2,
+    shader_vertex_source,
+    shader_fragment_source
+  );
+
+  object_vertex2 = tubeVertex(0.5, 0.5, 10, 50, 0.8, 0.8, 0.8);
+  object_faces2 = tubeFaces(50);
+  var kincir = new MyObject(
     object_vertex2,
     object_faces2,
     shader_vertex_source,
@@ -3926,42 +3863,42 @@ function main() {
     object_vertex67,
     object_faces67,
     shader_vertex_source,
-    shader_fragment_source 
+    shader_fragment_source
   );
 
   var trampleg2 = new MyObject(
     object_vertex67,
     object_faces67,
     shader_vertex_source,
-    shader_fragment_source 
+    shader_fragment_source
   );
 
   var trampleg3 = new MyObject(
     object_vertex67,
     object_faces67,
     shader_vertex_source,
-    shader_fragment_source 
+    shader_fragment_source
   );
 
   var trampleg4 = new MyObject(
     object_vertex67,
     object_faces67,
     shader_vertex_source,
-    shader_fragment_source 
+    shader_fragment_source
   );
 
   var trampstroke = new MyObject(
     object_vertex68,
     object_faces68,
     shader_vertex_source,
-    shader_fragment_source 
+    shader_fragment_source
   );
 
   var trampstring = new MyObject(
     object_vertex69,
     object_faces69,
     shader_vertex_source,
-    shader_fragment_source 
+    shader_fragment_source
   );
 
   for (i = 0; i < 5; i++) {
@@ -4014,6 +3951,42 @@ function main() {
     );
   }
 
+  kincir.addChild(
+    new MyObject(
+      object_vertex40,
+      object_faces40,
+      shader_vertex_source,
+      shader_fragment_source
+    )
+  );
+  object_vertex40 = tubeVertex(0.8, 0.1, 8, 3, 0, 1, 0);
+  kincir.addChild(
+    new MyObject(
+      object_vertex40,
+      object_faces40,
+      shader_vertex_source,
+      shader_fragment_source
+    )
+  );
+  object_vertex40 = tubeVertex(0.8, 0.1, 8, 3, 1, 1, 0);
+  kincir.addChild(
+    new MyObject(
+      object_vertex40,
+      object_faces40,
+      shader_vertex_source,
+      shader_fragment_source
+    )
+  );
+  object_vertex40 = tubeVertex(0.8, 0.1, 8, 3, 0, 0, 1);
+  kincir.addChild(
+    new MyObject(
+      object_vertex40,
+      object_faces40,
+      shader_vertex_source,
+      shader_fragment_source
+    )
+  );
+
   var mountain = new MyObject(
     object_vertex30,
     object_faces30,
@@ -4061,12 +4034,13 @@ function main() {
   var yTranslation3 = 1; // Initial translation value
   var ydirection3 = 1; // Initial direction of movement
 
-  var yTranslation4 = 5
+  var yTranslation4 = 5;
   var ydirection4 = 1;
 
   var t = 0; // Parameter for the curve (0 to 1)
   var direction4 = 1; // Initial direction of movement
   var dummy = 0;
+  var fanRotate = 0;
   var animate = async function (time) {
     var dt = time - time_prev;
     if (!drag) {
@@ -4077,185 +4051,181 @@ function main() {
     }
 
     //#region CharactersetBasePosition
-	object.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
-	//left_eye
-	left_eye.setPosition(Math.PI / 2, -0.3, Math.PI / 2, 1.2, 0.3, 0.2, PHI, THETA);
+    object.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
+    //left_eye
+    left_eye.setPosition(
+      Math.PI / 2,
+      -0.3,
+      Math.PI / 2,
+      1.2,
+      0.3,
+      0.2,
+      PHI,
+      THETA
+    );
 
-	//right_eye
-	right_eye.setPosition(Math.PI / 2, 0.3, Math.PI / 2, 1.2, -0.3, 0.2, PHI, THETA);
+    //right_eye
+    right_eye.setPosition(
+      Math.PI / 2,
+      0.3,
+      Math.PI / 2,
+      1.2,
+      -0.3,
+      0.2,
+      PHI,
+      THETA
+    );
 
-	//left_blackeye
-	left_blackeye.setPosition(Math.PI / 2, -0.5,  Math.PI / 2, 1.4, 0.2, 0.2, PHI, THETA);
+    //left_blackeye
+    left_blackeye.setPosition(
+      Math.PI / 2,
+      -0.5,
+      Math.PI / 2,
+      1.4,
+      0.2,
+      0.2,
+      PHI,
+      THETA
+    );
 
-	//right_blackeye
-	right_blackeye.setPosition(
-		Math.PI / 2,
-		0.5,
-		Math.PI / 2,
-		1.4,
-		-0.2,
-		0.2,
-		PHI,
-		THETA
-	);
+    //right_blackeye
+    right_blackeye.setPosition(
+      Math.PI / 2,
+      0.5,
+      Math.PI / 2,
+      1.4,
+      -0.2,
+      0.2,
+      PHI,
+      THETA
+    );
 
-	//mouth
-	mouth.setPosition(Math.PI/2, 0, Math.PI/2, 1.1, 0.18, -0.6, PHI, THETA);
+    //mouth
+    mouth.setPosition(Math.PI / 2, 0, Math.PI / 2, 1.1, 0.18, -0.6, PHI, THETA);
 
-	//puffball
-	hat_top.setPosition(0, 0, 0, -0.5, 0, 1.5, PHI, THETA);
+    //puffball
+    hat_top.setPosition(0, 0, 0, -0.5, 0, 1.5, PHI, THETA);
 
-	//hat_middle
-	hat_middle.setPosition(0, -0.35, 0, 0, 0, 0.2, PHI, THETA);
+    //hat_middle
+    hat_middle.setPosition(0, -0.35, 0, 0, 0, 0.2, PHI, THETA);
 
-	//hat_left
-	hat_left.setPosition(
-		1.22,
-		0,
-		0,
-		0,
-		0.05,
-		0.2,
-		PHI,
-		THETA
-	);
+    //hat_left
+    hat_left.setPosition(1.22, 0, 0, 0, 0.05, 0.2, PHI, THETA);
 
-	//hat_right
-	hat_right.setPosition(
-		Math.PI / 2 - 0.3,
-		0.05,
-		1.5,
-		1.2,
-		0.2,
-		0.45,
-		PHI,
-		THETA
-	);
+    //hat_right
+    hat_right.setPosition(
+      Math.PI / 2 - 0.3,
+      0.05,
+      1.5,
+      1.2,
+      0.2,
+      0.45,
+      PHI,
+      THETA
+    );
 
-	//hat_top
-	hat_back.setPosition(1.575, -0.375, 0, 0, 0, 0.2, PHI, THETA);
+    //hat_top
+    hat_back.setPosition(1.575, -0.375, 0, 0, 0, 0.2, PHI, THETA);
 
-	//body
-	body.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
+    //body
+    body.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
 
-	//left_shoulder
-	left_shoulder.setPosition(-0.6, 0, 0, 0, -0.8, -1.65, PHI, THETA);
+    //left_shoulder
+    left_shoulder.setPosition(-0.6, 0, 0, 0, -0.8, -1.65, PHI, THETA);
 
-	//right_shoulder
-	right_shoulder.setPosition(0.6, 0, 0, 0, 0.8, -1.65, PHI, THETA);
+    //right_shoulder
+    right_shoulder.setPosition(0.6, 0, 0, 0, 0.8, -1.65, PHI, THETA);
 
-	//right_elbow
-	right_elbow.setPosition(0, 0, 0, 0, -0.82, -1.7, PHI, THETA);
+    //right_elbow
+    right_elbow.setPosition(0, 0, 0, 0, -0.82, -1.7, PHI, THETA);
 
-	//left_elbow
-	left_elbow.setPosition(0, -0.15, 0, 0, 0.82, -1.7, PHI, THETA);
+    //left_elbow
+    left_elbow.setPosition(0, -0.15, 0, 0, 0.82, -1.7, PHI, THETA);
 
-	//left_arm
-	left_arm.setPosition(-0.15, 0, 0, 0, -0.9, -2.2, PHI, THETA);
+    //left_arm
+    left_arm.setPosition(-0.15, 0, 0, 0, -0.9, -2.2, PHI, THETA);
 
-	//right_arm
-	right_arm.setPosition(0.15, 0, 0, 0, 0.9, -2.2, PHI, THETA);
+    //right_arm
+    right_arm.setPosition(0.15, 0, 0, 0, 0.9, -2.2, PHI, THETA);
 
-	//left_hand
-	left_hand.setPosition(0, 0, 0, 0, -0.9, -2.3, PHI, THETA);
+    //left_hand
+    left_hand.setPosition(0, 0, 0, 0, -0.9, -2.3, PHI, THETA);
 
-	//right_hand
-	right_hand.setPosition(0, 0, 0, 0, 0.9, -2.3, PHI, THETA);
+    //right_hand
+    right_hand.setPosition(0, 0, 0, 0, 0.9, -2.3, PHI, THETA);
 
-	//left_thumb
-	left_thumb.setPosition(
-		-Math.PI / 2,
-		-Math.PI / 2,
-		0,
-		0.18,
-		-0.9,
-		-2.3,
-		PHI,
-		THETA
-	);
+    //left_thumb
+    left_thumb.setPosition(
+      -Math.PI / 2,
+      -Math.PI / 2,
+      0,
+      0.18,
+      -0.9,
+      -2.3,
+      PHI,
+      THETA
+    );
 
-	//right_thumb
-	right_thumb.setPosition(
-		Math.PI / 2,
-		Math.PI / 2,
-		0,
-		0.18,
-		0.9,
-		-2.3,
-		PHI,
-		THETA
-	);
+    //right_thumb
+    right_thumb.setPosition(
+      Math.PI / 2,
+      Math.PI / 2,
+      0,
+      0.18,
+      0.9,
+      -2.3,
+      PHI,
+      THETA
+    );
 
-	//left_leg
-	left_leg.setPosition(0, 0, 0, 0, -0.38, -3, PHI, THETA);
+    //left_leg
+    left_leg.setPosition(0, 0, 0, 0, -0.38, -3, PHI, THETA);
 
-	//right_leg
-	right_leg.setPosition(0, 0, 0, 0, 0.38, -3, PHI, THETA);
+    //right_leg
+    right_leg.setPosition(0, 0, 0, 0, 0.38, -3, PHI, THETA);
 
-	//left_shoe
-	left_shoe.setPosition(0, 0, 0, 0.18, -0.38, -3.08, PHI, THETA);
+    //left_shoe
+    left_shoe.setPosition(0, 0, 0, 0.18, -0.38, -3.08, PHI, THETA);
 
-	//right_shoe
-	right_shoe.setPosition(0, 0, 0, 0.18, 0.38, -3.08, PHI, THETA);
+    //right_shoe
+    right_shoe.setPosition(0, 0, 0, 0.18, 0.38, -3.08, PHI, THETA);
 
+    //shirt_line
+    shirt_line.setPosition(0, -0.32, 0, 1, 0, -2.7, PHI, THETA);
 
-	//shirt_line
-	shirt_line.setPosition(
-		0, -0.32, 0,
-		1, 0, -2.7,
-		PHI,
-		THETA
-	);
+    button1.setPosition(0, 0, 0, 0.6, -0.1, -1.5, PHI, THETA);
 
-	button1.setPosition(
-		0, 0, 0,
-		0.6, -0.1, -1.5,
-		PHI,
-		THETA
-	);
+    button2.setPosition(0, 0, 0, 0.75, -0.1, -1.9, PHI, THETA);
 
-	button2.setPosition(
-		0, 0, 0,
-		0.75, -0.1, -1.9,
-		PHI,
-		THETA
-	);
+    button3.setPosition(0, 0, 0, 0.9, -0.1, -2.3, PHI, THETA);
 
-	button3.setPosition(
-		0, 0, 0,
-		0.9, -0.1, -2.3,
-		PHI,
-		THETA
-	);
+    //pocket_triangle_right
+    //back_sweater
+    back_sweater.setPosition(0, 0.16, 0, -0.5, 0, -1.235, PHI, THETA);
 
-	//pocket_triangle_right
-	//back_sweater
-	back_sweater.setPosition(0, 0.16, 0, -0.5, 0, -1.235, PHI, THETA);
+    //front_sweater_left
+    front_sweater_left.setPosition(
+      -Math.PI / 2 - 0.5,
+      0.05,
+      0.9,
+      0.35,
+      -0.25,
+      -1.12,
+      PHI,
+      THETA
+    );
 
-	//front_sweater_left
-	front_sweater_left.setPosition(
-		-Math.PI / 2 - 0.5,
-		0.05,
-		0.9,
-		0.35,
-		-0.25,
-		-1.12,
-		PHI,
-		THETA
-	  );
-  
-	  //front_sweater_right
-	  front_sweater_right.setPosition(
-		-Math.PI / 2 + 0.5,
-		0.09,
-		-0.9,
-		0.35,
-		0.35,
-		-1.12,
-		PHI,
-		THETA
-	  );
-
+    //front_sweater_right
+    front_sweater_right.setPosition(
+      -Math.PI / 2 + 0.5,
+      0.09,
+      -0.9,
+      0.35,
+      0.35,
+      -1.12,
+      PHI,
+      THETA
+    );
 
     object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
     //left_eye
@@ -4333,211 +4303,238 @@ function main() {
 
     //mouth
     mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
-head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
-		//left_eye
-		left_eye_kyle.setPosition(Math.PI / 2, 0.3, Math.PI / 2, -1.2, -0.3, 0.2, PHI, THETA);
+    head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
+    //left_eye
+    left_eye_kyle.setPosition(
+      Math.PI / 2,
+      0.3,
+      Math.PI / 2,
+      -1.2,
+      -0.3,
+      0.2,
+      PHI,
+      THETA
+    );
 
-		//right_eye
-		right_eye_kyle.setPosition(Math.PI / 2, -0.3, Math.PI / 2,  -1.2, 0.3,0.2, PHI, THETA);
+    //right_eye
+    right_eye_kyle.setPosition(
+      Math.PI / 2,
+      -0.3,
+      Math.PI / 2,
+      -1.2,
+      0.3,
+      0.2,
+      PHI,
+      THETA
+    );
 
-		//left_blackeye
-		left_blackeye_kyle.setPosition(Math.PI / 2, 0.5, Math.PI / 2,  -1.4,-0.2, 0.2, PHI, THETA);
+    //left_blackeye
+    left_blackeye_kyle.setPosition(
+      Math.PI / 2,
+      0.5,
+      Math.PI / 2,
+      -1.4,
+      -0.2,
+      0.2,
+      PHI,
+      THETA
+    );
 
-		//right_blackeye
-		right_blackeye_kyle.setPosition(
-			Math.PI / 2,
-			-0.5,
-			Math.PI / 2,
+    //right_blackeye
+    right_blackeye_kyle.setPosition(
+      Math.PI / 2,
+      -0.5,
+      Math.PI / 2,
 
-			-1.4,
-			0.2,
-			0.2,
-			PHI,
-			THETA
-		);
+      -1.4,
+      0.2,
+      0.2,
+      PHI,
+      THETA
+    );
 
-		//mouth
-		mouth_kyle.setPosition(Math.PI / 2, 0, Math.PI / 2,  -1.1,0.18, -0.6, PHI, THETA);
+    //mouth
+    mouth_kyle.setPosition(
+      Math.PI / 2,
+      0,
+      Math.PI / 2,
+      -1.1,
+      0.18,
+      -0.6,
+      PHI,
+      THETA
+    );
 
-		//hat_top
-		hat_top_kyle.setPosition(0, 0, 0, 0, 0, 0.5, PHI, THETA);
+    //hat_top
+    hat_top_kyle.setPosition(0, 0, 0, 0, 0, 0.5, PHI, THETA);
 
-		//hat_middle
-		hat_middle_kyle.setPosition(0, 0, 0,  -0.2,0, 0.45, PHI, THETA);
+    //hat_middle
+    hat_middle_kyle.setPosition(0, 0, 0, -0.2, 0, 0.45, PHI, THETA);
 
-		//hat_left
-		hat_left_kyle.setPosition(
-			Math.PI / 2 - 0.3,
-			0.05,
-			0.05,
-			
-			0.2,
-			-1.2,
-			0.45,
-			PHI,
-			THETA
-		);
+    //hat_left
+    hat_left_kyle.setPosition(
+      Math.PI / 2 - 0.3,
+      0.05,
+      0.05,
 
-		//hat_right
-		hat_right_kyle.setPosition(
-			Math.PI / 2 + 0.3,
-			0.05,
-			-0.05,
-			
-			0.2,
-			1.2,
-			0.45,
-			PHI,
-			THETA
-		);
+      0.2,
+      -1.2,
+      0.45,
+      PHI,
+      THETA
+    );
 
-		//hat_back
-		hat_back_kyle.setPosition(Math.PI / 2-0.2, 0, 1.5,  1,0, 1.1, PHI, THETA);
+    //hat_right
+    hat_right_kyle.setPosition(
+      Math.PI / 2 + 0.3,
+      0.05,
+      -0.05,
 
-		//body
-		body_kyle.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
+      0.2,
+      1.2,
+      0.45,
+      PHI,
+      THETA
+    );
 
-		//left_arm
-		left_arm_kyle.setPosition(-0.6, 0, 0,  0,-0.8, -1.65, PHI, THETA);
+    //hat_back
+    hat_back_kyle.setPosition(Math.PI / 2 - 0.2, 0, 1.5, 1, 0, 1.1, PHI, THETA);
 
-		//right_arm
-		right_arm_kyle.setPosition(0.6, 0, 0,  0, 0.8,-1.65, PHI, THETA);
+    //body
+    body_kyle.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
 
-		//right_elbow
-		right_elbow_kyle.setPosition(0, 0, 0,  0, 0.82,-1.7, PHI, THETA);
+    //left_arm
+    left_arm_kyle.setPosition(-0.6, 0, 0, 0, -0.8, -1.65, PHI, THETA);
 
-		//left_elbow
-		left_elbow_kyle.setPosition(0, 0.15, 0,  0,-0.82, -1.7, PHI, THETA);
+    //right_arm
+    right_arm_kyle.setPosition(0.6, 0, 0, 0, 0.8, -1.65, PHI, THETA);
 
-		//left_forearm
-		left_forearm_kyle.setPosition(-0.1, 0, 0,  0,-0.9, -2.2, PHI, THETA);
+    //right_elbow
+    right_elbow_kyle.setPosition(0, 0, 0, 0, 0.82, -1.7, PHI, THETA);
 
-		//right_forearm
-		right_forearm_kyle.setPosition(0.1, 0, 0,  0,0.9, -2.2, PHI, THETA);
+    //left_elbow
+    left_elbow_kyle.setPosition(0, 0.15, 0, 0, -0.82, -1.7, PHI, THETA);
 
-		//left_hand
-		left_hand_kyle.setPosition(0, 0, 0,  0,-0.9, -2.3, PHI, THETA);
+    //left_forearm
+    left_forearm_kyle.setPosition(-0.1, 0, 0, 0, -0.9, -2.2, PHI, THETA);
 
-		//right_hand
-		right_hand_kyle.setPosition(0, 0, 0,  0,0.9, -2.3, PHI, THETA);
+    //right_forearm
+    right_forearm_kyle.setPosition(0.1, 0, 0, 0, 0.9, -2.2, PHI, THETA);
 
-		//left_thumb
-		left_thumb_kyle.setPosition(
-			Math.PI / 2,
-			Math.PI / 2,
-			0,
-			
-			-0.18,
-			-0.9,
-			-2.3,
-			PHI,
-			THETA
-		);
+    //left_hand
+    left_hand_kyle.setPosition(0, 0, 0, 0, -0.9, -2.3, PHI, THETA);
 
-		//right_thumb
-		right_thumb_kyle.setPosition(
-			Math.PI / 2,
-			Math.PI / 2,
-			0,
-			-0.18,
-			0.9,
-			-2.3,
-			PHI,
-			THETA
-		);
+    //right_hand
+    right_hand_kyle.setPosition(0, 0, 0, 0, 0.9, -2.3, PHI, THETA);
 
-		//left_leg
-		left_leg_kyle.setPosition(0, 0, 0,  0,-0.38, -3, PHI, THETA);
+    //left_thumb
+    left_thumb_kyle.setPosition(
+      Math.PI / 2,
+      Math.PI / 2,
+      0,
 
-		//right_leg
-		right_leg_kyle.setPosition(0, 0, 0,  0,0.38, -3, PHI, THETA);
+      -0.18,
+      -0.9,
+      -2.3,
+      PHI,
+      THETA
+    );
 
-		//left_shoe
-		left_shoe_kyle.setPosition(0, 0, 0, -0.18,-0.38, -3.08, PHI, THETA);
+    //right_thumb
+    right_thumb_kyle.setPosition(
+      Math.PI / 2,
+      Math.PI / 2,
+      0,
+      -0.18,
+      0.9,
+      -2.3,
+      PHI,
+      THETA
+    );
 
-		//right_shoe
-		right_shoe_kyle.setPosition(0, 0, 0,  -0.18,0.38, -3.08, PHI, THETA);
+    //left_leg
+    left_leg_kyle.setPosition(0, 0, 0, 0, -0.38, -3, PHI, THETA);
 
-		//pocket_square_left
-		pocket_square_left_kyle.setPosition(
-			2,
-			0,
-			2,
-			-0.7,
-			-0.3,
-			-2,
-			PHI,
-			THETA
-		);
-		pocket_square_left_kyle.changeline(true);
+    //right_leg
+    right_leg_kyle.setPosition(0, 0, 0, 0, 0.38, -3, PHI, THETA);
 
-		//pocket_square_right
-		pocket_square_right_kyle.setPosition(
-			2,
-			0,
-			1,
-			
-			-0.7,
-			0.3,
-			-2,
-			PHI,
-			THETA
-		);
-		pocket_square_right_kyle.changeline(true);
+    //left_shoe
+    left_shoe_kyle.setPosition(0, 0, 0, -0.18, -0.38, -3.08, PHI, THETA);
 
-		//pocket_triangle_left
-		pocket_triangle_left_kyle.setPosition(
-			3,
-			-0.2,
-			1.5,
-			
-			-0.76,
-			-0.34,
-			-1.85,
-			PHI,
-			THETA
-		);
+    //right_shoe
+    right_shoe_kyle.setPosition(0, 0, 0, -0.18, 0.38, -3.08, PHI, THETA);
 
-		//pocket_triangle_right
-		pocket_triangle_right_kyle.setPosition(
-			3,
-			-0.2,
-			0.5,
-			
-			-0.76,
-			0.34,
-			-1.85,
-			PHI,
-			THETA
-		);
-		
-		//back_sweater
-		back_sweater_kyle.setPosition(-0.16, 0, 0,  0.2,0, -1.235, PHI, THETA);
+    //pocket_square_left
+    pocket_square_left_kyle.setPosition(2, 0, 2, -0.7, -0.3, -2, PHI, THETA);
+    pocket_square_left_kyle.changeline(true);
 
-		//front_sweater_left
-		front_sweater_left_kyle.setPosition(
-			-Math.PI / 2 - 0.6,
-			-0.05,
-			-0.5,
-			-0.35,
-			-0.3,
-			-1.2,
-			PHI,
-			THETA
-		);
+    //pocket_square_right
+    pocket_square_right_kyle.setPosition(
+      2,
+      0,
+      1,
 
-		//front_sweater_right
-		front_sweater_right_kyle.setPosition(
-			-Math.PI / 2 + 0.5,
-			-0.05,
-			0.8,
-			
-			-0.35,
-			0.35,
-			-1.2,
-			PHI,
-			THETA
-		);
+      -0.7,
+      0.3,
+      -2,
+      PHI,
+      THETA
+    );
+    pocket_square_right_kyle.changeline(true);
+
+    //pocket_triangle_left
+    pocket_triangle_left_kyle.setPosition(
+      3,
+      -0.2,
+      1.5,
+
+      -0.76,
+      -0.34,
+      -1.85,
+      PHI,
+      THETA
+    );
+
+    //pocket_triangle_right
+    pocket_triangle_right_kyle.setPosition(
+      3,
+      -0.2,
+      0.5,
+
+      -0.76,
+      0.34,
+      -1.85,
+      PHI,
+      THETA
+    );
+
+    //back_sweater
+    back_sweater_kyle.setPosition(-0.16, 0, 0, 0.2, 0, -1.235, PHI, THETA);
+
+    //front_sweater_left
+    front_sweater_left_kyle.setPosition(
+      -Math.PI / 2 - 0.6,
+      -0.05,
+      -0.5,
+      -0.35,
+      -0.3,
+      -1.2,
+      PHI,
+      THETA
+    );
+
+    //front_sweater_right
+    front_sweater_right_kyle.setPosition(
+      -Math.PI / 2 + 0.5,
+      -0.05,
+      0.8,
+
+      -0.35,
+      0.35,
+      -1.2,
+      PHI,
+      THETA
+    );
 
     //#endregion
 
@@ -4548,10 +4545,10 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
 
     yTranslation2 += ydirection2 * 0.025;
     yTranslation3 += ydirection3 * 0.05;
+    yTranslation4 += ydirection4 * 0.05;
+    fanRotate += 0.005;
 
-	yTranslation4 += ydirection4 *0.05
-
-        // Check if within bounds, otherwise reverse direction
+    // Check if within bounds, otherwise reverse direction
     if (xTranslation >= -8.5) {
       direction = -1;
     } else if (xTranslation <= -10) {
@@ -4582,11 +4579,11 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
       ydirection3 = 1;
     }
 
-	if (yTranslation4 <= 5) {
-		ydirection4 = 1;
-	  } else if (yTranslation4 >= 20) {
-		ydirection4 = -1;
-	  }
+    if (yTranslation4 <= 5) {
+      ydirection4 = 1;
+    } else if (yTranslation4 >= 20) {
+      ydirection4 = -1;
+    }
 
     // Update the parameter for the curve
     t += direction4 * 0.008; // Adjust the speed of movement here
@@ -4634,7 +4631,19 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     for (var i = 0; i < sticks3.child.length; i++) {
       sticks3.child[i].setPosition(0, 0, 0, 0, 0, 2 + i * 1.5);
     }
+    kincir.setPosition(0, 0, 0, 0, 0, 0);
+    kincir.child[0].setPosition(0, 0, 0.5, 0, -1, 10);
+    kincir.child[1].setPosition(3, 0, 0, 0, -1, 10);
+    kincir.child[2].setPosition(0, 1.5, 0, 0, -1, 10);
+    kincir.child[3].setPosition(0, -1.5, 0, 0, -1, 10);
 
+
+    kincir.child[0].setRotateMove(0,fanRotate,0);
+    kincir.child[1].setRotateMove(0,fanRotate,0);
+    kincir.child[2].setRotateMove(0,fanRotate,0);
+    kincir.child[3].setRotateMove(0,fanRotate,0);
+
+    kincir.moveChildrenWithParent(-20,25,3)
     bush1.setPosition(Math.PI / 2, Math.PI / 2, 0, -40, -1, -1);
     bush2.setPosition(Math.PI / 2, Math.PI / 2, 0, 40, -1, -1);
 
@@ -4713,8 +4722,8 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     trampstroke.setPosition(0, 0, 0, -3, 8, -1.5);
     trampstring.setPosition(0, 0, 0, -3, 8, -1.3);
 
-	sun.setPosition(0, 0, 0, 0, 65, 5)
-	sun.moveChildrenWithParent(0, 0, yTranslation4)
+    sun.setPosition(0, 0, 0, 0, 65, 5);
+    sun.moveChildrenWithParent(0, 0, yTranslation4);
 
     snowman.setPosition(0, 0, 0, 0, 0, 0);
     for (i = 0; i < 3; i++) {
@@ -4854,6 +4863,12 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     for (var i = 0; i < sticks3.child.length; i++) {
       sticks3.child[i].setResponsiveRotation(PHI, THETA);
     }
+
+    kincir.setResponsiveRotation(PHI, THETA);
+    for (var i = 0; i < kincir.child.length; i++) {
+      kincir.child[i].setResponsiveRotation(PHI, THETA);
+    }
+
     rugbyball.setResponsiveRotation(PHI, THETA);
     swing0.setResponsiveRotation(PHI, THETA);
     swing1.setResponsiveRotation(PHI, THETA);
@@ -4886,11 +4901,11 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     trampstroke.setResponsiveRotation(PHI, THETA);
     trampstring.setResponsiveRotation(PHI, THETA);
 
-	sun.setResponsiveRotation(PHI, THETA)
+    sun.setResponsiveRotation(PHI, THETA);
 
-    snowman.setResponsiveRotation(PHI,THETA);
-    for(i=0 ; i<snowman.child.length;i++){
-      snowman.child[i].setResponsiveRotation(PHI,THETA);
+    snowman.setResponsiveRotation(PHI, THETA);
+    for (i = 0; i < snowman.child.length; i++) {
+      snowman.child[i].setResponsiveRotation(PHI, THETA);
     }
 
     swing0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
@@ -4972,6 +4987,9 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     sticks3.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     sticks3.draw();
 
+    kincir.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    kincir.draw();
+
     wall.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     wall.draw();
 
@@ -5014,8 +5032,8 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     trampstring.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     trampstring.draw();
 
-	sun.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
-	sun.draw()
+    sun.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    sun.draw();
 
     GL.flush();
     window.requestAnimationFrame(animate);
