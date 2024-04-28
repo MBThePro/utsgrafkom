@@ -3403,11 +3403,8 @@ function main() {
 	stackCount = 50;
 	sectorCount = 50;
 	radiusX = 0.5;
-	radiusY = 0.8;
+	radiusY = 0.5;
 	radiusZ = 0.5;
-	r = 102 / 255;
-	g = 51 / 255;
-	b = 0 / 255;
 	for (var i = 0; i <= stackCount; ++i) {
 		var theta = (i * Math.PI) / stackCount;
 		var sinTheta = Math.sin(theta);
@@ -3431,13 +3428,13 @@ function main() {
         (i % 5 === 0 && (j + 1) % 5 === 0) // Right side of the next stripe line
     ) {
 				// Set color to white for the front and end parts
+				r = 0;
+				g = 0;
+				b = 0;
+			} else {
 				r = 1;
 				g = 1;
-				b = 1;
-			} else {
-				r = 102 / 255;
-				g = 51 / 255;
-				b = 0 / 255;
+				b = 0;
 			}
 
 			object_vertex5.push(x, y, z, r, g, b);
