@@ -343,6 +343,22 @@ class MyObject {
     LIBS.rotateY(temps, THETA);
     this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, temps);
   }
+
+  scale(m) {
+    var parentMatrixBefore = this.MOVEMATRIX;
+    var matM = [m, 0, 0, 0, 0, m, 0, 0, 0, 0, m, 0, 0, 0, 0, 1];
+    this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, matM);
+    // LIBS.translateZ(this.MOVEMATRIX,parentMatrixBefore[14]);
+    // LIBS.translateY(this.MOVEMATRIX,parentMatrixBefore[13]);
+    // LIBS.translateX(this.MOVEMATRIX,parentMatrixBefore[12]);
+    this.MOVEMATRIX[12] = parentMatrixBefore[12];
+    this.MOVEMATRIX[13] = parentMatrixBefore[13];
+    this.MOVEMATRIX[14] = parentMatrixBefore[14];
+    for (let i = 0; i < this.child.length; i++) {
+      let child = this.child[i];
+      child.scale(m);
+    }
+  }
 }
 
 class MyObjectTexture {
@@ -4064,6 +4080,11 @@ function main() {
   var yTranslation4 = 5
   var ydirection4 = 1;
 
+  var scaleFactor = 1; // Initial scale factor for object2
+  var scaleDirection = 1; // Initial direction of scaling (1 for incrementing, -1 for decrementing)
+  var scaleIncrement = 0.01; // Increment or decrement amount for the scale factor
+
+
   var t = 0; // Parameter for the curve (0 to 1)
   var direction4 = 1; // Initial direction of movement
   var dummy = 0;
@@ -4714,6 +4735,21 @@ head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
     trampstring.setPosition(0, 0, 0, -3, 8, -1.3);
 
 	sun.setPosition(0, 0, 0, 0, 65, 5)
+
+  // Scale object2 by the current scale factor
+  sun.scale(scaleFactor);
+
+  // Increment or decrement scale factor based on scaleDirection
+  scaleFactor += scaleDirection * scaleIncrement;
+
+  // If scale factor reaches 2, change scaleDirection to -1 for decrementing
+  // If scale factor reaches 1, change scaleDirection to 1 for incrementing
+  if (scaleFactor >= 1.3) {
+      scaleDirection = -1;
+  } else if (scaleFactor <= 1) {
+      scaleDirection = 1;
+  }
+
 	sun.moveChildrenWithParent(0, 0, yTranslation4)
 
     snowman.setPosition(0, 0, 0, 0, 0, 0);
