@@ -1,6 +1,15 @@
 var GL;
 // Function to calculate the rotation matrix based on PHI and THETA
-
+function rotateArbitary(parent) {
+  var res = [];
+  for (var i = 0; i < 720; i += 0.1) {
+    var x = 6.5 * Math.cos(i) + parent.MOVEMATRIX[12];
+    var z = 6.5 * Math.sin(i) + parent.MOVEMATRIX[14];
+    res.push(x);
+    res.push(z);
+  }
+  return res;
+}
 // Function to multiply two 3x3 matrices
 function multiplyMatrices(a, b) {
   // Check if matrices are valid and have compatible dimensions
@@ -3433,7 +3442,7 @@ function main() {
   }
   object_faces30 = tubeFaces(50);
 
-  object_vertex31 = sphereVertex(50, 50, 1.5, 1.5, 1.5, 1, 1,1);
+  object_vertex31 = sphereVertex(50, 50, 1.5, 1.5, 1.5, 1, 1, 1);
   object_faces31 = sphereFaces(50, 50);
 
   var snowman = new MyObject(
@@ -3443,38 +3452,48 @@ function main() {
     shader_fragment_source
   );
   for (i = 0; i < 3; i++) {
-    object_vertex31 = sphereVertex(50, 50, 1.5-i*0.3, 1.5-i*0.3, 1.5-i*0.3, 1, 1,1);
+    object_vertex31 = sphereVertex(
+      50,
+      50,
+      1.5 - i * 0.3,
+      1.5 - i * 0.3,
+      1.5 - i * 0.3,
+      1,
+      1,
+      1
+    );
     object_faces31 = sphereFaces(50, 50);
-    snowman.addChild(new MyObject(
-      object_vertex31,
-      object_faces31,
-      shader_vertex_source,
-      shader_fragment_source
-    )
+    snowman.addChild(
+      new MyObject(
+        object_vertex31,
+        object_faces31,
+        shader_vertex_source,
+        shader_fragment_source
+      )
     );
   }
-  object_vertex31 = sphereVertex(50,50,0.15,0.15,0.15,0,0,0);
-  for(i =0 ;i<6;i++){
-  snowman.addChild(
-   new MyObject(
-      object_vertex31,
-      object_faces31,
-      shader_vertex_source,
-      shader_fragment_source
-    )
-  )
+  object_vertex31 = sphereVertex(50, 50, 0.15, 0.15, 0.15, 0, 0, 0);
+  for (i = 0; i < 6; i++) {
+    snowman.addChild(
+      new MyObject(
+        object_vertex31,
+        object_faces31,
+        shader_vertex_source,
+        shader_fragment_source
+      )
+    );
   }
 
-  object_vertex31=tubeVertex(0.2,0.1,0.5,50,1,165/255,0);
-  object_faces31 =tubeFaces(50);
+  object_vertex31 = tubeVertex(0.2, 0.1, 0.5, 50, 1, 165 / 255, 0);
+  object_faces31 = tubeFaces(50);
   snowman.addChild(
-   new MyObject(
+    new MyObject(
       object_vertex31,
       object_faces31,
       shader_vertex_source,
       shader_fragment_source
     )
-  )
+  );
 
   object_vertex31 = [];
   outerRad = 0.3;
@@ -3521,13 +3540,13 @@ function main() {
   object_faces31.push(2, segments * 2 + 2, 0); // Bottom circle
   object_faces31.push(1, segments * 2 + 3, 3); // Top circle
   snowman.addChild(
-   new MyObject(
+    new MyObject(
       object_vertex31,
       object_faces31,
       shader_vertex_source,
       shader_fragment_source
     )
-  )
+  );
 
   var wall = new MyObjectTexture(
     cube_vertex2,
@@ -3847,7 +3866,7 @@ function main() {
 
   var t = 0; // Parameter for the curve (0 to 1)
   var direction4 = 1; // Initial direction of movement
-
+  var dummy = 0;
   var animate = async function (time) {
     var dt = time - time_prev;
     if (!drag) {
@@ -3858,178 +3877,262 @@ function main() {
     }
 
     //#region CharactersetBasePosition
-    object.setPosition(0, 0, 0, 0, 0, 0);
+	object.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
+	//left_eye
+	left_eye.setPosition(Math.PI / 2, -0.3, Math.PI / 2, 1.2, 0.3, 0.2, PHI, THETA);
 
+	//right_eye
+	right_eye.setPosition(Math.PI / 2, 0.3, Math.PI / 2, 1.2, -0.3, 0.2, PHI, THETA);
+
+	//left_blackeye
+	left_blackeye.setPosition(Math.PI / 2, -0.5,  Math.PI / 2, 1.4, 0.2, 0.2, PHI, THETA);
+
+	//right_blackeye
+	right_blackeye.setPosition(
+		Math.PI / 2,
+		0.5,
+		Math.PI / 2,
+		1.4,
+		-0.2,
+		0.2,
+		PHI,
+		THETA
+	);
+
+	//mouth
+	mouth.setPosition(Math.PI/2, 0, Math.PI/2, 1.1, 0.18, -0.6, PHI, THETA);
+
+	//puffball
+	hat_top.setPosition(0, 0, 0, -0.5, 0, 1.5, PHI, THETA);
+
+	//hat_middle
+	hat_middle.setPosition(0, -0.35, 0, 0, 0, 0.2, PHI, THETA);
+
+	//hat_left
+	hat_left.setPosition(
+		1.22,
+		0,
+		0,
+		0,
+		0.05,
+		0.2,
+		PHI,
+		THETA
+	);
+
+	//hat_right
+	hat_right.setPosition(
+		Math.PI / 2 - 0.3,
+		0.05,
+		1.5,
+		1.2,
+		0.2,
+		0.45,
+		PHI,
+		THETA
+	);
+
+	//hat_top
+	hat_back.setPosition(1.575, -0.375, 0, 0, 0, 0.2, PHI, THETA);
+
+	//body
+	body.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
+
+	//left_shoulder
+	left_shoulder.setPosition(-0.6, 0, 0, 0, -0.8, -1.65, PHI, THETA);
+
+	//right_shoulder
+	right_shoulder.setPosition(0.6, 0, 0, 0, 0.8, -1.65, PHI, THETA);
+
+	//right_elbow
+	right_elbow.setPosition(0, 0, 0, 0, -0.82, -1.7, PHI, THETA);
+
+	//left_elbow
+	left_elbow.setPosition(0, -0.15, 0, 0, 0.82, -1.7, PHI, THETA);
+
+	//left_arm
+	left_arm.setPosition(-0.15, 0, 0, 0, -0.9, -2.2, PHI, THETA);
+
+	//right_arm
+	right_arm.setPosition(0.15, 0, 0, 0, 0.9, -2.2, PHI, THETA);
+
+	//left_hand
+	left_hand.setPosition(0, 0, 0, 0, -0.9, -2.3, PHI, THETA);
+
+	//right_hand
+	right_hand.setPosition(0, 0, 0, 0, 0.9, -2.3, PHI, THETA);
+
+	//left_thumb
+	left_thumb.setPosition(
+		-Math.PI / 2,
+		-Math.PI / 2,
+		0,
+		0.18,
+		-0.9,
+		-2.3,
+		PHI,
+		THETA
+	);
+
+	//right_thumb
+	right_thumb.setPosition(
+		Math.PI / 2,
+		Math.PI / 2,
+		0,
+		0.18,
+		0.9,
+		-2.3,
+		PHI,
+		THETA
+	);
+
+	//left_leg
+	left_leg.setPosition(0, 0, 0, 0, -0.38, -3, PHI, THETA);
+
+	//right_leg
+	right_leg.setPosition(0, 0, 0, 0, 0.38, -3, PHI, THETA);
+
+	//left_shoe
+	left_shoe.setPosition(0, 0, 0, 0.18, -0.38, -3.08, PHI, THETA);
+
+	//right_shoe
+	right_shoe.setPosition(0, 0, 0, 0.18, 0.38, -3.08, PHI, THETA);
+
+
+	//shirt_line
+	shirt_line.setPosition(
+		0, -0.32, 0,
+		1, 0, -2.7,
+		PHI,
+		THETA
+	);
+
+	button1.setPosition(
+		0, 0, 0,
+		0.6, -0.1, -1.5,
+		PHI,
+		THETA
+	);
+
+	button2.setPosition(
+		0, 0, 0,
+		0.75, -0.1, -1.9,
+		PHI,
+		THETA
+	);
+
+	button3.setPosition(
+		0, 0, 0,
+		0.9, -0.1, -2.3,
+		PHI,
+		THETA
+	);
+
+	//pocket_triangle_right
+	//back_sweater
+	back_sweater.setPosition(0, 0.16, 0, -0.5, 0, -1.235, PHI, THETA);
+
+	//front_sweater_left
+	front_sweater_left.setPosition(
+		-Math.PI / 2 - 0.5,
+		0.05,
+		0.9,
+		0.35,
+		-0.25,
+		-1.12,
+		PHI,
+		THETA
+	  );
+  
+	  //front_sweater_right
+	  front_sweater_right.setPosition(
+		-Math.PI / 2 + 0.5,
+		0.09,
+		-0.9,
+		0.35,
+		0.35,
+		-1.12,
+		PHI,
+		THETA
+	  );
+
+
+    object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
     //left_eye
-    left_eye.setPosition(Math.PI / 2, 0.3, 0, -0.3, -1.2, 0.2);
+    left_eye_cartman.setPosition(
+      Math.PI / 2 - 0.1,
+      0.3,
+      Math.PI / 2,
+      -1.3,
+      -0.3,
+      1.2
+    );
 
     //right_eye
-    right_eye.setPosition(Math.PI / 2, -0.3, 0, 0.3, -1.2, 0.2);
+    right_eye_cartman.setPosition(
+      Math.PI / 2 - 0.1,
+      -0.3,
+      Math.PI / 2,
+      -1.3,
+      0.3,
+      1.2
+    );
 
     //left_blackeye
-    left_blackeye.setPosition(Math.PI / 2, 0.5, 0, -0.2, -1.4, 0.2);
+    left_blackeye_cartman.setPosition(Math.PI / 2, 0.5, 0, -1.5, -0.2, 1.2);
 
     //right_blackeye
-    right_blackeye.setPosition(Math.PI / 2, -0.5, 0, 0.2, -1.4, 0.2);
+    right_blackeye_cartman.setPosition(Math.PI / 2, -0.5, 0, -1.5, 0.2, 1.2);
 
-    //mouth
-    mouth.setPosition(Math.PI / 2, 0, 0, 0.18, -1.1, -0.6);
-
-    //puffball
-    hat_top.setPosition(-0.35, 0, 0, 0, 0.5, 1.5);
-
-    //hat_middle
-    hat_middle.setPosition(-0.35, 0, 0, 0, 0, 0.2);
-
-    //hat_left
-    hat_left.setPosition(1.22, 0, 0, 0, 0.05, 0.2);
-
-    //hat_right
-    hat_right.setPosition(Math.PI / 2 - 0.3, 0.05, 1.5, 1.2, 0.2, 0.45);
-
-    //hat_top
-    hat_back.setPosition(1.2, 0, 0, 0, 0, 0.2);
+    //hat
+    hat_cartman.setPosition(0.38, 0, Math.PI / 2, 0, 0, 1.1);
 
     //body
-    body.setPosition(0, 0, 0, 0, 0, -2.7);
+    body_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, -1.7);
+    //yellowpart
+    yellowpart_cartman.setPosition(0.4, 0, Math.PI / 2, 0, 0, 1.1);
 
-    //left_shoulder
-    left_shoulder.setPosition(0, 0.6, 0, -0.8, 0, -1.65);
-
-    //right_shoulder
-    right_shoulder.setPosition(0, -0.6, 0, 0.8, 0, -1.65);
-
-    //right_elbow
-    right_elbow.setPosition(0, 0, 0, 0.82, 0, -1.7);
-
-    //left_elbow
-    left_elbow.setPosition(0, -0.15, 0, -0.82, 0, -1.7);
-
-    //left_arm
-    left_arm.setPosition(0, 0.15, 0, -0.9, 0, -2.2);
-
-    //right_arm
-    right_arm.setPosition(0, -0.15, 0, 0.9, 0, -2.2);
-
-    //left_hand
-    left_hand.setPosition(0, 0, 0, -0.9, 0, -2.3);
-
-    //right_hand
-    right_hand.setPosition(0, 0, 0, 0.9, 0, -2.3);
-
-    //left_thumb
-    left_thumb.setPosition(Math.PI / 2, Math.PI / 2, 0, -0.9, -0.18, -2.3);
-
-    //right_thumb
-    right_thumb.setPosition(Math.PI / 2, Math.PI / 2, 0, 0.9, -0.18, -2.3);
+    //pucukhat
+    pucukhat_cartman.setPosition(0, 0, 0, 0.5, 0, 2.4);
 
     //left_leg
-    left_leg.setPosition(0, 0, 0, -0.38, 0, -3);
+    left_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, -0.48, -2.2);
 
     //right_leg
-    right_leg.setPosition(0, 0, 0, 0.38, 0, -3);
+    right_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, 0.48, -2.2);
 
     //left_shoe
-    left_shoe.setPosition(0, 0, 0, -0.38, -0.18, -3.08);
+    left_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, -0.48, -2.28);
 
     //right_shoe
-    right_shoe.setPosition(0, 0, 0, 0.38, -0.18, -3.08);
+    right_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, 0.48, -2.28);
 
-    //shirt_line
-    shirt_line.setPosition(-0.33, 0, 0, 0, -1, -2.7);
+    //left_arm
+    left_arm_cartman.setPosition(-1, 0, 0, 0, -2.1, -0.85);
 
-    button1.setPosition(0, 0, 0, -0.1, -0.6, -1.5);
+    //right_arm
+    right_arm_cartman.setPosition(1, 0, 0, 0, 2.1, -0.85);
 
-    button2.setPosition(0, 0, 0, -0.1, -0.75, -1.9);
+    //left_hand
+    left_hand_cartman.setPosition(-1, 0, 0, 0, -2.2, -0.9);
 
-    button3.setPosition(0, 0, 0, -0.1, -0.9, -2.3);
+    //right_hand
+    right_hand_cartman.setPosition(1, 0, 0, 0, 2.2, -0.9);
 
-    //pocket_triangle_right
-    //back_sweater
-    back_sweater.setPosition(-0.16, 0, 0, 0, 0.2, -1.235);
+    //resleting
+    resleting_cartman.setPosition(0, 0, Math.PI / 2, -0.63, 0, -1.7);
 
-    //front_sweater_left
-    front_sweater_left.setPosition(
-      -Math.PI / 2 - 0.5,
-      -0.05,
-      -0.5,
-      -0.35,
-      -0.35,
-      -1.1
-    );
+    //button1
+    button1_cartman.setPosition(0, 0, 0, -2, 0.2, -1.4);
 
-    //front_sweater_right
-    front_sweater_right.setPosition(
-      -Math.PI / 2 - 0.5,
-      0.05,
-      0.5,
-      0.35,
-      -0.35,
-      -1.1
-    );
+    //button2
+    button2_cartman.setPosition(0, 0, 0, -1.8, 0.2, -0.7);
 
-		object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
-		//left_eye
-		left_eye_cartman.setPosition(Math.PI / 2 - 0.1, 0.3, Math.PI / 2, -1.3, -0.3, 1.2);
+    //button3
+    button3_cartman.setPosition(0, 0, 0, -1.4, 0.2, -0.1);
 
-		//right_eye
-		right_eye_cartman.setPosition(Math.PI / 2 - 0.1, -0.3, Math.PI / 2, -1.3, 0.3, 1.2);
-
-		//left_blackeye
-		left_blackeye_cartman.setPosition(Math.PI / 2, 0.5, 0, -1.5, -0.2, 1.2);
-
-		//right_blackeye
-		right_blackeye_cartman.setPosition(Math.PI / 2, -0.5, 0, -1.5, 0.2, 1.2);
-
-		//hat
-		hat_cartman.setPosition(0.38, 0, Math.PI / 2, 0, 0, 1.1);
-
-		//body
-		body_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, -1.7);
-		//yellowpart
-		yellowpart_cartman.setPosition(0.4, 0, Math.PI / 2, 0, 0, 1.1);
-
-		//pucukhat
-		pucukhat_cartman.setPosition(0, 0, 0, 0.5, 0, 2.4);
-
-		//left_leg
-		left_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, -0.48, -2.2);
-
-		//right_leg
-		right_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, 0.48, -2.2);
-
-		//left_shoe
-		left_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, -0.48, -2.28);
-
-		//right_shoe
-		right_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, 0.48, -2.28);
-
-		//left_arm
-		left_arm_cartman.setPosition(-1, 0, 0, 0, -2.1, -0.85);
-
-		//right_arm
-		right_arm_cartman.setPosition(1, 0, 0, 0, 2.1, -0.85);
-
-		//left_hand
-		left_hand_cartman.setPosition(-1, 0, 0, 0, -2.2, -0.9);
-
-		//right_hand
-		right_hand_cartman.setPosition(1, 0, 0, 0, 2.2, -0.9);
-
-		//resleting
-		resleting_cartman.setPosition(0, 0, Math.PI / 2, -0.63, 0, -1.7);
-
-		//button1
-		button1_cartman.setPosition(0, 0, 0, -2, 0.2, -1.4);
-
-		//button2
-		button2_cartman.setPosition(0, 0, 0, -1.8, 0.2, -0.7);
-
-		//button3
-		button3_cartman.setPosition(0, 0, 0, -1.4, 0.2, -0.1);
-
-		//mouth
-		mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
+    //mouth
+    mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
 
     head_kyle.setPosition(0, 0, 0, 0, 0, 0);
 
@@ -4182,7 +4285,7 @@ function main() {
     yTranslation2 += ydirection2 * 0.025;
     yTranslation3 += ydirection3 * 0.05;
 
-    // Check if within bounds, otherwise reverse direction
+        // Check if within bounds, otherwise reverse direction
     if (xTranslation >= -8.5) {
       direction = -1;
     } else if (xTranslation <= -10) {
@@ -4325,23 +4428,38 @@ function main() {
     trampstroke.setPosition(0, 0, 0, -3, 8, -1.5);
     trampstring.setPosition(0, 0, 0, -3, 8, -1.3);
 
-    snowman.setPosition(0,0,0,0,0,0);
-    for(i=0 ; i<3;i++){
-      child=snowman.child[i];
-      child.setPosition(0,0,0,0,0,i+0.1+i*0.5)
-    }
-    
-    for(i=3 ; i <7 ;i++){
-      child=snowman.child[i];
-      child.setPosition(0,0,0,0,-1.4,i*0.7 - 2.5)
+    trampleg1.setPosition(0, 0, 0, 1, 4, -2.5);
+    trampleg2.setPosition(0, 0, 0, 1, 12, -2.5);
+    trampleg3.setPosition(0, 0, 0, -7, 4, -2.5);
+    trampleg4.setPosition(0, 0, 0, -7, 12, -2.5);
+    trampstroke.setPosition(0, 0, 0, -3, 8, -1.5);
+    trampstring.setPosition(0, 0, 0, -3, 8, -1.3);
+
+    snowman.setPosition(0, 0, 0, 0, 0, 0);
+    for (i = 0; i < 3; i++) {
+      child = snowman.child[i];
+      child.setPosition(0, 0, 0, 0, 0, i + 0.1 + i * 0.5);
     }
 
-    snowman.child[7].setPosition(0,0,0,-0.5,-0.7,3.5)
-    snowman.child[8].setPosition(0,0,0,0.5,-0.7,3.5)
-    snowman.child[9].setPosition(1.5,0,0,0,-0.7,3.2)
-    snowman.child[10].setPosition(3,0,0,0,-0.8,2.9)
+    for (i = 3; i < 7; i++) {
+      child = snowman.child[i];
+      child.setPosition(0, 0, 0, 0, -1.4, i * 0.7 - 2.5);
+    }
 
-    snowman.moveChildrenWithParent(-13,13,-1)
+    snowman.child[7].setPosition(0, 0, 0, -0.5, -0.7, 3.5);
+    snowman.child[8].setPosition(0, 0, 0, 0.5, -0.7, 3.5);
+    snowman.child[9].setPosition(1.5, 0, 0, 0, -0.7, 3.2);
+    snowman.child[10].setPosition(3, 0, 0, 0, -0.8, 2.9);
+
+    snowman.moveChildrenWithParent(-13, 13, -1);
+    var controlBean = rotateArbitary(merrygoaround);
+    dummy += 2;
+    snowman.moveChildrenWithParent(
+      controlBean[dummy % controlBean.length] - snowman.MOVEMATRIX[12],
+      controlBean[(dummy + 1) % controlBean.length] - snowman.MOVEMATRIX[14],
+      0
+    );
+
     // head_kyle.rotateAllWithChild(0,0,1.5)
     //#region ResponsiveRotation
     // Set responsive rotation
@@ -4488,7 +4606,6 @@ function main() {
     for(i=0 ; i<snowman.child.length;i++){
       snowman.child[i].setResponsiveRotation(PHI,THETA);
     }
-	
 
     swing0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     swing0.draw();
@@ -4563,7 +4680,7 @@ function main() {
     wall.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     wall.draw();
 
-    snowman.setuniformmatrix4(PROJMATRIX,VIEWMATRIX);
+    snowman.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     snowman.draw();
 
     rugbyball.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
