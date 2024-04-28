@@ -3146,7 +3146,133 @@ function main() {
 			 index + 2
 		 ); // Side faces
 	 }
+
+	 //Swing
+	 object_vertex15 = [];
+	 outerRad = 0.2;
+	 innerRad = 0.2;
+	 height = 12;
+	 segments = 100;
+	 object_vertex15.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
+	 object_vertex15.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
  
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex15.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex15.push(topX, topY, topZ, 1, 0.8431, 0);
+	 }
+	 object_faces15 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces15.push(index, index + 2, 0); // Bottom face
+		 object_faces15.push(index + 1, 1, index + 3); // Top face
+		 object_faces15.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
+	 //Swing Rope
+	 object_vertex16 = [];
+	 outerRad = 0.2;
+	 innerRad = 0.2;
+	 height = 9;
+	 segments = 100;
+	 object_vertex16.push(0, 0, 0, 0.698, 0.4314, 0.3843); // Center vertex for bottom circle
+	 object_vertex16.push(0, 0, height, 0.698, 0.4314, 0.3843); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex16.push(bottomX, bottomY, bottomZ,0.698, 0.4314, 0.3843);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex16.push(topX, topY, topZ, 0.698, 0.4314, 0.3843);
+	 }
+	 object_faces16 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces16.push(index, index + 2, 0); // Bottom face
+		 object_faces16.push(index + 1, 1, index + 3); // Top face
+		 object_faces16.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
+	 //Swing Seat
+	 object_vertex17 = [];
+	 outerRad = 3;
+	 innerRad = 3;
+	 height = 0.5;
+	 segments = 100;
+	 object_vertex16.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+	 object_vertex16.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex17.push(bottomX, bottomY, bottomZ,0.50196, 0.50196, 0.50196);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex17.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+	 }
+	 object_faces17 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces17.push(index, index + 2, 0); // Bottom face
+		 object_faces17.push(index + 1, 1, index + 3); // Top face
+		 object_faces17.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
 
 
 	//wall
@@ -3376,6 +3502,15 @@ function main() {
 	);
 
 	var swing0 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing1 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing2 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing3 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing4 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+
+	var swing_rope0 = new MyObject(object_vertex16,object_faces16,shader_vertex_source,shader_fragment_source);
+	var swing_rope1 = new MyObject(object_vertex16,object_faces16,shader_vertex_source,shader_fragment_source);
+
+	var swing_seat = new MyObject(object_vertex17,object_faces17,shader_vertex_source,shader_fragment_source);
 
 	var merrygoaround = new MyObject(
         object_vertex13,
@@ -3987,7 +4122,16 @@ function main() {
         merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25)
         merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25)
 
-		swing0.setPosition(-0.25, 0, 0, 20, 9, 0)
+		swing0.setPosition(-0.25, 0, 0, 20, 7.5, -2.5)
+		swing1.setPosition(0.25, 0, 0, 20, 13.5, -2.5)
+		swing2.setPosition(-0.25, 0, 0, 8, 7.5, -2.5)
+		swing3.setPosition(0.25, 0, 0, 8, 13.5, -2.5)
+		swing4.setPosition(0, 1.58, 0, 8, 10.5, 9)
+
+		swing_rope0.setPosition(0, 0, 0, 11, 10.5, 0)
+		swing_rope1.setPosition(0, 0, 0, 17, 10.5, 0)
+
+		swing_seat.setPosition(0, 0, 0, 14, 10.5, 0)
 
 
 		// Set object position
@@ -4109,6 +4253,15 @@ function main() {
 		}
 		rugbyball.setResponsiveRotation(PHI, THETA);
 		swing0.setResponsiveRotation(PHI, THETA)
+		swing1.setResponsiveRotation(PHI, THETA)
+		swing2.setResponsiveRotation(PHI, THETA)
+		swing3.setResponsiveRotation(PHI, THETA)
+		swing4.setResponsiveRotation(PHI, THETA)
+
+		swing_rope0.setResponsiveRotation(PHI, THETA)
+		swing_rope1.setResponsiveRotation(PHI, THETA)
+
+		swing_seat.setResponsiveRotation(PHI, THETA)
 
 		merrygoaround.setResponsiveRotation(PHI, THETA)
         merrygoaroundstick.setResponsiveRotation(PHI, THETA)
@@ -4124,6 +4277,24 @@ function main() {
 
 		swing0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		swing0.draw()
+		swing1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing1.draw()
+		swing2.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing2.draw()
+		swing3.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing3.draw()
+		swing4.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing4.draw()
+		
+		swing_rope0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing_rope0.draw()
+
+		swing_rope1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing_rope1.draw()
+
+		swing_seat.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing_seat.draw()
+
 		//#endregion
 
 		land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
