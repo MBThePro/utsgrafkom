@@ -3232,11 +3232,11 @@ function main() {
 	}
 	object_faces5 = sphereFaces(50, 50);
 	
-	var wall = new MyObject(
+	var wall = new MyObjectTexture(
 		cube_vertex2,
 		cube_faces2,
-		shader_vertex_source,
-		shader_fragment_source
+		shader_vertex_source_texture,
+		shader_fragment_source_texture
 	);
 
 	wall.setTexture("brick.jpg");
