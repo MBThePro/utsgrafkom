@@ -470,9 +470,13 @@ function main() {
 
     var xTranslation2 = 8.5; // Initial translation value
     var direction2 = 1; // Initial direction of movement
+	var yTranslation2 = 0; // Initial translation value
+    var ydirection2 = 1; // Initial direction of movement
 
     var xTranslation3 = 5; // Initial translation value
     var direction3 = -1; // Initial direction of movement
+	var yTranslation3 = 0; // Initial translation value
+    var ydirection3 = 1; // Initial direction of movement
 
     var t = 0; // Parameter for the curve (0 to 1)
     var direction4 = 1; // Initial direction of movement
@@ -491,6 +495,9 @@ function main() {
         xTranslation2 += direction2 * 0.013;
         xTranslation3 += direction3 * 0.02;
 
+		yTranslation2 += ydirection2 * 0.03;
+		yTranslation3 += ydirection3 * 0.02;
+
         // Check if within bounds, otherwise reverse direction
         if (xTranslation >= -8.5) {
             direction = -1;
@@ -504,10 +511,22 @@ function main() {
             direction2 = 1;
         }
 
+		if (yTranslation2 >= 0.3) {
+            ydirection2 = -1;
+        } else if (yTranslation2 <= 0) {
+            ydirection2 = 1;
+        }
+
         if (xTranslation3 <= -5) {
             direction3 = 1;
         } else if (xTranslation3 >= 5) {
             direction3 = -1;
+        }
+
+		if (yTranslation3 >= 0.3) {
+            ydirection3 = -1;
+        } else if (yTranslation3 <= 0) {
+            ydirection3 = 1;
         }
 
         // Update the parameter for the curve
@@ -527,9 +546,9 @@ function main() {
         var yCurve = (1 - t) * ((1 - t) * 0 + t * 10) + t * ((1 - t) * 10 + t * 0);
 
         // Set object position
-        object.setPosition(0, 0, 0, xTranslation, 0, 0, PHI, THETA);
-        object2.setPosition(0, 0, 0, xTranslation2, 0, 0, PHI, THETA);
-        object3.setPosition(0, 0, 0, xTranslation3, 0, 0, PHI, THETA);
+        object.setPosition(0, 0, 0, xTranslation, 0, yTranslation2, PHI, THETA);
+        object2.setPosition(0, 0, 0, xTranslation2, 0, yTranslation2, PHI, THETA);
+        object3.setPosition(0, 0, 0, xTranslation3, 0, yTranslation3, PHI, THETA);
         object4.setPosition(0, 0, 0, xCurve, 0, yCurve, PHI, THETA);
 
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
@@ -554,3 +573,4 @@ function main() {
 }
 
 window.addEventListener("load", main);
+
