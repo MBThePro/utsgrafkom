@@ -2949,6 +2949,91 @@ function main() {
 		}
 	}
 	object_faces5 = sphereFaces(50, 50);
+
+	//Merry go around
+    object_vertex13 = [];
+	outerRad = 5;
+	innerRad = 5;
+	height = 0.25;
+	segments = 100;
+	object_vertex13.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+	object_vertex13.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+	var angleIncrement = (2 * Math.PI) / segments;
+	for (var i = 0; i <= segments; i++) {
+		// Change the condition to <= to include the last segment
+		var angle = i * angleIncrement;
+		var cosAngle = Math.cos(angle);
+		var sinAngle = Math.sin(angle);
+
+		// Bottom circle vertex
+		var bottomX = outerRad * cosAngle;
+		var bottomY = outerRad * sinAngle;
+		var bottomZ = 0; // For the bottom circle
+		object_vertex13.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
+
+		// Top circle vertex
+		var topX = innerRad * cosAngle;
+		var topY = innerRad * sinAngle;
+		var topZ = height; // For the top circle
+		object_vertex13.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+	}
+	object_faces13 = [];
+	for (var i = 0; i < segments; i++) {
+		var index = i * 2 + 2;
+		object_faces13.push(index, index + 2, 0); // Bottom face
+		object_faces13.push(index + 1, 1, index + 3); // Top face
+		object_faces13.push(
+			index,
+			index + 1,
+			index + 3,
+			index,
+			index + 3,
+			index + 2
+		); // Side faces
+	}
+
+    // Merry go around stick
+    object_vertex14 = [];
+	outerRad = 0.25;
+	innerRad = 0.25;
+	height = 4;
+	segments = 100;
+	object_vertex14.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
+	object_vertex14.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
+	var angleIncrement = (2 * Math.PI) / segments;
+	for (var i = 0; i <= segments; i++) {
+		// Change the condition to <= to include the last segment
+		var angle = i * angleIncrement;
+		var cosAngle = Math.cos(angle);
+		var sinAngle = Math.sin(angle);
+
+		// Bottom circle vertex
+		var bottomX = outerRad * cosAngle;
+		var bottomY = outerRad * sinAngle;
+		var bottomZ = 0; // For the bottom circle
+		object_vertex14.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
+
+		// Top circle vertex
+		var topX = innerRad * cosAngle;
+		var topY = innerRad * sinAngle;
+		var topZ = height; // For the top circle
+		object_vertex14.push(topX, topY, topZ, 1, 0.8431, 0);
+	}
+	object_faces14 = [];
+	for (var i = 0; i < segments; i++) {
+		var index = i * 2 + 2;
+		object_faces14.push(index, index + 2, 0); // Bottom face
+		object_faces14.push(index + 1, 1, index + 3); // Top face
+		object_faces14.push(
+			index,
+			index + 1,
+			index + 3,
+			index,
+			index + 3,
+			index + 2
+		); // Side faces
+	}
+
 	var wall = new MyObject(
 		object_vertex4,
 		object_faces4,
@@ -2999,6 +3084,79 @@ function main() {
 		shader_vertex_source,
 		shader_fragment_source
 	);
+
+	var merrygoaround = new MyObject(
+        object_vertex13,
+        object_faces13,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundstick = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside1 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside2 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside3 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside4 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside5 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    
+    var merrygoaroundside6 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+
+    
+    var merrygoaroundside7 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
 
 	for (i = 0; i < 5; i++) {
 		var object_vertex3 = tubeVertex(6 - i, 0.1, 3, 3, 0.1333, 0.5451, 0.1333);
@@ -3524,6 +3682,19 @@ function main() {
 
 		body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
 
+		merrygoaround.setPosition(0,0,0,-20,10,-2.5)
+        merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5)
+        merrygoaroundside.setPosition(0, 0, 0, -15.5, 10, -2.5)
+        merrygoaroundside1.setPosition(0, 0, 0, -24.5, 10, -2.5)
+        merrygoaroundside2.setPosition(0, 0, 0, -20, 14.5, -2.5)
+        merrygoaroundside3.setPosition(0, 0, 0, -20, 5.5, -2.5)
+
+        merrygoaroundside4.setPosition(1.57, 0, 0, -20, 9.75, 1.25)
+        merrygoaroundside5.setPosition(1.57, 0, 0, -20, 14.25, 1.25)
+        merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25)
+        merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25)
+
+
 		// Set object position
 
 		sticks.moveChildrenWithParent(-30, 30, 0);
@@ -3643,10 +3814,52 @@ function main() {
 		}
 		rugbyball.setResponsiveRotation(PHI, THETA);
 
+		merrygoaround.setResponsiveRotation(PHI, THETA)
+        merrygoaroundstick.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside1.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside2.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside3.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside4.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside5.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside6.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside7.setResponsiveRotation(PHI, THETA)
+
 		//#endregion
 
 		land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		land.draw();
+
+		merrygoaround.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaround.draw()
+
+        merrygoaroundstick.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundstick.draw()
+
+        merrygoaroundside.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside.draw()
+
+        merrygoaroundside1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside1.draw()
+
+        merrygoaroundside2.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside2.draw()
+
+        merrygoaroundside3.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside3.draw()
+    
+        merrygoaroundside4.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside4.draw()
+
+        merrygoaroundside5.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside5.draw()
+
+        merrygoaroundside6.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside6.draw()
+
+        merrygoaroundside7.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside7.draw()
+
 
 		sticks.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		sticks.draw();
