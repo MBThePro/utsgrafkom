@@ -3548,6 +3548,17 @@ function main() {
     )
   );
 
+  // Sun
+  var object_vertex_sun = sphereVertex(100, 100, 5,5, 5, 1, 1, 0);
+  var object_faces_sun = sphereFaces(100, 100);
+
+  var sun = new MyObject(
+	object_vertex_sun,
+	object_faces_sun,
+	shader_vertex_source,
+	shader_fragment_source
+  )
+
   var wall = new MyObjectTexture(
     cube_vertex2,
     cube_faces2,
@@ -3863,6 +3874,9 @@ function main() {
   var direction3 = -1; // Initial direction of movement
   var yTranslation3 = 1; // Initial translation value
   var ydirection3 = 1; // Initial direction of movement
+
+  var yTranslation4 = 5
+  var ydirection4 = 1;
 
   var t = 0; // Parameter for the curve (0 to 1)
   var direction4 = 1; // Initial direction of movement
@@ -4285,6 +4299,8 @@ function main() {
     yTranslation2 += ydirection2 * 0.025;
     yTranslation3 += ydirection3 * 0.05;
 
+	yTranslation4 += ydirection4 *0.05
+
         // Check if within bounds, otherwise reverse direction
     if (xTranslation >= -8.5) {
       direction = -1;
@@ -4315,6 +4331,12 @@ function main() {
     } else if (yTranslation3 <= 1) {
       ydirection3 = 1;
     }
+
+	if (yTranslation4 <= 5) {
+		ydirection4 = 1;
+	  } else if (yTranslation4 >= 20) {
+		ydirection4 = -1;
+	  }
 
     // Update the parameter for the curve
     t += direction4 * 0.008; // Adjust the speed of movement here
@@ -4434,6 +4456,9 @@ function main() {
     trampleg4.setPosition(0, 0, 0, -7, 12, -2.5);
     trampstroke.setPosition(0, 0, 0, -3, 8, -1.5);
     trampstring.setPosition(0, 0, 0, -3, 8, -1.3);
+
+	sun.setPosition(0, 0, 0, 0, 65, 5)
+	sun.moveChildrenWithParent(0, 0, yTranslation4)
 
     snowman.setPosition(0, 0, 0, 0, 0, 0);
     for (i = 0; i < 3; i++) {
@@ -4602,6 +4627,8 @@ function main() {
     trampstroke.setResponsiveRotation(PHI, THETA);
     trampstring.setResponsiveRotation(PHI, THETA);
 
+	sun.setResponsiveRotation(PHI, THETA)
+
     snowman.setResponsiveRotation(PHI,THETA);
     for(i=0 ; i<snowman.child.length;i++){
       snowman.child[i].setResponsiveRotation(PHI,THETA);
@@ -4718,6 +4745,9 @@ function main() {
 
     trampstring.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     trampstring.draw();
+
+	sun.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+	sun.draw()
 
     GL.flush();
     window.requestAnimationFrame(animate);
