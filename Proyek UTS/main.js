@@ -3231,11 +3231,12 @@ function main() {
 		}
 	}
 	object_faces5 = sphereFaces(50, 50);
-	var wall = new MyObjectTexture(
+	
+	var wall = new MyObject(
 		cube_vertex2,
 		cube_faces2,
-		shader_vertex_source_texture,
-		shader_fragment_source_texture
+		shader_vertex_source,
+		shader_fragment_source
 	);
 
 	wall.setTexture("brick.jpg");
@@ -3286,6 +3287,79 @@ function main() {
 		shader_vertex_source,
 		shader_fragment_source
 	);
+
+	var merrygoaround = new MyObject(
+        object_vertex13,
+        object_faces13,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundstick = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside1 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside2 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside3 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside4 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    var merrygoaroundside5 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+    
+    var merrygoaroundside6 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
+
+
+    
+    var merrygoaroundside7 = new MyObject(
+        object_vertex14,
+        object_faces14,
+        shader_vertex_source,
+        shader_fragment_source
+    )
 
 	for (i = 0; i < 5; i++) {
 		var object_vertex3 = tubeVertex(6 - i, 0.1, 3, 3, 0.1333, 0.5451, 0.1333);
@@ -3363,9 +3437,13 @@ function main() {
 
 	var xTranslation2 = 8.5; // Initial translation value
 	var direction2 = 1; // Initial direction of movement
+	var yTranslation2 = 0; // Initial translation value
+    var ydirection2 = 1; // Initial direction of movement
 
 	var xTranslation3 = 5; // Initial translation value
 	var direction3 = -1; // Initial direction of movement
+	var yTranslation3 = 0; // Initial translation value
+    var ydirection3 = 1; // Initial direction of movement
 
 	var t = 0; // Parameter for the curve (0 to 1)
 	var direction4 = 1; // Initial direction of movement
@@ -3703,6 +3781,10 @@ function main() {
 		xTranslation2 += direction2 * 0.004;
 		xTranslation3 += direction3 * 0.018;
 
+		yTranslation2 += ydirection2 * 0.025;
+		yTranslation3 += ydirection3 * 0.015;
+
+
 		// Check if within bounds, otherwise reverse direction
 		if (xTranslation >= -8.5) {
 			direction = -1;
@@ -3721,6 +3803,20 @@ function main() {
 		} else if (xTranslation3 >= 3) {
 			direction3 = -1;
 		}
+
+				if (yTranslation2 >= 0.3) {
+            ydirection2 = -1;
+        } else if (yTranslation2 <= 0) {
+            ydirection2 = 1;
+        }
+
+		if (yTranslation3 >= 0.3) {
+            ydirection3 = -1;
+        } else if (yTranslation3 <= 0) {
+            ydirection3 = 1;
+        }
+
+
 
 		// Update the parameter for the curve
 		t += direction4 * 0.003; // Adjust the speed of movement here
@@ -3782,13 +3878,26 @@ function main() {
 		// Store the translation values before the pause
 
 		if (ballMovingTowardsObject) {
-			body.moveChildrenWithParent(xTranslation - xCurve, 0, 0);
-			body_kyle.moveChildrenWithParent(xTranslation2 - xCurve, 0, 0);
+			body.moveChildrenWithParent(xTranslation - xCurve, 0, yTranslation2);
+			body_kyle.moveChildrenWithParent(xTranslation2 - xCurve, 0, yTranslation2);
 		}
 
 		rugbyball.setPosition(0, 0, 1.5, xCurve, 0, yCurve);
 
-		body_cartman.moveChildrenWithParent(xTranslation3, 0, 0);
+		body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
+
+		merrygoaround.setPosition(0,0,0,-20,10,-2.5)
+        merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5)
+        merrygoaroundside.setPosition(0, 0, 0, -15.5, 10, -2.5)
+        merrygoaroundside1.setPosition(0, 0, 0, -24.5, 10, -2.5)
+        merrygoaroundside2.setPosition(0, 0, 0, -20, 14.5, -2.5)
+        merrygoaroundside3.setPosition(0, 0, 0, -20, 5.5, -2.5)
+
+        merrygoaroundside4.setPosition(1.57, 0, 0, -20, 9.75, 1.25)
+        merrygoaroundside5.setPosition(1.57, 0, 0, -20, 14.25, 1.25)
+        merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25)
+        merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25)
+
 
 		// Set object position
 
@@ -3909,10 +4018,52 @@ function main() {
 		}
 		rugbyball.setResponsiveRotation(PHI, THETA);
 
+		merrygoaround.setResponsiveRotation(PHI, THETA)
+        merrygoaroundstick.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside1.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside2.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside3.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside4.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside5.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside6.setResponsiveRotation(PHI, THETA)
+        merrygoaroundside7.setResponsiveRotation(PHI, THETA)
+
 		//#endregion
 
 		land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		land.draw();
+
+		merrygoaround.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaround.draw()
+
+        merrygoaroundstick.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundstick.draw()
+
+        merrygoaroundside.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside.draw()
+
+        merrygoaroundside1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside1.draw()
+
+        merrygoaroundside2.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside2.draw()
+
+        merrygoaroundside3.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside3.draw()
+    
+        merrygoaroundside4.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside4.draw()
+
+        merrygoaroundside5.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside5.draw()
+
+        merrygoaroundside6.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside6.draw()
+
+        merrygoaroundside7.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+        merrygoaroundside7.draw()
+
 
 		sticks.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		sticks.draw();
