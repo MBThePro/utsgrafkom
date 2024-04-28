@@ -3034,6 +3034,49 @@ function main() {
 		); // Side faces
 	}
 
+	// Swing
+    object_vertex15 = [];
+	outerRad = 0.2;
+	innerRad = 0.22;
+	height = 15;
+	segments = 100;
+	object_vertex15.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
+	object_vertex15.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
+	var angleIncrement = (2 * Math.PI) / segments;
+	for (var i = 0; i <= segments; i++) {
+		// Change the condition to <= to include the last segment
+		var angle = i * angleIncrement;
+		var cosAngle = Math.cos(angle);
+		var sinAngle = Math.sin(angle);
+
+		// Bottom circle vertex
+		var bottomX = outerRad * cosAngle;
+		var bottomY = outerRad * sinAngle;
+		var bottomZ = 0; // For the bottom circle
+		object_vertex15.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
+
+		// Top circle vertex
+		var topX = innerRad * cosAngle;
+		var topY = innerRad * sinAngle;
+		var topZ = height; // For the top circle
+		object_vertex15.push(topX, topY, topZ, 1, 0.8431, 0);
+	}
+	object_faces15 = [];
+	for (var i = 0; i < segments; i++) {
+		var index = i * 2 + 2;
+		object_faces15.push(index, index + 2, 0); // Bottom face
+		object_faces15.push(index + 1, 1, index + 3); // Top face
+		object_faces15.push(
+			index,
+			index + 1,
+			index + 3,
+			index,
+			index + 3,
+			index + 2
+		); // Side faces
+	}
+
+
 	var wall = new MyObject(
 		object_vertex4,
 		object_faces4,
@@ -3084,6 +3127,8 @@ function main() {
 		shader_vertex_source,
 		shader_fragment_source
 	);
+
+	var swing0 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
 
 	var merrygoaround = new MyObject(
         object_vertex13,
@@ -3672,6 +3717,8 @@ function main() {
         merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25)
         merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25)
 
+		swing0.setPosition(-0.25, 0, 0, 20, 9, 0)
+
 
 		// Set object position
 
@@ -3791,6 +3838,7 @@ function main() {
 			sticks3.child[i].setResponsiveRotation(PHI, THETA);
 		}
 		rugbyball.setResponsiveRotation(PHI, THETA);
+		swing0.setResponsiveRotation(PHI, THETA)
 
 		merrygoaround.setResponsiveRotation(PHI, THETA)
         merrygoaroundstick.setResponsiveRotation(PHI, THETA)
@@ -3803,6 +3851,9 @@ function main() {
         merrygoaroundside6.setResponsiveRotation(PHI, THETA)
         merrygoaroundside7.setResponsiveRotation(PHI, THETA)
 
+
+		swing0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing0.draw()
 		//#endregion
 
 		land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
