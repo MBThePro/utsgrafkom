@@ -1,6 +1,15 @@
 var GL;
 // Function to calculate the rotation matrix based on PHI and THETA
-
+function rotateArbitary(parent) {
+  var res = [];
+  for (var i = 0; i < 720; i += 0.1) {
+    var x = 6.5 * Math.cos(i) + parent.MOVEMATRIX[12];
+    var z = 6.5 * Math.sin(i) + parent.MOVEMATRIX[14];
+    res.push(x);
+    res.push(z);
+  }
+  return res;
+}
 // Function to multiply two 3x3 matrices
 function multiplyMatrices(a, b) {
   // Check if matrices are valid and have compatible dimensions
@@ -3132,67 +3141,40 @@ function main() {
     ); // Side faces
   }
 
+  //wall
+  var cube_vertex2 = [
+    // Front face
+    -80, -4, 0, 0, 0, 80, -4, 0, 1, 0, 80, 4, 0, 1, 1, -80, 4, 0, 0, 1,
 
+    // Back face
+    -80, -4, 1, 0, 0, 80, -4, 1, 1, 0, 80, 4, 1, 1, 1, -80, 4, 1, 0, 1,
 
-	//wall
-	var cube_vertex2 = [
-		// Front face
-		-80, -4, 0,   0, 0,
-		80, -4, 0,    1, 0,
-		80, 4, 0,     1, 1,
-		-80, 4, 0,    0, 1,
-		
-		// Back face
-		-80, -4, 1,   0, 0,
-		80, -4, 1,    1, 0,
-		80, 4, 1,     1, 1,
-		-80, 4, 1,    0, 1,
-		
-		// Top face
-		-80, 4, 0,    0, 0,
-		80, 4, 0,     1, 0,
-		80, 4, 1,     1, 1,
-		-80, 4, 1,    0, 1,
-		
-		// Bottom face
-		-80, -4, 0,   0, 0,
-		80, -4, 0,    1, 0,
-		80, -4, 1,    1, 1,
-		-80, -4, 1,   0, 1,
-		
-		// Right face
-		80, -4, 0,    0, 0,
-		80, 4, 0,     1, 0,
-		80, 4, 1,     1, 1,
-		80, -4, 1,    0, 1,
-		
-		// Left face
-		-80, -4, 0,   0, 0,
-		-80, -4, 1,   1, 0,
-		-80, 4, 1,    1, 1,
-		-80, 4, 0,    0, 1
-	  ];
-	
-	  cube_faces2 = [
-		0, 1, 2,
-		0, 2, 3,
-		
-		4, 5, 6,
-		4, 6, 7,
-		
-		8, 9, 10,
-		8, 10, 11,
-		
-		12, 13, 14,
-		12, 14, 15,
-		
-		16, 17, 18,
-		16, 18, 19,
-		
-		20, 21, 22,
-		20, 22, 23
-	
-	  ];
+    // Top face
+    -80, 4, 0, 0, 0, 80, 4, 0, 1, 0, 80, 4, 1, 1, 1, -80, 4, 1, 0, 1,
+
+    // Bottom face
+    -80, -4, 0, 0, 0, 80, -4, 0, 1, 0, 80, -4, 1, 1, 1, -80, -4, 1, 0, 1,
+
+    // Right face
+    80, -4, 0, 0, 0, 80, 4, 0, 1, 0, 80, 4, 1, 1, 1, 80, -4, 1, 0, 1,
+
+    // Left face
+    -80, -4, 0, 0, 0, -80, -4, 1, 1, 0, -80, 4, 1, 1, 1, -80, 4, 0, 0, 1,
+  ];
+
+  cube_faces2 = [
+    0, 1, 2, 0, 2, 3,
+
+    4, 5, 6, 4, 6, 7,
+
+    8, 9, 10, 8, 10, 11,
+
+    12, 13, 14, 12, 14, 15,
+
+    16, 17, 18, 16, 18, 19,
+
+    20, 21, 22, 20, 22, 23,
+  ];
 
   //land
   var cube_vertex = [
@@ -3307,7 +3289,7 @@ function main() {
   }
   object_faces30 = tubeFaces(50);
 
-  object_vertex31 = sphereVertex(50, 50, 1.5, 1.5, 1.5, 1, 1,1);
+  object_vertex31 = sphereVertex(50, 50, 1.5, 1.5, 1.5, 1, 1, 1);
   object_faces31 = sphereFaces(50, 50);
 
   var snowman = new MyObject(
@@ -3317,38 +3299,48 @@ function main() {
     shader_fragment_source
   );
   for (i = 0; i < 3; i++) {
-    object_vertex31 = sphereVertex(50, 50, 1.5-i*0.3, 1.5-i*0.3, 1.5-i*0.3, 1, 1,1);
+    object_vertex31 = sphereVertex(
+      50,
+      50,
+      1.5 - i * 0.3,
+      1.5 - i * 0.3,
+      1.5 - i * 0.3,
+      1,
+      1,
+      1
+    );
     object_faces31 = sphereFaces(50, 50);
-    snowman.addChild(new MyObject(
-      object_vertex31,
-      object_faces31,
-      shader_vertex_source,
-      shader_fragment_source
-    )
+    snowman.addChild(
+      new MyObject(
+        object_vertex31,
+        object_faces31,
+        shader_vertex_source,
+        shader_fragment_source
+      )
     );
   }
-  object_vertex31 = sphereVertex(50,50,0.15,0.15,0.15,0,0,0);
-  for(i =0 ;i<6;i++){
-  snowman.addChild(
-   new MyObject(
-      object_vertex31,
-      object_faces31,
-      shader_vertex_source,
-      shader_fragment_source
-    )
-  )
+  object_vertex31 = sphereVertex(50, 50, 0.15, 0.15, 0.15, 0, 0, 0);
+  for (i = 0; i < 6; i++) {
+    snowman.addChild(
+      new MyObject(
+        object_vertex31,
+        object_faces31,
+        shader_vertex_source,
+        shader_fragment_source
+      )
+    );
   }
 
-  object_vertex31=tubeVertex(0.2,0.1,0.5,50,1,165/255,0);
-  object_faces31 =tubeFaces(50);
+  object_vertex31 = tubeVertex(0.2, 0.1, 0.5, 50, 1, 165 / 255, 0);
+  object_faces31 = tubeFaces(50);
   snowman.addChild(
-   new MyObject(
+    new MyObject(
       object_vertex31,
       object_faces31,
       shader_vertex_source,
       shader_fragment_source
     )
-  )
+  );
 
   object_vertex31 = [];
   outerRad = 0.3;
@@ -3395,13 +3387,13 @@ function main() {
   object_faces31.push(2, segments * 2 + 2, 0); // Bottom circle
   object_faces31.push(1, segments * 2 + 3, 3); // Top circle
   snowman.addChild(
-   new MyObject(
+    new MyObject(
       object_vertex31,
       object_faces31,
       shader_vertex_source,
       shader_fragment_source
     )
-  )
+  );
 
   var wall = new MyObjectTexture(
     cube_vertex2,
@@ -3679,7 +3671,7 @@ function main() {
 
   var t = 0; // Parameter for the curve (0 to 1)
   var direction4 = 1; // Initial direction of movement
-
+  var dummy = 0;
   var animate = async function (time) {
     var dt = time - time_prev;
     if (!drag) {
@@ -3800,68 +3792,82 @@ function main() {
       -1.1
     );
 
-		object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
-		//left_eye
-		left_eye_cartman.setPosition(Math.PI / 2 - 0.1, 0.3, Math.PI / 2, -1.3, -0.3, 1.2);
+    object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
+    //left_eye
+    left_eye_cartman.setPosition(
+      Math.PI / 2 - 0.1,
+      0.3,
+      Math.PI / 2,
+      -1.3,
+      -0.3,
+      1.2
+    );
 
-		//right_eye
-		right_eye_cartman.setPosition(Math.PI / 2 - 0.1, -0.3, Math.PI / 2, -1.3, 0.3, 1.2);
+    //right_eye
+    right_eye_cartman.setPosition(
+      Math.PI / 2 - 0.1,
+      -0.3,
+      Math.PI / 2,
+      -1.3,
+      0.3,
+      1.2
+    );
 
-		//left_blackeye
-		left_blackeye_cartman.setPosition(Math.PI / 2, 0.5, 0, -1.5, -0.2, 1.2);
+    //left_blackeye
+    left_blackeye_cartman.setPosition(Math.PI / 2, 0.5, 0, -1.5, -0.2, 1.2);
 
-		//right_blackeye
-		right_blackeye_cartman.setPosition(Math.PI / 2, -0.5, 0, -1.5, 0.2, 1.2);
+    //right_blackeye
+    right_blackeye_cartman.setPosition(Math.PI / 2, -0.5, 0, -1.5, 0.2, 1.2);
 
-		//hat
-		hat_cartman.setPosition(0.38, 0, Math.PI / 2, 0, 0, 1.1);
+    //hat
+    hat_cartman.setPosition(0.38, 0, Math.PI / 2, 0, 0, 1.1);
 
-		//body
-		body_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, -1.7);
-		//yellowpart
-		yellowpart_cartman.setPosition(0.4, 0, Math.PI / 2, 0, 0, 1.1);
+    //body
+    body_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, -1.7);
+    //yellowpart
+    yellowpart_cartman.setPosition(0.4, 0, Math.PI / 2, 0, 0, 1.1);
 
-		//pucukhat
-		pucukhat_cartman.setPosition(0, 0, 0, 0.5, 0, 2.4);
+    //pucukhat
+    pucukhat_cartman.setPosition(0, 0, 0, 0.5, 0, 2.4);
 
-		//left_leg
-		left_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, -0.48, -2.2);
+    //left_leg
+    left_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, -0.48, -2.2);
 
-		//right_leg
-		right_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, 0.48, -2.2);
+    //right_leg
+    right_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, 0.48, -2.2);
 
-		//left_shoe
-		left_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, -0.48, -2.28);
+    //left_shoe
+    left_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, -0.48, -2.28);
 
-		//right_shoe
-		right_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, 0.48, -2.28);
+    //right_shoe
+    right_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, 0.48, -2.28);
 
-		//left_arm
-		left_arm_cartman.setPosition(-1, 0, 0, 0, -2.1, -0.85);
+    //left_arm
+    left_arm_cartman.setPosition(-1, 0, 0, 0, -2.1, -0.85);
 
-		//right_arm
-		right_arm_cartman.setPosition(1, 0, 0, 0, 2.1, -0.85);
+    //right_arm
+    right_arm_cartman.setPosition(1, 0, 0, 0, 2.1, -0.85);
 
-		//left_hand
-		left_hand_cartman.setPosition(-1, 0, 0, 0, -2.2, -0.9);
+    //left_hand
+    left_hand_cartman.setPosition(-1, 0, 0, 0, -2.2, -0.9);
 
-		//right_hand
-		right_hand_cartman.setPosition(1, 0, 0, 0, 2.2, -0.9);
+    //right_hand
+    right_hand_cartman.setPosition(1, 0, 0, 0, 2.2, -0.9);
 
-		//resleting
-		resleting_cartman.setPosition(0, 0, Math.PI / 2, -0.63, 0, -1.7);
+    //resleting
+    resleting_cartman.setPosition(0, 0, Math.PI / 2, -0.63, 0, -1.7);
 
-		//button1
-		button1_cartman.setPosition(0, 0, 0, -2, 0.2, -1.4);
+    //button1
+    button1_cartman.setPosition(0, 0, 0, -2, 0.2, -1.4);
 
-		//button2
-		button2_cartman.setPosition(0, 0, 0, -1.8, 0.2, -0.7);
+    //button2
+    button2_cartman.setPosition(0, 0, 0, -1.8, 0.2, -0.7);
 
-		//button3
-		button3_cartman.setPosition(0, 0, 0, -1.4, 0.2, -0.1);
+    //button3
+    button3_cartman.setPosition(0, 0, 0, -1.4, 0.2, -0.1);
 
-		//mouth
-		mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
+    //mouth
+    mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
 
     head_kyle.setPosition(0, 0, 0, 0, 0, 0);
 
@@ -4014,7 +4020,8 @@ function main() {
     yTranslation2 += ydirection2 * 0.025;
     yTranslation3 += ydirection3 * 0.015;
 
-    // Check if within bounds, otherwise reverse direction
+
+        // Check if within bounds, otherwise reverse direction
     if (xTranslation >= -8.5) {
       direction = -1;
     } else if (xTranslation <= -10) {
@@ -4116,6 +4123,8 @@ function main() {
     rugbyball.setPosition(0, dt * 0.01, 0, xCurve, 0, yCurve);
 
     body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
+    // mouth_cartman.scale(5);
+
 
     merrygoaround.setPosition(0, 0, 0, -20, 10, -2.5);
     merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5);
@@ -4150,23 +4159,31 @@ function main() {
     mountain.setPosition(0, 0, 0, -20, 60, 0);
     mountain1.setPosition(0, 0, 0, 20, 60, 0);
 
-    snowman.setPosition(0,0,0,0,0,0);
-    for(i=0 ; i<3;i++){
-      child=snowman.child[i];
-      child.setPosition(0,0,0,0,0,i+0.1+i*0.5)
-    }
-    
-    for(i=3 ; i <7 ;i++){
-      child=snowman.child[i];
-      child.setPosition(0,0,0,0,-1.4,i*0.7 - 2.5)
+    snowman.setPosition(0, 0, 0, 0, 0, 0);
+    for (i = 0; i < 3; i++) {
+      child = snowman.child[i];
+      child.setPosition(0, 0, 0, 0, 0, i + 0.1 + i * 0.5);
     }
 
-    snowman.child[7].setPosition(0,0,0,-0.5,-0.7,3.5)
-    snowman.child[8].setPosition(0,0,0,0.5,-0.7,3.5)
-    snowman.child[9].setPosition(1.5,0,0,0,-0.7,3.2)
-    snowman.child[10].setPosition(3,0,0,0,-0.8,2.9)
+    for (i = 3; i < 7; i++) {
+      child = snowman.child[i];
+      child.setPosition(0, 0, 0, 0, -1.4, i * 0.7 - 2.5);
+    }
 
-    snowman.moveChildrenWithParent(-13,13,-1)
+    snowman.child[7].setPosition(0, 0, 0, -0.5, -0.7, 3.5);
+    snowman.child[8].setPosition(0, 0, 0, 0.5, -0.7, 3.5);
+    snowman.child[9].setPosition(1.5, 0, 0, 0, -0.7, 3.2);
+    snowman.child[10].setPosition(3, 0, 0, 0, -0.8, 2.9);
+
+    snowman.moveChildrenWithParent(-13, 13, -1);
+    var controlBean = rotateArbitary(merrygoaround);
+    dummy += 2;
+    snowman.moveChildrenWithParent(
+      controlBean[dummy % controlBean.length] - snowman.MOVEMATRIX[12],
+      controlBean[(dummy + 1) % controlBean.length] - snowman.MOVEMATRIX[14],
+      0
+    );
+
     // head_kyle.rotateAllWithChild(0,0,1.5)
     //#region ResponsiveRotation
     // Set responsive rotation
@@ -4301,11 +4318,10 @@ function main() {
     merrygoaroundside7.setResponsiveRotation(PHI, THETA);
     mountain.setResponsiveRotation(PHI, THETA);
     mountain1.setResponsiveRotation(PHI, THETA);
-    snowman.setResponsiveRotation(PHI,THETA);
-    for(i=0 ; i<snowman.child.length;i++){
-      snowman.child[i].setResponsiveRotation(PHI,THETA);
+    snowman.setResponsiveRotation(PHI, THETA);
+    for (i = 0; i < snowman.child.length; i++) {
+      snowman.child[i].setResponsiveRotation(PHI, THETA);
     }
-	
 
     swing0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     swing0.draw();
@@ -4380,7 +4396,7 @@ function main() {
     wall.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     wall.draw();
 
-    snowman.setuniformmatrix4(PROJMATRIX,VIEWMATRIX);
+    snowman.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     snowman.draw();
 
     rugbyball.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
