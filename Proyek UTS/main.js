@@ -3682,115 +3682,185 @@ function main() {
     }
 
     //#region CharactersetBasePosition
-    object.setPosition(0, 0, 0, 0, 0, 0);
+	object.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
+	//left_eye
+	left_eye.setPosition(Math.PI / 2, -0.3, Math.PI / 2, 1.2, 0.3, 0.2, PHI, THETA);
 
-    //left_eye
-    left_eye.setPosition(Math.PI / 2, 0.3, 0, -0.3, -1.2, 0.2);
+	//right_eye
+	right_eye.setPosition(Math.PI / 2, 0.3, Math.PI / 2, 1.2, -0.3, 0.2, PHI, THETA);
 
-    //right_eye
-    right_eye.setPosition(Math.PI / 2, -0.3, 0, 0.3, -1.2, 0.2);
+	//left_blackeye
+	left_blackeye.setPosition(Math.PI / 2, -0.5,  Math.PI / 2, 1.4, 0.2, 0.2, PHI, THETA);
 
-    //left_blackeye
-    left_blackeye.setPosition(Math.PI / 2, 0.5, 0, -0.2, -1.4, 0.2);
+	//right_blackeye
+	right_blackeye.setPosition(
+		Math.PI / 2,
+		0.5,
+		Math.PI / 2,
+		1.4,
+		-0.2,
+		0.2,
+		PHI,
+		THETA
+	);
 
-    //right_blackeye
-    right_blackeye.setPosition(Math.PI / 2, -0.5, 0, 0.2, -1.4, 0.2);
+	//mouth
+	mouth.setPosition(Math.PI/2, 0, Math.PI/2, 1.1, 0.18, -0.6, PHI, THETA);
 
-    //mouth
-    mouth.setPosition(Math.PI / 2, 0, 0, 0.18, -1.1, -0.6);
+	//puffball
+	hat_top.setPosition(0, 0, 0, -0.5, 0, 1.5, PHI, THETA);
 
-    //puffball
-    hat_top.setPosition(-0.35, 0, 0, 0, 0.5, 1.5);
+	//hat_middle
+	hat_middle.setPosition(0, -0.35, 0, 0, 0, 0.2, PHI, THETA);
 
-    //hat_middle
-    hat_middle.setPosition(-0.35, 0, 0, 0, 0, 0.2);
+	//hat_left
+	hat_left.setPosition(
+		1.22,
+		0,
+		0,
+		0,
+		0.05,
+		0.2,
+		PHI,
+		THETA
+	);
 
-    //hat_left
-    hat_left.setPosition(1.22, 0, 0, 0, 0.05, 0.2);
+	//hat_right
+	hat_right.setPosition(
+		Math.PI / 2 - 0.3,
+		0.05,
+		1.5,
+		1.2,
+		0.2,
+		0.45,
+		PHI,
+		THETA
+	);
 
-    //hat_right
-    hat_right.setPosition(Math.PI / 2 - 0.3, 0.05, 1.5, 1.2, 0.2, 0.45);
+	//hat_top
+	hat_back.setPosition(1.575, -0.375, 0, 0, 0, 0.2, PHI, THETA);
 
-    //hat_top
-    hat_back.setPosition(1.2, 0, 0, 0, 0, 0.2);
+	//body
+	body.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
 
-    //body
-    body.setPosition(0, 0, 0, 0, 0, -2.7);
+	//left_shoulder
+	left_shoulder.setPosition(-0.6, 0, 0, 0, -0.8, -1.65, PHI, THETA);
 
-    //left_shoulder
-    left_shoulder.setPosition(0, 0.6, 0, -0.8, 0, -1.65);
+	//right_shoulder
+	right_shoulder.setPosition(0.6, 0, 0, 0, 0.8, -1.65, PHI, THETA);
 
-    //right_shoulder
-    right_shoulder.setPosition(0, -0.6, 0, 0.8, 0, -1.65);
+	//right_elbow
+	right_elbow.setPosition(0, 0, 0, 0, -0.82, -1.7, PHI, THETA);
 
-    //right_elbow
-    right_elbow.setPosition(0, 0, 0, 0.82, 0, -1.7);
+	//left_elbow
+	left_elbow.setPosition(0, -0.15, 0, 0, 0.82, -1.7, PHI, THETA);
 
-    //left_elbow
-    left_elbow.setPosition(0, -0.15, 0, -0.82, 0, -1.7);
+	//left_arm
+	left_arm.setPosition(-0.15, 0, 0, 0, -0.9, -2.2, PHI, THETA);
 
-    //left_arm
-    left_arm.setPosition(0, 0.15, 0, -0.9, 0, -2.2);
+	//right_arm
+	right_arm.setPosition(0.15, 0, 0, 0, 0.9, -2.2, PHI, THETA);
 
-    //right_arm
-    right_arm.setPosition(0, -0.15, 0, 0.9, 0, -2.2);
+	//left_hand
+	left_hand.setPosition(0, 0, 0, 0, -0.9, -2.3, PHI, THETA);
 
-    //left_hand
-    left_hand.setPosition(0, 0, 0, -0.9, 0, -2.3);
+	//right_hand
+	right_hand.setPosition(0, 0, 0, 0, 0.9, -2.3, PHI, THETA);
 
-    //right_hand
-    right_hand.setPosition(0, 0, 0, 0.9, 0, -2.3);
+	//left_thumb
+	left_thumb.setPosition(
+		-Math.PI / 2,
+		-Math.PI / 2,
+		0,
+		0.18,
+		-0.9,
+		-2.3,
+		PHI,
+		THETA
+	);
 
-    //left_thumb
-    left_thumb.setPosition(Math.PI / 2, Math.PI / 2, 0, -0.9, -0.18, -2.3);
+	//right_thumb
+	right_thumb.setPosition(
+		Math.PI / 2,
+		Math.PI / 2,
+		0,
+		0.18,
+		0.9,
+		-2.3,
+		PHI,
+		THETA
+	);
 
-    //right_thumb
-    right_thumb.setPosition(Math.PI / 2, Math.PI / 2, 0, 0.9, -0.18, -2.3);
+	//left_leg
+	left_leg.setPosition(0, 0, 0, 0, -0.38, -3, PHI, THETA);
 
-    //left_leg
-    left_leg.setPosition(0, 0, 0, -0.38, 0, -3);
+	//right_leg
+	right_leg.setPosition(0, 0, 0, 0, 0.38, -3, PHI, THETA);
 
-    //right_leg
-    right_leg.setPosition(0, 0, 0, 0.38, 0, -3);
+	//left_shoe
+	left_shoe.setPosition(0, 0, 0, 0.18, -0.38, -3.08, PHI, THETA);
 
-    //left_shoe
-    left_shoe.setPosition(0, 0, 0, -0.38, -0.18, -3.08);
+	//right_shoe
+	right_shoe.setPosition(0, 0, 0, 0.18, 0.38, -3.08, PHI, THETA);
 
-    //right_shoe
-    right_shoe.setPosition(0, 0, 0, 0.38, -0.18, -3.08);
 
-    //shirt_line
-    shirt_line.setPosition(-0.33, 0, 0, 0, -1, -2.7);
+	//shirt_line
+	shirt_line.setPosition(
+		0, -0.32, 0,
+		1, 0, -2.7,
+		PHI,
+		THETA
+	);
 
-    button1.setPosition(0, 0, 0, -0.1, -0.6, -1.5);
+	button1.setPosition(
+		0, 0, 0,
+		0.6, -0.1, -1.5,
+		PHI,
+		THETA
+	);
 
-    button2.setPosition(0, 0, 0, -0.1, -0.75, -1.9);
+	button2.setPosition(
+		0, 0, 0,
+		0.75, -0.1, -1.9,
+		PHI,
+		THETA
+	);
 
-    button3.setPosition(0, 0, 0, -0.1, -0.9, -2.3);
+	button3.setPosition(
+		0, 0, 0,
+		0.9, -0.1, -2.3,
+		PHI,
+		THETA
+	);
 
-    //pocket_triangle_right
-    //back_sweater
-    back_sweater.setPosition(-0.16, 0, 0, 0, 0.2, -1.235);
+	//pocket_triangle_right
+	//back_sweater
+	back_sweater.setPosition(0, 0.16, 0, -0.5, 0, -1.235, PHI, THETA);
 
-    //front_sweater_left
-    front_sweater_left.setPosition(
-      -Math.PI / 2 - 0.5,
-      -0.05,
-      -0.5,
-      -0.35,
-      -0.35,
-      -1.1
-    );
+	//front_sweater_left
+	front_sweater_left.setPosition(
+		-Math.PI / 2 - 0.5,
+		0.05,
+		0.9,
+		0.35,
+		-0.25,
+		-1.12,
+		PHI,
+		THETA
+	  );
+  
+	  //front_sweater_right
+	  front_sweater_right.setPosition(
+		-Math.PI / 2 + 0.5,
+		0.09,
+		-0.9,
+		0.35,
+		0.35,
+		-1.12,
+		PHI,
+		THETA
+	  );
 
-    //front_sweater_right
-    front_sweater_right.setPosition(
-      -Math.PI / 2 - 0.5,
-      0.05,
-      0.5,
-      0.35,
-      -0.35,
-      -1.1
-    );
 
     object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
     //left_eye
