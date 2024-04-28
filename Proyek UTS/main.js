@@ -3132,6 +3132,132 @@ function main() {
     ); // Side faces
   }
 
+  // trampleg
+  object_vertex67 = [];
+  outerRad = 0.25;
+  innerRad = 0.25;
+  height = 1;
+  segments = 100;
+  object_vertex67.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+  object_vertex67.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+  var angleIncrement = (2 * Math.PI) / segments;
+  for (var i = 0; i <= segments; i++) {
+    // Change the condition to <= to include the last segment
+    var angle = i * angleIncrement;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+
+    // Bottom circle vertex
+    var bottomX = outerRad * cosAngle;
+    var bottomY = outerRad * sinAngle;
+    var bottomZ = 0; // For the bottom circle
+    object_vertex67.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
+
+    // Top circle vertex
+    var topX = innerRad * cosAngle;
+    var topY = innerRad * sinAngle;
+    var topZ = height; // For the top circle
+    object_vertex67.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+  }
+  object_faces67 = [];
+  for (var i = 0; i < segments; i++) {
+    var index = i * 2 + 2;
+    object_faces67.push(index, index + 2, 0); // Bottom face
+    object_faces67.push(index + 1, 1, index + 3); // Top face
+    object_faces67.push(
+      index,
+      index + 1,
+      index + 3,
+      index,
+      index + 3,
+      index + 2
+    ); // Side faces
+  }
+
+  // trampstroke
+  object_vertex68 = [];
+  outerRad = 6;
+  innerRad = 6;
+  height = 0.5;
+  segments = 100;
+  object_vertex68.push(0, 0, 0, 1, 0, 0); // Center vertex for bottom circle
+  object_vertex68.push(0, 0, height, 1, 0, 0); // Center vertex for top circle
+  var angleIncrement = (2 * Math.PI) / segments;
+  for (var i = 0; i <= segments; i++) {
+    // Change the condition to <= to include the last segment
+    var angle = i * angleIncrement;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+
+    // Bottom circle vertex
+    var bottomX = outerRad * cosAngle;
+    var bottomY = outerRad * sinAngle;
+    var bottomZ = 0; // For the bottom circle
+    object_vertex68.push(bottomX, bottomY, bottomZ, 1, 0, 0);
+
+    // Top circle vertex
+    var topX = innerRad * cosAngle;
+    var topY = innerRad * sinAngle;
+    var topZ = height; // For the top circle
+    object_vertex68.push(topX, topY, topZ, 1, 0, 0);
+  }
+  object_faces68 = [];
+  for (var i = 0; i < segments; i++) {
+    var index = i * 2 + 2;
+    object_faces68.push(index, index + 2, 0); // Bottom face
+    object_faces68.push(index + 1, 1, index + 3); // Top face
+    object_faces68.push(
+      index,
+      index + 1,
+      index + 3,
+      index,
+      index + 3,
+      index + 2
+    ); // Side faces
+  }
+
+  // trampstring
+  object_vertex69 = [];
+  outerRad = 5;
+  innerRad = 5;
+  height = 0.5;
+  segments = 100;
+  object_vertex69.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+  object_vertex69.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+  var angleIncrement = (2 * Math.PI) / segments;
+  for (var i = 0; i <= segments; i++) {
+    // Change the condition to <= to include the last segment
+    var angle = i * angleIncrement;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+
+    // Bottom circle vertex
+    var bottomX = outerRad * cosAngle;
+    var bottomY = outerRad * sinAngle;
+    var bottomZ = 0; // For the bottom circle
+    object_vertex69.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
+
+    // Top circle vertex
+    var topX = innerRad * cosAngle;
+    var topY = innerRad * sinAngle;
+    var topZ = height; // For the top circle
+    object_vertex69.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+  }
+  object_faces69 = [];
+  for (var i = 0; i < segments; i++) {
+    var index = i * 2 + 2;
+    object_faces69.push(index, index + 2, 0); // Bottom face
+    object_faces69.push(index + 1, 1, index + 3); // Top face
+    object_faces69.push(
+      index,
+      index + 1,
+      index + 3,
+      index,
+      index + 3,
+      index + 2
+    ); // Side faces
+  }
+
 
 
 	//wall
@@ -3580,6 +3706,48 @@ function main() {
     shader_fragment_source
   );
 
+  var trampleg1 = new MyObject(
+    object_vertex67,
+    object_faces67,
+    shader_vertex_source,
+    shader_fragment_source 
+  );
+
+  var trampleg2 = new MyObject(
+    object_vertex67,
+    object_faces67,
+    shader_vertex_source,
+    shader_fragment_source 
+  );
+
+  var trampleg3 = new MyObject(
+    object_vertex67,
+    object_faces67,
+    shader_vertex_source,
+    shader_fragment_source 
+  );
+
+  var trampleg4 = new MyObject(
+    object_vertex67,
+    object_faces67,
+    shader_vertex_source,
+    shader_fragment_source 
+  );
+
+  var trampstroke = new MyObject(
+    object_vertex68,
+    object_faces68,
+    shader_vertex_source,
+    shader_fragment_source 
+  );
+
+  var trampstring = new MyObject(
+    object_vertex69,
+    object_faces69,
+    shader_vertex_source,
+    shader_fragment_source 
+  );
+
   for (i = 0; i < 5; i++) {
     var object_vertex3 = tubeVertex(6 - i, 0.1, 3, 3, 0.1333, 0.5451, 0.1333);
     var object_faces3 = tubeFaces(3);
@@ -3672,9 +3840,9 @@ function main() {
   var yTranslation2 = 0; // Initial translation value
   var ydirection2 = 1; // Initial direction of movement
 
-  var xTranslation3 = 5; // Initial translation value
+  var xTranslation3 = -2; // Initial translation value
   var direction3 = -1; // Initial direction of movement
-  var yTranslation3 = 0; // Initial translation value
+  var yTranslation3 = 1; // Initial translation value
   var ydirection3 = 1; // Initial direction of movement
 
   var t = 0; // Parameter for the curve (0 to 1)
@@ -4009,10 +4177,10 @@ function main() {
     // Adjust xTranslation based on direction
     xTranslation += direction * 0.004; // Adjust the speed of movement here
     xTranslation2 += direction2 * 0.004;
-    xTranslation3 += direction3 * 0.048;
+    xTranslation3 += direction3 * 0.006;
 
     yTranslation2 += ydirection2 * 0.025;
-    yTranslation3 += ydirection3 * 0.015;
+    yTranslation3 += ydirection3 * 0.05;
 
     // Check if within bounds, otherwise reverse direction
     if (xTranslation >= -8.5) {
@@ -4027,9 +4195,9 @@ function main() {
       direction2 = 1;
     }
 
-    if (xTranslation3 <= -3) {
+    if (xTranslation3 <= -3.5) {
       direction3 = 1;
-    } else if (xTranslation3 >= 3) {
+    } else if (xTranslation3 >= -2) {
       direction3 = -1;
     }
 
@@ -4039,9 +4207,9 @@ function main() {
       ydirection2 = 1;
     }
 
-    if (yTranslation3 >= 0.3) {
+    if (yTranslation3 >= 3.3) {
       ydirection3 = -1;
-    } else if (yTranslation3 <= 0) {
+    } else if (yTranslation3 <= 1) {
       ydirection3 = 1;
     }
 
@@ -4115,7 +4283,7 @@ function main() {
 
     rugbyball.setPosition(0, dt * 0.01, 0, xCurve, 0, yCurve);
 
-    body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
+    body_cartman.moveChildrenWithParent(xTranslation3, 5, yTranslation3);
 
     merrygoaround.setPosition(0, 0, 0, -20, 10, -2.5);
     merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5);
@@ -4149,6 +4317,13 @@ function main() {
 
     mountain.setPosition(0, 0, 0, -20, 60, 0);
     mountain1.setPosition(0, 0, 0, 20, 60, 0);
+
+    trampleg1.setPosition(0, 0, 0, 1, 4, -2.5);
+    trampleg2.setPosition(0, 0, 0, 1, 12, -2.5);
+    trampleg3.setPosition(0, 0, 0, -7, 4, -2.5);
+    trampleg4.setPosition(0, 0, 0, -7, 12, -2.5);
+    trampstroke.setPosition(0, 0, 0, -3, 8, -1.5);
+    trampstring.setPosition(0, 0, 0, -3, 8, -1.3);
 
     snowman.setPosition(0,0,0,0,0,0);
     for(i=0 ; i<3;i++){
@@ -4301,6 +4476,14 @@ function main() {
     merrygoaroundside7.setResponsiveRotation(PHI, THETA);
     mountain.setResponsiveRotation(PHI, THETA);
     mountain1.setResponsiveRotation(PHI, THETA);
+
+    trampleg1.setResponsiveRotation(PHI, THETA);
+    trampleg2.setResponsiveRotation(PHI, THETA);
+    trampleg3.setResponsiveRotation(PHI, THETA);
+    trampleg4.setResponsiveRotation(PHI, THETA);
+    trampstroke.setResponsiveRotation(PHI, THETA);
+    trampstring.setResponsiveRotation(PHI, THETA);
+
     snowman.setResponsiveRotation(PHI,THETA);
     for(i=0 ; i<snowman.child.length;i++){
       snowman.child[i].setResponsiveRotation(PHI,THETA);
@@ -4400,6 +4583,24 @@ function main() {
 
     body_kyle.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
     body_kyle.draw();
+
+    trampleg1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    trampleg1.draw();
+
+    trampleg2.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    trampleg2.draw();
+
+    trampleg3.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    trampleg3.draw();
+
+    trampleg4.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    trampleg4.draw();
+
+    trampstroke.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    trampstroke.draw();
+
+    trampstring.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+    trampstring.draw();
 
     GL.flush();
     window.requestAnimationFrame(animate);
