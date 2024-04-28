@@ -326,6 +326,173 @@ class MyObject {
 	}
 }
 
+class MyObjectTexture{
+    CANVAS = document.getElementById("mycanvas");
+    cube_vertex = [];
+    CUBE_VERTEX;
+    cube_faces = [];
+    CUBE_FACES;
+    shader_vertex_source = null;
+    shader_fragment_source = null;
+  
+    MOVEMATRIX = LIBS.get_I4();
+  
+    child = [];
+  
+    compile_shader = function(source, type, typeString) {
+      var shader = GL.createShader(type);
+      GL.shaderSource(shader, source);
+      GL.compileShader(shader);
+      if (!GL.getShaderParameter(shader, GL.COMPILE_STATUS)) {
+        alert("ERROR IN " + typeString + " SHADER: " + GL.getShaderInfoLog(shader));
+        return false;
+      }
+      return shader;
+    };
+  
+    shader_vertex;
+    shader_fragment;
+  
+    _Pmatrix;
+    _Vmatrix;
+    _Mmatrix;
+    _sampler;
+    texture;
+  
+    _color;
+    _position;
+  
+    SHADER_PROGRAM = GL.createProgram();
+  
+    constructor(cube_vertex,cube_faces,shader_vertex,shader_fragment){
+      this.cube_vertex = cube_vertex;
+      this.cube_faces = cube_faces;
+      this.shader_vertex_source = shader_vertex;
+      this.shader_fragment_source = shader_fragment;
+    
+      this.shader_vertex = this.compile_shader(this.shader_vertex_source, GL.VERTEX_SHADER, "VERTEX");
+      this.shader_fragment = this.compile_shader(this.shader_fragment_source, GL.FRAGMENT_SHADER, "FRAGMENT");
+  
+      this.SHADER_PROGRAM = GL.createProgram();
+  
+      GL.attachShader(this.SHADER_PROGRAM, this.shader_vertex);
+      GL.attachShader(this.SHADER_PROGRAM, this.shader_fragment);
+    
+      GL.linkProgram(this.SHADER_PROGRAM);
+  
+      this._Pmatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "Pmatrix");
+      this._Vmatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "Vmatrix");
+      this._Mmatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "Mmatrix");
+  
+      this._sampler = GL.getUniformLocation(this.SHADER_PROGRAM, "sampler");
+  
+      this._color = GL.getAttribLocation(this.SHADER_PROGRAM, "uv");
+      this._position = GL.getAttribLocation(this.SHADER_PROGRAM, "position");
+  
+      GL.enableVertexAttribArray(this._color);
+      GL.enableVertexAttribArray(this._position);
+    
+      GL.useProgram(this.SHADER_PROGRAM);
+      GL.uniform1i(this._sampler, 0);
+  
+      this.CUBE_VERTEX= GL.createBuffer();
+      this.CUBE_FACES = GL.createBuffer();
+      
+      GL.bindBuffer(GL.ARRAY_BUFFER, this.CUBE_VERTEX);
+      GL.bufferData(GL.ARRAY_BUFFER,new Float32Array(this.cube_vertex),GL.STATIC_DRAW);
+      
+      GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.CUBE_FACES);
+      GL.bufferData(GL.ELEMENT_ARRAY_BUFFER,
+      new Uint16Array(this.cube_faces),
+      GL.STATIC_DRAW);
+  
+    }
+  
+    setTexture(string){
+      this.texture = LIBS.loadTexture(string);
+    }
+    
+    setuniformmatrix4(PROJMATRIX,VIEWMATRIX){
+      GL.useProgram(this.SHADER_PROGRAM);
+      GL.uniformMatrix4fv(this._Pmatrix, false, PROJMATRIX);
+      GL.uniformMatrix4fv(this._Vmatrix, false, VIEWMATRIX);
+      GL.uniformMatrix4fv(this._Mmatrix, false, this.MOVEMATRIX);
+      
+    }
+    draw(){
+      GL.useProgram(this.SHADER_PROGRAM);
+      GL.activeTexture(GL.TEXTURE0);
+      GL.bindTexture(GL.TEXTURE_2D, this.texture);
+      
+      GL.bindBuffer(GL.ARRAY_BUFFER, this.CUBE_VERTEX);
+      GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 4*(3+2), 0);
+      GL.vertexAttribPointer(this._color, 2, GL.FLOAT, false, 4*(3+2), 3*4);
+  
+      GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.CUBE_FACES);
+      GL.drawElements(GL.TRIANGLE_STRIP, this.cube_faces.length, GL.UNSIGNED_SHORT, 0);
+      //  GL.drawArrays(GL.TRIANGLES, 0, this.cube_vertex.length/6);
+      for(let i = 0;i<this.child.length;i++){
+        this.child[i].draw();
+      }
+    }
+    getMoveMatrix(){
+      return this.MOVEMATRIX;
+    }
+    setRotateMove(phi,theta,r){
+      LIBS.rotateZ(this.MOVEMATRIX,r);
+      LIBS.rotateY(this.MOVEMATRIX, theta);
+      LIBS.rotateX(this.MOVEMATRIX, phi);
+    }
+    setTranslateMove(x,y,z){
+      LIBS.translateZ(this.MOVEMATRIX,z);
+      LIBS.translateY(this.MOVEMATRIX,y);
+      LIBS.translateX(this.MOVEMATRIX,x);
+    }
+    setIdentityMove(){
+      LIBS.set_I4(this.MOVEMATRIX);
+    }
+    addChild(child){
+      this.child.push(child);
+    }
+
+    setPosition(x1, y1, z1, x2, y2, z2) {
+		this.setIdentityMove();
+		this.setRotateMove(x1, y1, z1);
+		this.setTranslateMove(x2, y2, z2);
+	}
+
+    setResponsiveRotation(PHI, THETA) {
+		var temps = LIBS.get_I4();
+		LIBS.rotateX(temps, PHI);
+		this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, temps);
+
+		LIBS.rotateY(temps, THETA);
+		this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, temps);
+	}
+
+	scale(m){
+        var parentMatrixBefore = (this.MOVEMATRIX);
+        var matM = [
+            m, 0, 0, 0,
+            0, m, 0, 0,
+            0, 0, m, 0,
+            0, 0, 0, 1
+        ]
+        this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, matM);
+        // LIBS.translateZ(this.MOVEMATRIX,parentMatrixBefore[14]);
+        // LIBS.translateY(this.MOVEMATRIX,parentMatrixBefore[13]);
+        // LIBS.translateX(this.MOVEMATRIX,parentMatrixBefore[12]);
+        this.MOVEMATRIX[12] = parentMatrixBefore[12];
+        this.MOVEMATRIX[13] = parentMatrixBefore[13];
+        this.MOVEMATRIX[14] = parentMatrixBefore[14];
+        for (let i = 0; i < this.child.length; i++) {
+            let child = this.child[i];
+            child.scale(m)
+		}
+  	}
+
+}
+
 function main() {
 	var CANVAS = document.getElementById("mycanvas");
 
@@ -398,6 +565,28 @@ function main() {
     void main(void){
         gl_FragColor =vec4(vColor,1.0);
     }`;
+
+	var shader_vertex_source_texture = "\n\
+	attribute vec3 position;\n\
+	uniform mat4 Pmatrix, Vmatrix, Mmatrix;\n\
+	attribute vec2 uv;\n\
+	varying vec2 vUV;\n\
+	\n\
+	void main(void) {\n\
+	gl_Position = Pmatrix * Vmatrix * Mmatrix * vec4(position, 1.);\n\
+	vUV=uv;\n\
+	}";
+	
+	var shader_fragment_source_texture = "\n\
+	precision mediump float;\n\
+	uniform sampler2D sampler;\n\
+	varying vec2 vUV;\n\
+	\n\
+	\n\
+	void main(void) {\n\
+	gl_FragColor = texture2D(sampler, vUV);\n\
+	//gl_FragColor = vec4(1.,1.,1.,1.);\n\
+	}";
 
 	//#region stan
 	//head
@@ -2873,32 +3062,338 @@ function main() {
 	//#endregion
 
 	//#region enviroment
+
+	 //Merry go around
+	 object_vertex13 = [];
+	 outerRad = 5;
+	 innerRad = 5;
+	 height = 0.25;
+	 segments = 100;
+	 object_vertex13.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+	 object_vertex13.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex13.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex13.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+	 }
+	 object_faces13 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces13.push(index, index + 2, 0); // Bottom face
+		 object_faces13.push(index + 1, 1, index + 3); // Top face
+		 object_faces13.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+ 
+	 // Merry go around stick
+	 object_vertex14 = [];
+	 outerRad = 0.25;
+	 innerRad = 0.25;
+	 height = 4;
+	 segments = 100;
+	 object_vertex14.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
+	 object_vertex14.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex14.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex14.push(topX, topY, topZ, 1, 0.8431, 0);
+	 }
+	 object_faces14 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces14.push(index, index + 2, 0); // Bottom face
+		 object_faces14.push(index + 1, 1, index + 3); // Top face
+		 object_faces14.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
+	 //Swing
+	 object_vertex15 = [];
+	 outerRad = 0.2;
+	 innerRad = 0.2;
+	 height = 12;
+	 segments = 100;
+	 object_vertex15.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
+	 object_vertex15.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex15.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex15.push(topX, topY, topZ, 1, 0.8431, 0);
+	 }
+	 object_faces15 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces15.push(index, index + 2, 0); // Bottom face
+		 object_faces15.push(index + 1, 1, index + 3); // Top face
+		 object_faces15.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
+	 //Swing Rope
+	 object_vertex16 = [];
+	 outerRad = 0.2;
+	 innerRad = 0.2;
+	 height = 9;
+	 segments = 100;
+	 object_vertex16.push(0, 0, 0, 0.698, 0.4314, 0.3843); // Center vertex for bottom circle
+	 object_vertex16.push(0, 0, height, 0.698, 0.4314, 0.3843); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex16.push(bottomX, bottomY, bottomZ,0.698, 0.4314, 0.3843);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex16.push(topX, topY, topZ, 0.698, 0.4314, 0.3843);
+	 }
+	 object_faces16 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces16.push(index, index + 2, 0); // Bottom face
+		 object_faces16.push(index + 1, 1, index + 3); // Top face
+		 object_faces16.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
+	 //Swing Seat
+	 object_vertex17 = [];
+	 outerRad = 3;
+	 innerRad = 3;
+	 height = 0.5;
+	 segments = 100;
+	 object_vertex16.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+	 object_vertex16.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex17.push(bottomX, bottomY, bottomZ,0.50196, 0.50196, 0.50196);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex17.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+	 }
+	 object_faces17 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces17.push(index, index + 2, 0); // Bottom face
+		 object_faces17.push(index + 1, 1, index + 3); // Top face
+		 object_faces17.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+
+
+
 	//wall
-	object_vertex4 = createCuboidVertices(
-		1,
-		6,
-		CANVAS.width,
-		165 / 255,
-		51 / 255,
-		51 / 255
-	);
-	object_faces = [
-		0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 0, 3, 7, 0, 4, 7, 1, 2, 6, 1, 5, 6, 2,
-		3, 6, 3, 7, 6, 0, 1, 5, 0, 4, 5,
-	];
+	var cube_vertex2 = [
+		// Front face
+		-80, -5, 0,   0, 0,
+		80, -5, 0,    1, 0,
+		80, 5, 0,     1, 1,
+		-80, 5, 0,    0, 1,
+		
+		// Back face
+		-80, -5, 1,   0, 0,
+		80, -5, 1,    1, 0,
+		80, 5, 1,     1, 1,
+		-80, 5, 1,    0, 1,
+		
+		// Top face
+		-80, 5, 0,    0, 0,
+		80, 5, 0,     1, 0,
+		80, 5, 1,     1, 1,
+		-80, 5, 1,    0, 1,
+		
+		// Bottom face
+		-80, -5, 0,   0, 0,
+		80, -5, 0,    1, 0,
+		80, -5, 1,    1, 1,
+		-80, -5, 1,   0, 1,
+		
+		// Right face
+		80, -5, 0,    0, 0,
+		80, 5, 0,     1, 0,
+		80, 5, 1,     1, 1,
+		80, -5, 1,    0, 1,
+		
+		// Left face
+		-80, -5, 0,   0, 0,
+		-80, -5, 1,   1, 0,
+		-80, 5, 1,    1, 1,
+		-80, 5, 0,    0, 1
+	  ];
+	
+	  cube_faces2 = [
+		0, 1, 2,
+		0, 2, 3,
+		
+		4, 5, 6,
+		4, 6, 7,
+		
+		8, 9, 10,
+		8, 10, 11,
+		
+		12, 13, 14,
+		12, 14, 15,
+		
+		16, 17, 18,
+		16, 18, 19,
+		
+		20, 21, 22,
+		20, 22, 23
+	
+	  ];
+
 	//land
-	object_vertex1 = createCuboidVertices(
-		1,
-		CANVAS.width,
-		70,
-		220 / 255,
-		220 / 255,
-		220 / 255
-	);
-	object_faces1 = [
-		0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 0, 3, 7, 0, 4, 7, 1, 2, 6, 1, 5, 6, 2,
-		3, 6, 3, 7, 6, 0, 1, 5, 0, 4, 5,
-	];
+	var cube_vertex = [
+		// Front face
+		-20, -8, 0,   0, 0,
+		20, -8, 0,    1, 0,
+		20, 8, 0,     1, 1,
+		-20, 8, 0,    0, 1,
+		
+		// Back face
+		-20, -8, 0.3,   0, 0,
+		20, -8, 0.3,    1, 0,
+		20, 8, 0.3,     1, 1,
+		-20, 8, 0.3,    0, 1,
+		
+		// Top face
+		-20, 8, 0,    0, 0,
+		20, 8, 0,     1, 0,
+		20, 8, 0.3,     1, 1,
+		-20, 8, 0.3,    0, 1,
+		
+		// Bottom face
+		-20, -8, 0,   0, 0,
+		20, -8, 0,    1, 0,
+		20, -8, 0.3,    1, 1,
+		-20, -8, 0.3,   0, 1,
+		
+		// Right face
+		20, -8, 0,    0, 0,
+		20, 8, 0,     1, 0,
+		20, 8, 0.3,     1, 1,
+		20, -8, 0.3,    0, 1,
+		
+		// Left face
+		-20, -8, 0,   0, 0,
+		-20, -8, 0.3,   1, 0,
+		-20, 8, 0.3,    1, 1,
+		-20, 8, 0,    0, 1
+	  ];
+	
+	  cube_faces = [
+		0, 1, 2,
+		0, 2, 3,
+		
+		4, 5, 6,
+		4, 6, 7,
+		
+		8, 9, 10,
+		8, 10, 11,
+		
+		12, 13, 14,
+		12, 14, 15,
+		
+		16, 17, 18,
+		16, 18, 19,
+		
+		20, 21, 22,
+		20, 22, 23
+	
+	  ];
 	//sticks
 	object_vertex2 = tubeVertex(0.5, 0.5, 8, 50, 0.5451, 0.2706, 0.0745);
 	object_faces2 = tubeFaces(50);
@@ -2907,9 +3402,9 @@ function main() {
 	object_vertex5 = [];
 	stackCount = 50;
 	sectorCount = 50;
-	radiusX = 0.7;
-	radiusY = 0.7;
-	radiusZ = 0.7;
+	radiusX = 0.5;
+	radiusY = 0.8;
+	radiusZ = 0.5;
 	r = 102 / 255;
 	g = 51 / 255;
 	b = 0 / 255;
@@ -2930,154 +3425,43 @@ function main() {
 			// Condition to check if it's the front or end part
 			 if (
         i === 0 || i === stackCount || j === 0 || j === sectorCount || // Front and end parts
-            (i % 5 === 0 && (j % 5 === 0 || (j + 1) % 5 === 0)) || // Side stripe lines
-            ((i - 1) % 5 === 0 && (j - 1) % 5 === 0) || // Intersecting lines on the left side
-            ((i + 1) % 5 === 0 && j % 5 === 0) // Intersecting lines on the right side
+        ((i - 1) % 5 === 0 && j % 5 === 0) || // Left side of the stripe line
+        (i % 5 === 0 && (j - 1) % 5 === 0) || // Right side of the stripe line
+        ((i + 1) % 5 === 0 && j % 5 === 0) || // Left side of the next stripe line
+        (i % 5 === 0 && (j + 1) % 5 === 0) // Right side of the next stripe line
     ) {
 				// Set color to white for the front and end parts
-				r = 0;
-				g = 0;
-				b = 0;
+				r = 1;
+				g = 1;
+				b = 1;
 			} else {
-				r = 255;
-				g = 255;
-				b = 255;
+				r = 102 / 255;
+				g = 51 / 255;
+				b = 0 / 255;
 			}
 
 			object_vertex5.push(x, y, z, r, g, b);
 		}
 	}
 	object_faces5 = sphereFaces(50, 50);
-
-	//Merry go around
-    object_vertex13 = [];
-	outerRad = 5;
-	innerRad = 5;
-	height = 0.25;
-	segments = 100;
-	object_vertex13.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
-	object_vertex13.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
-	var angleIncrement = (2 * Math.PI) / segments;
-	for (var i = 0; i <= segments; i++) {
-		// Change the condition to <= to include the last segment
-		var angle = i * angleIncrement;
-		var cosAngle = Math.cos(angle);
-		var sinAngle = Math.sin(angle);
-
-		// Bottom circle vertex
-		var bottomX = outerRad * cosAngle;
-		var bottomY = outerRad * sinAngle;
-		var bottomZ = 0; // For the bottom circle
-		object_vertex13.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
-
-		// Top circle vertex
-		var topX = innerRad * cosAngle;
-		var topY = innerRad * sinAngle;
-		var topZ = height; // For the top circle
-		object_vertex13.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
-	}
-	object_faces13 = [];
-	for (var i = 0; i < segments; i++) {
-		var index = i * 2 + 2;
-		object_faces13.push(index, index + 2, 0); // Bottom face
-		object_faces13.push(index + 1, 1, index + 3); // Top face
-		object_faces13.push(
-			index,
-			index + 1,
-			index + 3,
-			index,
-			index + 3,
-			index + 2
-		); // Side faces
-	}
-
-    // Merry go around stick
-    object_vertex14 = [];
-	outerRad = 0.25;
-	innerRad = 0.25;
-	height = 4;
-	segments = 100;
-	object_vertex14.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
-	object_vertex14.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
-	var angleIncrement = (2 * Math.PI) / segments;
-	for (var i = 0; i <= segments; i++) {
-		// Change the condition to <= to include the last segment
-		var angle = i * angleIncrement;
-		var cosAngle = Math.cos(angle);
-		var sinAngle = Math.sin(angle);
-
-		// Bottom circle vertex
-		var bottomX = outerRad * cosAngle;
-		var bottomY = outerRad * sinAngle;
-		var bottomZ = 0; // For the bottom circle
-		object_vertex14.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
-
-		// Top circle vertex
-		var topX = innerRad * cosAngle;
-		var topY = innerRad * sinAngle;
-		var topZ = height; // For the top circle
-		object_vertex14.push(topX, topY, topZ, 1, 0.8431, 0);
-	}
-	object_faces14 = [];
-	for (var i = 0; i < segments; i++) {
-		var index = i * 2 + 2;
-		object_faces14.push(index, index + 2, 0); // Bottom face
-		object_faces14.push(index + 1, 1, index + 3); // Top face
-		object_faces14.push(
-			index,
-			index + 1,
-			index + 3,
-			index,
-			index + 3,
-			index + 2
-		); // Side faces
-	}
-	//Mountain
-	//Mountain
-outerRad =35;
-innerRad = 1;
-height = 15; 
-sectorCount = 50;
-r = 0 / 255;
-g = 65 / 255;
-b = 0 / 255;
-object_vertex30 = [];
-
-object_vertex30.push(0, 0, 0, r, g, b);
-object_vertex30.push(0, 0, height, r, g, b);
-var angleIncrement = (2 * Math.PI) / sectorCount;
-for (var i = 0; i <= sectorCount; i++) {
-    var angle = i * angleIncrement;
-    var cosAngle = Math.cos(angle);
-    var sinAngle = Math.sin(angle);
-    var bottomX = outerRad * cosAngle;
-    var bottomY = outerRad * sinAngle;
-    var bottomZ = 0;
-    object_vertex30.push(bottomX, bottomY, bottomZ, r, g, b);
-
-    var topX, topY, topZ;
-        // Use the provided RGB values for other vertices
-        topX = innerRad * cosAngle;
-        topY = innerRad * sinAngle;
-        topZ = height;
-        object_vertex30.push(topX, topY, topZ, 0.9,0.9,0.9);
-}
-
-	object_faces30 = tubeFaces(50);
 	
-		
-	var wall = new MyObject(
-		object_vertex4,
-		object_faces4,
-		shader_vertex_source,
-		shader_fragment_source
+	var wall = new MyObjectTexture(
+		cube_vertex2,
+		cube_faces2,
+		shader_vertex_source_texture,
+		shader_fragment_source_texture
 	);
-	var land = new MyObject(
-		object_vertex1,
-		object_faces1,
-		shader_vertex_source,
-		shader_fragment_source
+
+	wall.setTexture("brick.jpg");
+
+	var land = new MyObjectTexture(
+		cube_vertex,
+		cube_faces,
+		shader_vertex_source_texture,
+		shader_fragment_source_texture
 	);
+
+	land.setTexture("snow01.png");
 
 	var sticks = new MyObject(
 		object_vertex2,
@@ -3116,6 +3500,17 @@ for (var i = 0; i <= sectorCount; i++) {
 		shader_vertex_source,
 		shader_fragment_source
 	);
+
+	var swing0 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing1 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing2 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing3 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+	var swing4 = new MyObject(object_vertex15,object_faces15,shader_vertex_source,shader_fragment_source);
+
+	var swing_rope0 = new MyObject(object_vertex16,object_faces16,shader_vertex_source,shader_fragment_source);
+	var swing_rope1 = new MyObject(object_vertex16,object_faces16,shader_vertex_source,shader_fragment_source);
+
+	var swing_seat = new MyObject(object_vertex17,object_faces17,shader_vertex_source,shader_fragment_source);
 
 	var merrygoaround = new MyObject(
         object_vertex13,
@@ -3686,8 +4081,9 @@ for (var i = 0; i <= sectorCount; i++) {
 		var ballMovingTowardsObject = (xCurve - nextXCurve) * direction4 > 0;
 		// Move body_kyle and body only if the ball is moving towards the object
 
-		wall.setPosition(1.5708, 0, 1.5708, 0, 20, 0);
-		land.setPosition(1.5708, 1.5708, 0, 0, -10, -3.2);
+		wall.setPosition(1.6, 0, 0, 0, 20, 2);
+		land.setPosition(0, 0, 0, 0, -0, -4);
+		land.scale(5);
 		sticks.setPosition(0, 0, 0, 0, 0, 0);
 		for (var i = 0; i < sticks.child.length; i++) {
 			sticks.child[i].setPosition(0, 0, 0, 0, 0, 4 + i * 1.5);
@@ -3726,20 +4122,29 @@ for (var i = 0; i <= sectorCount; i++) {
 
 		body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
 
-		merrygoaround.setPosition(0,0,0,-20,10,-2.5);
-        merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5);
-        merrygoaroundside.setPosition(0, 0, 0, -15.5, 10, -2.5);
-        merrygoaroundside1.setPosition(0, 0, 0, -24.5, 10, -2.5);
-        merrygoaroundside2.setPosition(0, 0, 0, -20, 14.5, -2.5);
-        merrygoaroundside3.setPosition(0, 0, 0, -20, 5.5, -2.5);
-        merrygoaroundside4.setPosition(1.57, 0, 0, -20, 9.75, 1.25);
-        merrygoaroundside5.setPosition(1.57, 0, 0, -20, 14.25, 1.25);
-        merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25);
-        merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25);
+		merrygoaround.setPosition(0,0,0,-20,10,-2.5)
+        merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5)
+        merrygoaroundside.setPosition(0, 0, 0, -15.5, 10, -2.5)
+        merrygoaroundside1.setPosition(0, 0, 0, -24.5, 10, -2.5)
+        merrygoaroundside2.setPosition(0, 0, 0, -20, 14.5, -2.5)
+        merrygoaroundside3.setPosition(0, 0, 0, -20, 5.5, -2.5)
 
-		//mountain
-		mountain.setPosition(0,0,0,-20,55,0);
-		mountain1.setPosition(0,0,0,20,55,0);
+        merrygoaroundside4.setPosition(1.57, 0, 0, -20, 9.75, 1.25)
+        merrygoaroundside5.setPosition(1.57, 0, 0, -20, 14.25, 1.25)
+        merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25)
+        merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25)
+
+		swing0.setPosition(-0.25, 0, 0, 20, 7.5, -2.5)
+		swing1.setPosition(0.25, 0, 0, 20, 13.5, -2.5)
+		swing2.setPosition(-0.25, 0, 0, 8, 7.5, -2.5)
+		swing3.setPosition(0.25, 0, 0, 8, 13.5, -2.5)
+		swing4.setPosition(0, 1.58, 0, 8, 10.5, 9)
+
+		swing_rope0.setPosition(0, 0, 0, 11, 10.5, 0)
+		swing_rope1.setPosition(0, 0, 0, 17, 10.5, 0)
+
+		swing_seat.setPosition(0, 0, 0, 14, 10.5, 0)
+
 
 		// Set object position
 
@@ -3859,6 +4264,16 @@ for (var i = 0; i <= sectorCount; i++) {
 			sticks3.child[i].setResponsiveRotation(PHI, THETA);
 		}
 		rugbyball.setResponsiveRotation(PHI, THETA);
+		swing0.setResponsiveRotation(PHI, THETA)
+		swing1.setResponsiveRotation(PHI, THETA)
+		swing2.setResponsiveRotation(PHI, THETA)
+		swing3.setResponsiveRotation(PHI, THETA)
+		swing4.setResponsiveRotation(PHI, THETA)
+
+		swing_rope0.setResponsiveRotation(PHI, THETA)
+		swing_rope1.setResponsiveRotation(PHI, THETA)
+
+		swing_seat.setResponsiveRotation(PHI, THETA)
 
 		merrygoaround.setResponsiveRotation(PHI, THETA)
         merrygoaroundstick.setResponsiveRotation(PHI, THETA)
@@ -3872,6 +4287,28 @@ for (var i = 0; i <= sectorCount; i++) {
         merrygoaroundside7.setResponsiveRotation(PHI, THETA)
 		mountain.setResponsiveRotation(PHI,THETA);
 		mountain1.setResponsiveRotation(PHI,THETA);
+
+
+		swing0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing0.draw()
+		swing1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing1.draw()
+		swing2.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing2.draw()
+		swing3.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing3.draw()
+		swing4.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing4.draw()
+		
+		swing_rope0.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing_rope0.draw()
+
+		swing_rope1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing_rope1.draw()
+
+		swing_seat.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		swing_seat.draw()
+
 		//#endregion
 
 		land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
