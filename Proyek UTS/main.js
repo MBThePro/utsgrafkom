@@ -3509,7 +3509,7 @@ function main() {
 		sticks2.moveChildrenWithParent(-10, 30, 0);
 		sticks3.moveChildrenWithParent(10, 30, 0);
 
-		head_kyle.rotateAllWithChild(0,0,1.5)
+		// head_kyle.rotateAllWithChild(0,0,1.5)
 		//#region ResponsiveRotation
 		// Set responsive rotation
 		object.setResponsiveRotation(PHI, THETA);
