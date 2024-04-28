@@ -4333,147 +4333,211 @@ function main() {
 
     //mouth
     mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
+head_kyle.setPosition(0, 0, 0, 0, 0, 0, PHI, THETA);
+		//left_eye
+		left_eye_kyle.setPosition(Math.PI / 2, 0.3, Math.PI / 2, -1.2, -0.3, 0.2, PHI, THETA);
 
-    head_kyle.setPosition(0, 0, 0, 0, 0, 0);
+		//right_eye
+		right_eye_kyle.setPosition(Math.PI / 2, -0.3, Math.PI / 2,  -1.2, 0.3,0.2, PHI, THETA);
 
-    //left_eye
-    left_eye_kyle.setPosition(Math.PI / 2, 0.3, 0, -0.3, -1.2, 0.2);
+		//left_blackeye
+		left_blackeye_kyle.setPosition(Math.PI / 2, 0.5, Math.PI / 2,  -1.4,-0.2, 0.2, PHI, THETA);
 
-    //right_eye
-    right_eye_kyle.setPosition(Math.PI / 2, -0.3, 0, 0.3, -1.2, 0.2);
+		//right_blackeye
+		right_blackeye_kyle.setPosition(
+			Math.PI / 2,
+			-0.5,
+			Math.PI / 2,
 
-    //left_blackeye
-    left_blackeye_kyle.setPosition(Math.PI / 2, 0.5, 0, -0.2, -1.4, 0.2);
+			-1.4,
+			0.2,
+			0.2,
+			PHI,
+			THETA
+		);
 
-    //right_blackeye
-    right_blackeye_kyle.setPosition(Math.PI / 2, -0.5, 0, 0.2, -1.4, 0.2);
+		//mouth
+		mouth_kyle.setPosition(Math.PI / 2, 0, Math.PI / 2,  -1.1,0.18, -0.6, PHI, THETA);
 
-    //mouth
-    mouth_kyle.setPosition(Math.PI / 2, 0, 0, 0.18, -1.1, -0.6);
+		//hat_top
+		hat_top_kyle.setPosition(0, 0, 0, 0, 0, 0.5, PHI, THETA);
 
-    //hat_top
-    hat_top_kyle.setPosition(0, 0, 0, 0, 0, 0.5);
+		//hat_middle
+		hat_middle_kyle.setPosition(0, 0, 0,  -0.2,0, 0.45, PHI, THETA);
 
-    //hat_middle
-    hat_middle_kyle.setPosition(0, 0, 0, 0, -0.2, 0.45);
+		//hat_left
+		hat_left_kyle.setPosition(
+			Math.PI / 2 - 0.3,
+			0.05,
+			0.05,
+			
+			0.2,
+			-1.2,
+			0.45,
+			PHI,
+			THETA
+		);
 
-    //hat_left
-    hat_left_kyle.setPosition(Math.PI / 2 + 0.3, 0.05, 1.5, -1.2, 0.2, 0.45);
+		//hat_right
+		hat_right_kyle.setPosition(
+			Math.PI / 2 + 0.3,
+			0.05,
+			-0.05,
+			
+			0.2,
+			1.2,
+			0.45,
+			PHI,
+			THETA
+		);
 
-    //hat_right
-    hat_right_kyle.setPosition(Math.PI / 2 - 0.3, 0.05, 1.5, 1.2, 0.2, 0.45);
+		//hat_back
+		hat_back_kyle.setPosition(Math.PI / 2-0.2, 0, 1.5,  1,0, 1.1, PHI, THETA);
 
-    //hat_back
-    hat_back_kyle.setPosition(Math.PI / 2, 0, 0, 0, 1, 1.1);
+		//body
+		body_kyle.setPosition(0, 0, 0, 0, 0, -2.7, PHI, THETA);
 
-    //body
-    body_kyle.setPosition(0, 0, 0, 0, 0, -2.7);
+		//left_arm
+		left_arm_kyle.setPosition(-0.6, 0, 0,  0,-0.8, -1.65, PHI, THETA);
 
-    //left_arm
-    left_arm_kyle.setPosition(0, 0.6, 0, -0.8, 0, -1.65);
+		//right_arm
+		right_arm_kyle.setPosition(0.6, 0, 0,  0, 0.8,-1.65, PHI, THETA);
 
-    //right_arm
-    right_arm_kyle.setPosition(0, -0.6, 0, 0.8, 0, -1.65);
+		//right_elbow
+		right_elbow_kyle.setPosition(0, 0, 0,  0, 0.82,-1.7, PHI, THETA);
 
-    //right_elbow
-    right_elbow_kyle.setPosition(0, 0, 0, 0.82, 0, -1.7);
+		//left_elbow
+		left_elbow_kyle.setPosition(0, 0.15, 0,  0,-0.82, -1.7, PHI, THETA);
 
-    //left_elbow
-    left_elbow_kyle.setPosition(0, -0.15, 0, -0.82, 0, -1.7);
+		//left_forearm
+		left_forearm_kyle.setPosition(-0.1, 0, 0,  0,-0.9, -2.2, PHI, THETA);
 
-    //left_forearm
-    left_forearm_kyle.setPosition(0, 0.15, 0, -0.9, 0, -2.2);
+		//right_forearm
+		right_forearm_kyle.setPosition(0.1, 0, 0,  0,0.9, -2.2, PHI, THETA);
 
-    //right_forearm
-    right_forearm_kyle.setPosition(0, -0.15, 0, 0.9, 0, -2.2);
+		//left_hand
+		left_hand_kyle.setPosition(0, 0, 0,  0,-0.9, -2.3, PHI, THETA);
 
-    //left_hand
-    left_hand_kyle.setPosition(0, 0, 0, -0.9, 0, -2.3);
-    //right_hand
-    right_hand_kyle.setPosition(0, 0, 0, 0.9, 0, -2.3);
+		//right_hand
+		right_hand_kyle.setPosition(0, 0, 0,  0,0.9, -2.3, PHI, THETA);
 
-    //left_thumb
-    left_thumb_kyle.setPosition(Math.PI / 2, Math.PI / 2, 0, -0.9, -0.18, -2.3);
+		//left_thumb
+		left_thumb_kyle.setPosition(
+			Math.PI / 2,
+			Math.PI / 2,
+			0,
+			
+			-0.18,
+			-0.9,
+			-2.3,
+			PHI,
+			THETA
+		);
 
-    //right_thumb
-    right_thumb_kyle.setPosition(Math.PI / 2, Math.PI / 2, 0, 0.9, -0.18, -2.3);
+		//right_thumb
+		right_thumb_kyle.setPosition(
+			Math.PI / 2,
+			Math.PI / 2,
+			0,
+			-0.18,
+			0.9,
+			-2.3,
+			PHI,
+			THETA
+		);
 
-    //left_leg
-    left_leg_kyle.setPosition(0, 0, 0, -0.38, 0, -3);
+		//left_leg
+		left_leg_kyle.setPosition(0, 0, 0,  0,-0.38, -3, PHI, THETA);
 
-    //right_leg
-    right_leg_kyle.setPosition(0, 0, 0, 0.38, 0, -3);
+		//right_leg
+		right_leg_kyle.setPosition(0, 0, 0,  0,0.38, -3, PHI, THETA);
 
-    //left_shoe
-    left_shoe_kyle.setPosition(0, 0, 0, -0.38, -0.18, -3.08);
+		//left_shoe
+		left_shoe_kyle.setPosition(0, 0, 0, -0.18,-0.38, -3.08, PHI, THETA);
 
-    //right_shoe
-    right_shoe_kyle.setPosition(0, 0, 0, 0.38, -0.18, -3.08);
+		//right_shoe
+		right_shoe_kyle.setPosition(0, 0, 0,  -0.18,0.38, -3.08, PHI, THETA);
 
-    //pocket_square_left
-    pocket_square_left_kyle.setPosition(
-      Math.PI / 2 - 0.3,
-      0,
-      -0.4,
-      -0.3,
-      -0.7,
-      -2
-    );
-    pocket_square_left_kyle.changeline(true);
+		//pocket_square_left
+		pocket_square_left_kyle.setPosition(
+			2,
+			0,
+			2,
+			-0.7,
+			-0.3,
+			-2,
+			PHI,
+			THETA
+		);
+		pocket_square_left_kyle.changeline(true);
 
-    //pocket_square_right
-    pocket_square_right_kyle.setPosition(
-      Math.PI / 2 - 0.3,
-      0,
-      0.4,
-      0.3,
-      -0.7,
-      -2
-    );
-    pocket_square_right_kyle.changeline(true);
+		//pocket_square_right
+		pocket_square_right_kyle.setPosition(
+			2,
+			0,
+			1,
+			
+			-0.7,
+			0.3,
+			-2,
+			PHI,
+			THETA
+		);
+		pocket_square_right_kyle.changeline(true);
 
-    //pocket_triangle_left
-    pocket_triangle_left_kyle.setPosition(
-      -Math.PI / 2 - 0.8,
-      -0.3,
-      0,
-      -0.34,
-      -0.76,
-      -1.85
-    );
+		//pocket_triangle_left
+		pocket_triangle_left_kyle.setPosition(
+			3,
+			-0.2,
+			1.5,
+			
+			-0.76,
+			-0.34,
+			-1.85,
+			PHI,
+			THETA
+		);
 
-    //pocket_triangle_right
-    pocket_triangle_right_kyle.setPosition(
-      -Math.PI / 2 - 0.8,
-      -0.4,
-      0.8,
-      0.34,
-      -0.76,
-      -1.85
-    );
+		//pocket_triangle_right
+		pocket_triangle_right_kyle.setPosition(
+			3,
+			-0.2,
+			0.5,
+			
+			-0.76,
+			0.34,
+			-1.85,
+			PHI,
+			THETA
+		);
+		
+		//back_sweater
+		back_sweater_kyle.setPosition(-0.16, 0, 0,  0.2,0, -1.235, PHI, THETA);
 
-    //back_sweater
-    back_sweater_kyle.setPosition(-0.16, 0, 0, 0, 0.2, -1.235);
+		//front_sweater_left
+		front_sweater_left_kyle.setPosition(
+			-Math.PI / 2 - 0.6,
+			-0.05,
+			-0.5,
+			-0.35,
+			-0.3,
+			-1.2,
+			PHI,
+			THETA
+		);
 
-    //front_sweater_left
-    front_sweater_left_kyle.setPosition(
-      -Math.PI / 2 - 0.5,
-      -0.05,
-      -0.5,
-      -0.35,
-      -0.35,
-      -1.1
-    );
-
-    //front_sweater_right
-    front_sweater_right_kyle.setPosition(
-      -Math.PI / 2 - 0.5,
-      0.05,
-      0.5,
-      0.35,
-      -0.35,
-      -1.1
-    );
+		//front_sweater_right
+		front_sweater_right_kyle.setPosition(
+			-Math.PI / 2 + 0.5,
+			-0.05,
+			0.8,
+			
+			-0.35,
+			0.35,
+			-1.2,
+			PHI,
+			THETA
+		);
 
     //#endregion
 
