@@ -3278,40 +3278,40 @@ function main() {
 	//wall
 	var cube_vertex2 = [
 		// Front face
-		-80, -3, 0,   0, 0,
-		80, -3, 0,    1, 0,
-		80, 3, 0,     1, 1,
-		-80, 3, 0,    0, 1,
+		-80, -4, 0,   0, 0,
+		80, -4, 0,    1, 0,
+		80, 4, 0,     1, 1,
+		-80, 4, 0,    0, 1,
 		
 		// Back face
-		-80, -3, 1,   0, 0,
-		80, -3, 1,    1, 0,
-		80, 3, 1,     1, 1,
-		-80, 3, 1,    0, 1,
+		-80, -4, 1,   0, 0,
+		80, -4, 1,    1, 0,
+		80, 4, 1,     1, 1,
+		-80, 4, 1,    0, 1,
 		
 		// Top face
-		-80, 3, 0,    0, 0,
-		80, 3, 0,     1, 0,
-		80, 3, 1,     1, 1,
-		-80, 3, 1,    0, 1,
+		-80, 4, 0,    0, 0,
+		80, 4, 0,     1, 0,
+		80, 4, 1,     1, 1,
+		-80, 4, 1,    0, 1,
 		
 		// Bottom face
-		-80, -3, 0,   0, 0,
-		80, -3, 0,    1, 0,
-		80, -3, 1,    1, 1,
-		-80, -3, 1,   0, 1,
+		-80, -4, 0,   0, 0,
+		80, -4, 0,    1, 0,
+		80, -4, 1,    1, 1,
+		-80, -4, 1,   0, 1,
 		
 		// Right face
-		80, -3, 0,    0, 0,
-		80, 3, 0,     1, 0,
-		80, 3, 1,     1, 1,
-		80, -3, 1,    0, 1,
+		80, -4, 0,    0, 0,
+		80, 4, 0,     1, 0,
+		80, 4, 1,     1, 1,
+		80, -4, 1,    0, 1,
 		
 		// Left face
-		-80, -3, 0,   0, 0,
-		-80, -3, 1,   1, 0,
-		-80, 3, 1,    1, 1,
-		-80, 3, 0,    0, 1
+		-80, -4, 0,   0, 0,
+		-80, -4, 1,   1, 0,
+		-80, 4, 1,    1, 1,
+		-80, 4, 0,    0, 1
 	  ];
 	
 	  cube_faces2 = [
@@ -3836,68 +3836,68 @@ function main() {
 			-1.1
 		);
 
-		object_cartman.setPosition(0, 0, 0, 0, 0, 1);
+		object_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, 1);
 		//left_eye
-		left_eye_cartman.setPosition(Math.PI / 2 - 0.1, 0.3, 0, -0.3, -1.3, 1.2);
+		left_eye_cartman.setPosition(Math.PI / 2 - 0.1, 0.3, Math.PI / 2, -1.3, -0.3, 1.2);
 
 		//right_eye
-		right_eye_cartman.setPosition(Math.PI / 2 - 0.1, -0.3, 0, 0.3, -1.3, 1.2);
+		right_eye_cartman.setPosition(Math.PI / 2 - 0.1, -0.3, Math.PI / 2, -1.3, 0.3, 1.2);
 
 		//left_blackeye
-		left_blackeye_cartman.setPosition(Math.PI / 2, 0.5, 0, -0.2, -1.5, 1.2);
+		left_blackeye_cartman.setPosition(Math.PI / 2, 0.5, 0, -1.5, -0.2, 1.2);
 
 		//right_blackeye
-		right_blackeye_cartman.setPosition(Math.PI / 2, -0.5, 0, 0.2, -1.5, 1.2);
+		right_blackeye_cartman.setPosition(Math.PI / 2, -0.5, 0, -1.5, 0.2, 1.2);
 
 		//hat
-		hat_cartman.setPosition(-0.4, 0, 0, 0, 0.05, 1.1);
+		hat_cartman.setPosition(0.38, 0, Math.PI / 2, 0, 0, 1.1);
 
 		//body
-		body_cartman.setPosition(0, 0, 0, 0, 0, -1.7);
+		body_cartman.setPosition(0, 0, Math.PI / 2, 0, 0, -1.7);
 		//yellowpart
-		yellowpart_cartman.setPosition(-0.4, 0, 0, 0, 0.05, 1.1);
+		yellowpart_cartman.setPosition(0.4, 0, Math.PI / 2, 0, 0, 1.1);
 
 		//pucukhat
-		pucukhat_cartman.setPosition(0, 0, 0, 0, 0.5, 2.4);
+		pucukhat_cartman.setPosition(0, 0, 0, 0.5, 0, 2.4);
 
 		//left_leg
-		left_leg_cartman.setPosition(0, 0, 0, -0.48, 0, -2.2);
+		left_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, -0.48, -2.2);
 
 		//right_leg
-		right_leg_cartman.setPosition(0, 0, 0, 0.48, 0, -2.2);
+		right_leg_cartman.setPosition(0, 0, Math.PI / 2, 0, 0.48, -2.2);
 
 		//left_shoe
-		left_shoe_cartman.setPosition(0.05, 0, 0, -0.48, -0.15, -2.28);
+		left_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, -0.48, -2.28);
 
 		//right_shoe
-		right_shoe_cartman.setPosition(0.05, 0, 0, 0.48, -0.15, -2.28);
+		right_shoe_cartman.setPosition(-0.05, 0, Math.PI / 2, -0.1, 0.48, -2.28);
 
 		//left_arm
-		left_arm_cartman.setPosition(0, 1, 0, -2.1, 0, -0.85);
+		left_arm_cartman.setPosition(-1, 0, 0, 0, -2.1, -0.85);
 
 		//right_arm
-		right_arm_cartman.setPosition(0, -1, 0, 2.1, 0, -0.85);
+		right_arm_cartman.setPosition(1, 0, 0, 0, 2.1, -0.85);
 
 		//left_hand
-		left_hand_cartman.setPosition(0, 1, 0, -2.2, 0, -0.9);
+		left_hand_cartman.setPosition(-1, 0, 0, 0, -2.2, -0.9);
 
 		//right_hand
-		right_hand_cartman.setPosition(0, -1, 0, 2.2, 0, -0.9);
+		right_hand_cartman.setPosition(1, 0, 0, 0, 2.2, -0.9);
 
 		//resleting
-		resleting_cartman.setPosition(0, 0, 0, 0, -0.65, -1.7);
+		resleting_cartman.setPosition(0, 0, Math.PI / 2, -0.63, 0, -1.7);
 
 		//button1
-		button1_cartman.setPosition(0, 0, 0, -0.2, -2, -1.4);
+		button1_cartman.setPosition(0, 0, 0, -2, 0.2, -1.4);
 
 		//button2
-		button2_cartman.setPosition(0, 0, 0, -0.2, -1.8, -0.7);
+		button2_cartman.setPosition(0, 0, 0, -1.8, 0.2, -0.7);
 
 		//button3
-		button3_cartman.setPosition(0, 0, 0, -0.2, -1.4, -0.1);
+		button3_cartman.setPosition(0, 0, 0, -1.4, 0.2, -0.1);
 
 		//mouth
-		mouth_cartman.setPosition(Math.PI / 2 + 1.3, -0.2, -0.5, 0, -1.14, 0.5);
+		mouth_cartman.setPosition(9.8, -0.1, 2, -1.14, 0, 0.5);
 
 		head_kyle.setPosition(0, 0, 0, 0, 0, 0);
 
