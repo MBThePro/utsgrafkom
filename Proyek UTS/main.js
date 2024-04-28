@@ -3062,6 +3062,93 @@ function main() {
 	//#endregion
 
 	//#region enviroment
+
+	 //Merry go around
+	 object_vertex13 = [];
+	 outerRad = 5;
+	 innerRad = 5;
+	 height = 0.25;
+	 segments = 100;
+	 object_vertex13.push(0, 0, 0, 0.50196, 0.50196, 0.50196); // Center vertex for bottom circle
+	 object_vertex13.push(0, 0, height, 0.50196, 0.50196, 0.50196); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex13.push(bottomX, bottomY, bottomZ, 0.50196, 0.50196, 0.50196);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex13.push(topX, topY, topZ, 0.50196, 0.50196, 0.50196);
+	 }
+	 object_faces13 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces13.push(index, index + 2, 0); // Bottom face
+		 object_faces13.push(index + 1, 1, index + 3); // Top face
+		 object_faces13.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+ 
+	 // Merry go around stick
+	 object_vertex14 = [];
+	 outerRad = 0.25;
+	 innerRad = 0.25;
+	 height = 4;
+	 segments = 100;
+	 object_vertex14.push(0, 0, 0, 1, 0.8431, 0); // Center vertex for bottom circle
+	 object_vertex14.push(0, 0, height, 1, 0.8431, 0); // Center vertex for top circle
+	 var angleIncrement = (2 * Math.PI) / segments;
+	 for (var i = 0; i <= segments; i++) {
+		 // Change the condition to <= to include the last segment
+		 var angle = i * angleIncrement;
+		 var cosAngle = Math.cos(angle);
+		 var sinAngle = Math.sin(angle);
+ 
+		 // Bottom circle vertex
+		 var bottomX = outerRad * cosAngle;
+		 var bottomY = outerRad * sinAngle;
+		 var bottomZ = 0; // For the bottom circle
+		 object_vertex14.push(bottomX, bottomY, bottomZ,1, 0.8431, 0);
+ 
+		 // Top circle vertex
+		 var topX = innerRad * cosAngle;
+		 var topY = innerRad * sinAngle;
+		 var topZ = height; // For the top circle
+		 object_vertex14.push(topX, topY, topZ, 1, 0.8431, 0);
+	 }
+	 object_faces14 = [];
+	 for (var i = 0; i < segments; i++) {
+		 var index = i * 2 + 2;
+		 object_faces14.push(index, index + 2, 0); // Bottom face
+		 object_faces14.push(index + 1, 1, index + 3); // Top face
+		 object_faces14.push(
+			 index,
+			 index + 1,
+			 index + 3,
+			 index,
+			 index + 3,
+			 index + 2
+		 ); // Side faces
+	 }
+ 
+
+
 	//wall
 	var cube_vertex2 = [
 		// Front face
