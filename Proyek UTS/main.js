@@ -3076,9 +3076,13 @@ function main() {
 
 	var xTranslation2 = 8.5; // Initial translation value
 	var direction2 = 1; // Initial direction of movement
+	var yTranslation2 = 0; // Initial translation value
+    var ydirection2 = 1; // Initial direction of movement
 
 	var xTranslation3 = 5; // Initial translation value
 	var direction3 = -1; // Initial direction of movement
+	var yTranslation3 = 0; // Initial translation value
+    var ydirection3 = 1; // Initial direction of movement
 
 	var t = 0; // Parameter for the curve (0 to 1)
 	var direction4 = 1; // Initial direction of movement
@@ -3416,6 +3420,10 @@ function main() {
 		xTranslation2 += direction2 * 0.004;
 		xTranslation3 += direction3 * 0.018;
 
+		yTranslation2 += ydirection2 * 0.025;
+		yTranslation3 += ydirection3 * 0.015;
+
+
 		// Check if within bounds, otherwise reverse direction
 		if (xTranslation >= -8.5) {
 			direction = -1;
@@ -3434,6 +3442,20 @@ function main() {
 		} else if (xTranslation3 >= 3) {
 			direction3 = -1;
 		}
+
+				if (yTranslation2 >= 0.3) {
+            ydirection2 = -1;
+        } else if (yTranslation2 <= 0) {
+            ydirection2 = 1;
+        }
+
+		if (yTranslation3 >= 0.3) {
+            ydirection3 = -1;
+        } else if (yTranslation3 <= 0) {
+            ydirection3 = 1;
+        }
+
+
 
 		// Update the parameter for the curve
 		t += direction4 * 0.003; // Adjust the speed of movement here
@@ -3494,13 +3516,13 @@ function main() {
 		// Store the translation values before the pause
 
 		if (ballMovingTowardsObject) {
-			body.moveChildrenWithParent(xTranslation - xCurve, 0, 0);
-			body_kyle.moveChildrenWithParent(xTranslation2 - xCurve, 0, 0);
+			body.moveChildrenWithParent(xTranslation - xCurve, 0, yTranslation2);
+			body_kyle.moveChildrenWithParent(xTranslation2 - xCurve, 0, yTranslation2);
 		}
 
 		rugbyball.setPosition(0, 0, 1.5, xCurve, 0, yCurve);
 
-		body_cartman.moveChildrenWithParent(xTranslation3, 0, 0);
+		body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
 
 		// Set object position
 
