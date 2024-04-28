@@ -3278,40 +3278,40 @@ function main() {
 	//wall
 	var cube_vertex2 = [
 		// Front face
-		-80, -5, 0,   0, 0,
-		80, -5, 0,    1, 0,
-		80, 5, 0,     1, 1,
-		-80, 5, 0,    0, 1,
+		-80, -3, 0,   0, 0,
+		80, -3, 0,    1, 0,
+		80, 3, 0,     1, 1,
+		-80, 3, 0,    0, 1,
 		
 		// Back face
-		-80, -5, 1,   0, 0,
-		80, -5, 1,    1, 0,
-		80, 5, 1,     1, 1,
-		-80, 5, 1,    0, 1,
+		-80, -3, 1,   0, 0,
+		80, -3, 1,    1, 0,
+		80, 3, 1,     1, 1,
+		-80, 3, 1,    0, 1,
 		
 		// Top face
-		-80, 5, 0,    0, 0,
-		80, 5, 0,     1, 0,
-		80, 5, 1,     1, 1,
-		-80, 5, 1,    0, 1,
+		-80, 3, 0,    0, 0,
+		80, 3, 0,     1, 0,
+		80, 3, 1,     1, 1,
+		-80, 3, 1,    0, 1,
 		
 		// Bottom face
-		-80, -5, 0,   0, 0,
-		80, -5, 0,    1, 0,
-		80, -5, 1,    1, 1,
-		-80, -5, 1,   0, 1,
+		-80, -3, 0,   0, 0,
+		80, -3, 0,    1, 0,
+		80, -3, 1,    1, 1,
+		-80, -3, 1,   0, 1,
 		
 		// Right face
-		80, -5, 0,    0, 0,
-		80, 5, 0,     1, 0,
-		80, 5, 1,     1, 1,
-		80, -5, 1,    0, 1,
+		80, -3, 0,    0, 0,
+		80, 3, 0,     1, 0,
+		80, 3, 1,     1, 1,
+		80, -3, 1,    0, 1,
 		
 		// Left face
-		-80, -5, 0,   0, 0,
-		-80, -5, 1,   1, 0,
-		-80, 5, 1,    1, 1,
-		-80, 5, 0,    0, 1
+		-80, -3, 0,   0, 0,
+		-80, -3, 1,   1, 0,
+		-80, 3, 1,    1, 1,
+		-80, 3, 0,    0, 1
 	  ];
 	
 	  cube_faces2 = [
@@ -3443,7 +3443,40 @@ function main() {
 			object_vertex5.push(x, y, z, r, g, b);
 		}
 	}
-	object_faces5 = sphereFaces(50, 50);
+		object_faces5 = sphereFaces(50, 50);
+
+
+	//mountain
+	
+	 	outerRad=35;
+		innerRad=1;
+		height=20;
+		sectorCount=50;
+		r=0;
+		g=90/255;
+		b=0;
+		object_vertex30 = [];
+		object_vertex30.push(0, 0, 0, r, g, b);
+		object_vertex30.push(0, 0, height, r, g, b);
+		var angleIncrement = (2 * Math.PI) / sectorCount;
+		for (var i = 0; i <= sectorCount; i++) {
+			var angle = i * angleIncrement;
+			var cosAngle = Math.cos(angle);
+			var sinAngle = Math.sin(angle);
+			var bottomX = outerRad * cosAngle;
+			var bottomY = outerRad * sinAngle;
+			var bottomZ = 0;
+			object_vertex30.push(bottomX, bottomY, bottomZ, r, g, b);
+			var topX = innerRad * cosAngle;
+			var topY = innerRad * sinAngle;
+			var topZ = height;
+			object_vertex30.push(topX, topY, topZ, 0.9, 0.9, 0.9);
+		}
+
+
+
+	object_faces30=tubeFaces(50);
+	
 	
 	var wall = new MyObjectTexture(
 		cube_vertex2,
@@ -3452,7 +3485,7 @@ function main() {
 		shader_fragment_source_texture
 	);
 
-	wall.setTexture("brick.jpg");
+	wall.setTexture("rock-texture.jpg");
 
 	var land = new MyObjectTexture(
 		cube_vertex,
@@ -4153,6 +4186,10 @@ function main() {
 		sticks2.moveChildrenWithParent(-10, 25, 0);
 		sticks3.moveChildrenWithParent(10, 25 , 0);
 
+		mountain.setPosition(0,0,0,-20,60,0);
+		mountain1.setPosition(0,0,0,20,60,0);
+		
+
 		// head_kyle.rotateAllWithChild(0,0,1.5)
 		//#region ResponsiveRotation
 		// Set responsive rotation
@@ -4365,6 +4402,14 @@ function main() {
 
 		rugbyball.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		rugbyball.draw();
+
+		mountain.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		mountain.draw();
+
+		mountain1.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
+		mountain1.draw();
+		
+
 
 		body.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
 		body.draw();
