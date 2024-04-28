@@ -4027,6 +4027,7 @@ function main() {
   var VIEWMATRIX = LIBS.get_I4();
 
   LIBS.translateZ(VIEWMATRIX, -40);
+  
 
   //DRAWING
   GL.clearColor(0.0, 0.0, 0.0, 0.0);
