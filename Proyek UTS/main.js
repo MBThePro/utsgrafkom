@@ -4054,6 +4054,7 @@ function main() {
   var ydirection4 = 1;
 
   var scaleFactor = 1; // Initial scale factor for object2
+  var scaleFactor2 = 1;
   var scaleDirection = 1; // Initial direction of scaling (1 for incrementing, -1 for decrementing)
   var scaleIncrement = 0.01; // Increment or decrement amount for the scale factor
 
@@ -4747,15 +4748,26 @@ function main() {
 
   // Scale object2 by the current scale factor
   sun.scale(scaleFactor);
+  sticks.scale(scaleFactor);
+  sticks1.scale(scaleFactor2);
+  sticks2.scale(scaleFactor2);
+  sticks3.scale(scaleFactor2);
 
   // Increment or decrement scale factor based on scaleDirection
   scaleFactor += scaleDirection * scaleIncrement;
+  scaleFactor2 += scaleDirection * 0.005;
 
   // If scale factor reaches 2, change scaleDirection to -1 for decrementing
   // If scale factor reaches 1, change scaleDirection to 1 for incrementing
   if (scaleFactor >= 1.3) {
       scaleDirection = -1;
   } else if (scaleFactor <= 1) {
+      scaleDirection = 1;
+  }
+
+  if (scaleFactor2 >= 1.2) {
+    scaleDirection = -1;
+  } else if (scaleFactor2 <= 1) {
       scaleDirection = 1;
   }
 
