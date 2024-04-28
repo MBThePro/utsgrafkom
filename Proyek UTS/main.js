@@ -193,7 +193,7 @@ class MyObject {
 
 	setBaseRotation(phi,theta,r){
 		if(this.set === false){
-		console.log(this.phiOri,this.thetaOri,this.rOri)
+		// console.log(this.phiOri,this.thetaOri,this.rOri)
 		this.phiOri=phi;
 		this.thetaOri=theta;
 		this.rOri=r;
@@ -2454,7 +2454,7 @@ function main() {
 		var topX = innerRad * cosAngle;
 		var topY = innerRad * sinAngle;
 		var topZ = height;
-		if (i == 75) object_vertex1.push(topX, topY, topZ, 0, 0, 0);
+		if (i == 50 ) object_vertex1.push(topX, topY, topZ, 0, 0, 0);
 		else object_vertex1.push(topX, topY, topZ, 1.0, 0.428, 0.182);
 	}
 	object_faces1 = [];
@@ -2907,9 +2907,9 @@ function main() {
 	object_vertex5 = [];
 	stackCount = 50;
 	sectorCount = 50;
-	radiusX = 0.5;
-	radiusY = 0.8;
-	radiusZ = 0.5;
+	radiusX = 0.7;
+	radiusY = 0.7;
+	radiusZ = 0.7;
 	r = 102 / 255;
 	g = 51 / 255;
 	b = 0 / 255;
@@ -2930,19 +2930,18 @@ function main() {
 			// Condition to check if it's the front or end part
 			 if (
         i === 0 || i === stackCount || j === 0 || j === sectorCount || // Front and end parts
-        ((i - 1) % 5 === 0 && j % 5 === 0) || // Left side of the stripe line
-        (i % 5 === 0 && (j - 1) % 5 === 0) || // Right side of the stripe line
-        ((i + 1) % 5 === 0 && j % 5 === 0) || // Left side of the next stripe line
-        (i % 5 === 0 && (j + 1) % 5 === 0) // Right side of the next stripe line
+            (i % 5 === 0 && (j % 5 === 0 || (j + 1) % 5 === 0)) || // Side stripe lines
+            ((i - 1) % 5 === 0 && (j - 1) % 5 === 0) || // Intersecting lines on the left side
+            ((i + 1) % 5 === 0 && j % 5 === 0) // Intersecting lines on the right side
     ) {
 				// Set color to white for the front and end parts
-				r = 1;
-				g = 1;
-				b = 1;
+				r = 0;
+				g = 0;
+				b = 0;
 			} else {
-				r = 102 / 255;
-				g = 51 / 255;
-				b = 0 / 255;
+				r = 255;
+				g = 255;
+				b = 255;
 			}
 
 			object_vertex5.push(x, y, z, r, g, b);
@@ -3033,7 +3032,40 @@ function main() {
 			index + 2
 		); // Side faces
 	}
+	//Mountain
+	//Mountain
+outerRad =35;
+innerRad = 1;
+height = 15; 
+sectorCount = 50;
+r = 0 / 255;
+g = 65 / 255;
+b = 0 / 255;
+object_vertex30 = [];
 
+object_vertex30.push(0, 0, 0, r, g, b);
+object_vertex30.push(0, 0, height, r, g, b);
+var angleIncrement = (2 * Math.PI) / sectorCount;
+for (var i = 0; i <= sectorCount; i++) {
+    var angle = i * angleIncrement;
+    var cosAngle = Math.cos(angle);
+    var sinAngle = Math.sin(angle);
+    var bottomX = outerRad * cosAngle;
+    var bottomY = outerRad * sinAngle;
+    var bottomZ = 0;
+    object_vertex30.push(bottomX, bottomY, bottomZ, r, g, b);
+
+    var topX, topY, topZ;
+        // Use the provided RGB values for other vertices
+        topX = innerRad * cosAngle;
+        topY = innerRad * sinAngle;
+        topZ = height;
+        object_vertex30.push(topX, topY, topZ, 0.9,0.9,0.9);
+}
+
+	object_faces30 = tubeFaces(50);
+	
+		
 	var wall = new MyObject(
 		object_vertex4,
 		object_faces4,
@@ -3207,6 +3239,20 @@ function main() {
 			)
 		);
 	}
+
+	var mountain =new MyObject(
+				object_vertex30,
+				object_faces30,
+				shader_vertex_source,
+				shader_fragment_source
+			); 
+			var mountain1 =new MyObject(
+				object_vertex30,
+				object_faces30,
+				shader_vertex_source,
+				shader_fragment_source
+			) ;
+
 
 	//#endregion
 	//Matrix
@@ -3571,12 +3617,10 @@ function main() {
 
 		//#endregion
 		
-		
-		
 		// Adjust xTranslation based on direction
 		xTranslation += direction * 0.004; // Adjust the speed of movement here
 		xTranslation2 += direction2 * 0.004;
-		xTranslation3 += direction3 * 0.018;
+		xTranslation3 += direction3 * 0.048;
 
 		yTranslation2 += ydirection2 * 0.025;
 		yTranslation3 += ydirection3 * 0.015;
@@ -3601,7 +3645,7 @@ function main() {
 			direction3 = -1;
 		}
 
-				if (yTranslation2 >= 0.3) {
+		if (yTranslation2 >= 0.3) {
             ydirection2 = -1;
         } else if (yTranslation2 <= 0) {
             ydirection2 = 1;
@@ -3616,7 +3660,7 @@ function main() {
 
 
 		// Update the parameter for the curve
-		t += direction4 * 0.003; // Adjust the speed of movement here
+		t += direction4 * 0.008; // Adjust the speed of movement here
 
 		// Ensure t stays within the range [0, 1]
 		if (t > 1) {
@@ -3678,29 +3722,31 @@ function main() {
 			body_kyle.moveChildrenWithParent(xTranslation2 - xCurve, 0, yTranslation2);
 		}
 
-		rugbyball.setPosition(0, 0, 1.5, xCurve, 0, yCurve);
+		rugbyball.setPosition(0, dt*0.01,0, xCurve, 0, yCurve);
 
 		body_cartman.moveChildrenWithParent(xTranslation3, 0, yTranslation3);
 
-		merrygoaround.setPosition(0,0,0,-20,10,-2.5)
-        merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5)
-        merrygoaroundside.setPosition(0, 0, 0, -15.5, 10, -2.5)
-        merrygoaroundside1.setPosition(0, 0, 0, -24.5, 10, -2.5)
-        merrygoaroundside2.setPosition(0, 0, 0, -20, 14.5, -2.5)
-        merrygoaroundside3.setPosition(0, 0, 0, -20, 5.5, -2.5)
+		merrygoaround.setPosition(0,0,0,-20,10,-2.5);
+        merrygoaroundstick.setPosition(0, 0, 0, -20, 10, -2.5);
+        merrygoaroundside.setPosition(0, 0, 0, -15.5, 10, -2.5);
+        merrygoaroundside1.setPosition(0, 0, 0, -24.5, 10, -2.5);
+        merrygoaroundside2.setPosition(0, 0, 0, -20, 14.5, -2.5);
+        merrygoaroundside3.setPosition(0, 0, 0, -20, 5.5, -2.5);
+        merrygoaroundside4.setPosition(1.57, 0, 0, -20, 9.75, 1.25);
+        merrygoaroundside5.setPosition(1.57, 0, 0, -20, 14.25, 1.25);
+        merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25);
+        merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25);
 
-        merrygoaroundside4.setPosition(1.57, 0, 0, -20, 9.75, 1.25)
-        merrygoaroundside5.setPosition(1.57, 0, 0, -20, 14.25, 1.25)
-        merrygoaroundside6.setPosition(0, 1.57, 0, -24.25,10,1.25)
-        merrygoaroundside7.setPosition(0, 1.57, 0, -19.75,10,1.25)
-
+		//mountain
+		mountain.setPosition(0,0,0,-20,55,0);
+		mountain1.setPosition(0,0,0,20,55,0);
 
 		// Set object position
 
-		sticks.moveChildrenWithParent(-30, 30, 0);
-		sticks1.moveChildrenWithParent(30, 30, 0);
-		sticks2.moveChildrenWithParent(-10, 30, 0);
-		sticks3.moveChildrenWithParent(10, 30, 0);
+		sticks.moveChildrenWithParent(-30, 25, 0);
+		sticks1.moveChildrenWithParent(30, 25, 0);
+		sticks2.moveChildrenWithParent(-10, 25, 0);
+		sticks3.moveChildrenWithParent(10, 25 , 0);
 
 		// head_kyle.rotateAllWithChild(0,0,1.5)
 		//#region ResponsiveRotation
@@ -3824,7 +3870,8 @@ function main() {
         merrygoaroundside5.setResponsiveRotation(PHI, THETA)
         merrygoaroundside6.setResponsiveRotation(PHI, THETA)
         merrygoaroundside7.setResponsiveRotation(PHI, THETA)
-
+		mountain.setResponsiveRotation(PHI,THETA);
+		mountain1.setResponsiveRotation(PHI,THETA);
 		//#endregion
 
 		land.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
@@ -3859,6 +3906,12 @@ function main() {
 
         merrygoaroundside7.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
         merrygoaroundside7.draw()
+
+		mountain.setuniformmatrix4(PROJMATRIX,VIEWMATRIX);
+		mountain.draw();
+		
+		mountain1.setuniformmatrix4(PROJMATRIX,VIEWMATRIX);
+		mountain1.draw();
 
 
 		sticks.setuniformmatrix4(PROJMATRIX, VIEWMATRIX);
