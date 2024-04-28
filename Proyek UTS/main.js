@@ -326,6 +326,173 @@ class MyObject {
 	}
 }
 
+class MyObjectTexture{
+    CANVAS = document.getElementById("mycanvas");
+    cube_vertex = [];
+    CUBE_VERTEX;
+    cube_faces = [];
+    CUBE_FACES;
+    shader_vertex_source = null;
+    shader_fragment_source = null;
+  
+    MOVEMATRIX = LIBS.get_I4();
+  
+    child = [];
+  
+    compile_shader = function(source, type, typeString) {
+      var shader = GL.createShader(type);
+      GL.shaderSource(shader, source);
+      GL.compileShader(shader);
+      if (!GL.getShaderParameter(shader, GL.COMPILE_STATUS)) {
+        alert("ERROR IN " + typeString + " SHADER: " + GL.getShaderInfoLog(shader));
+        return false;
+      }
+      return shader;
+    };
+  
+    shader_vertex;
+    shader_fragment;
+  
+    _Pmatrix;
+    _Vmatrix;
+    _Mmatrix;
+    _sampler;
+    texture;
+  
+    _color;
+    _position;
+  
+    SHADER_PROGRAM = GL.createProgram();
+  
+    constructor(cube_vertex,cube_faces,shader_vertex,shader_fragment){
+      this.cube_vertex = cube_vertex;
+      this.cube_faces = cube_faces;
+      this.shader_vertex_source = shader_vertex;
+      this.shader_fragment_source = shader_fragment;
+    
+      this.shader_vertex = this.compile_shader(this.shader_vertex_source, GL.VERTEX_SHADER, "VERTEX");
+      this.shader_fragment = this.compile_shader(this.shader_fragment_source, GL.FRAGMENT_SHADER, "FRAGMENT");
+  
+      this.SHADER_PROGRAM = GL.createProgram();
+  
+      GL.attachShader(this.SHADER_PROGRAM, this.shader_vertex);
+      GL.attachShader(this.SHADER_PROGRAM, this.shader_fragment);
+    
+      GL.linkProgram(this.SHADER_PROGRAM);
+  
+      this._Pmatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "Pmatrix");
+      this._Vmatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "Vmatrix");
+      this._Mmatrix = GL.getUniformLocation(this.SHADER_PROGRAM, "Mmatrix");
+  
+      this._sampler = GL.getUniformLocation(this.SHADER_PROGRAM, "sampler");
+  
+      this._color = GL.getAttribLocation(this.SHADER_PROGRAM, "uv");
+      this._position = GL.getAttribLocation(this.SHADER_PROGRAM, "position");
+  
+      GL.enableVertexAttribArray(this._color);
+      GL.enableVertexAttribArray(this._position);
+    
+      GL.useProgram(this.SHADER_PROGRAM);
+      GL.uniform1i(this._sampler, 0);
+  
+      this.CUBE_VERTEX= GL.createBuffer();
+      this.CUBE_FACES = GL.createBuffer();
+      
+      GL.bindBuffer(GL.ARRAY_BUFFER, this.CUBE_VERTEX);
+      GL.bufferData(GL.ARRAY_BUFFER,new Float32Array(this.cube_vertex),GL.STATIC_DRAW);
+      
+      GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.CUBE_FACES);
+      GL.bufferData(GL.ELEMENT_ARRAY_BUFFER,
+      new Uint16Array(this.cube_faces),
+      GL.STATIC_DRAW);
+  
+    }
+  
+    setTexture(string){
+      this.texture = LIBS.loadTexture(string);
+    }
+    
+    setuniformmatrix4(PROJMATRIX,VIEWMATRIX){
+      GL.useProgram(this.SHADER_PROGRAM);
+      GL.uniformMatrix4fv(this._Pmatrix, false, PROJMATRIX);
+      GL.uniformMatrix4fv(this._Vmatrix, false, VIEWMATRIX);
+      GL.uniformMatrix4fv(this._Mmatrix, false, this.MOVEMATRIX);
+      
+    }
+    draw(){
+      GL.useProgram(this.SHADER_PROGRAM);
+      GL.activeTexture(GL.TEXTURE0);
+      GL.bindTexture(GL.TEXTURE_2D, this.texture);
+      
+      GL.bindBuffer(GL.ARRAY_BUFFER, this.CUBE_VERTEX);
+      GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 4*(3+2), 0);
+      GL.vertexAttribPointer(this._color, 2, GL.FLOAT, false, 4*(3+2), 3*4);
+  
+      GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.CUBE_FACES);
+      GL.drawElements(GL.TRIANGLE_STRIP, this.cube_faces.length, GL.UNSIGNED_SHORT, 0);
+      //  GL.drawArrays(GL.TRIANGLES, 0, this.cube_vertex.length/6);
+      for(let i = 0;i<this.child.length;i++){
+        this.child[i].draw();
+      }
+    }
+    getMoveMatrix(){
+      return this.MOVEMATRIX;
+    }
+    setRotateMove(phi,theta,r){
+      LIBS.rotateZ(this.MOVEMATRIX,r);
+      LIBS.rotateY(this.MOVEMATRIX, theta);
+      LIBS.rotateX(this.MOVEMATRIX, phi);
+    }
+    setTranslateMove(x,y,z){
+      LIBS.translateZ(this.MOVEMATRIX,z);
+      LIBS.translateY(this.MOVEMATRIX,y);
+      LIBS.translateX(this.MOVEMATRIX,x);
+    }
+    setIdentityMove(){
+      LIBS.set_I4(this.MOVEMATRIX);
+    }
+    addChild(child){
+      this.child.push(child);
+    }
+
+    setPosition(x1, y1, z1, x2, y2, z2) {
+		this.setIdentityMove();
+		this.setRotateMove(x1, y1, z1);
+		this.setTranslateMove(x2, y2, z2);
+	}
+
+    setResponsiveRotation(PHI, THETA) {
+		var temps = LIBS.get_I4();
+		LIBS.rotateX(temps, PHI);
+		this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, temps);
+
+		LIBS.rotateY(temps, THETA);
+		this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, temps);
+	}
+
+	scale(m){
+        var parentMatrixBefore = (this.MOVEMATRIX);
+        var matM = [
+            m, 0, 0, 0,
+            0, m, 0, 0,
+            0, 0, m, 0,
+            0, 0, 0, 1
+        ]
+        this.MOVEMATRIX = LIBS.multiply(this.MOVEMATRIX, matM);
+        // LIBS.translateZ(this.MOVEMATRIX,parentMatrixBefore[14]);
+        // LIBS.translateY(this.MOVEMATRIX,parentMatrixBefore[13]);
+        // LIBS.translateX(this.MOVEMATRIX,parentMatrixBefore[12]);
+        this.MOVEMATRIX[12] = parentMatrixBefore[12];
+        this.MOVEMATRIX[13] = parentMatrixBefore[13];
+        this.MOVEMATRIX[14] = parentMatrixBefore[14];
+        for (let i = 0; i < this.child.length; i++) {
+            let child = this.child[i];
+            child.scale(m)
+		}
+  	}
+
+}
+
 function main() {
 	var CANVAS = document.getElementById("mycanvas");
 
@@ -398,6 +565,28 @@ function main() {
     void main(void){
         gl_FragColor =vec4(vColor,1.0);
     }`;
+
+	var shader_vertex_source_texture = "\n\
+	attribute vec3 position;\n\
+	uniform mat4 Pmatrix, Vmatrix, Mmatrix;\n\
+	attribute vec2 uv;\n\
+	varying vec2 vUV;\n\
+	\n\
+	void main(void) {\n\
+	gl_Position = Pmatrix * Vmatrix * Mmatrix * vec4(position, 1.);\n\
+	vUV=uv;\n\
+	}";
+	
+	var shader_fragment_source_texture = "\n\
+	precision mediump float;\n\
+	uniform sampler2D sampler;\n\
+	varying vec2 vUV;\n\
+	\n\
+	\n\
+	void main(void) {\n\
+	gl_FragColor = texture2D(sampler, vUV);\n\
+	//gl_FragColor = vec4(1.,1.,1.,1.);\n\
+	}";
 
 	//#region stan
 	//head
@@ -2874,31 +3063,124 @@ function main() {
 
 	//#region enviroment
 	//wall
-	object_vertex4 = createCuboidVertices(
-		1,
-		6,
-		CANVAS.width,
-		165 / 255,
-		51 / 255,
-		51 / 255
-	);
-	object_faces = [
-		0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 0, 3, 7, 0, 4, 7, 1, 2, 6, 1, 5, 6, 2,
-		3, 6, 3, 7, 6, 0, 1, 5, 0, 4, 5,
-	];
+	var cube_vertex2 = [
+		// Front face
+		-80, -5, 0,   0, 0,
+		80, -5, 0,    1, 0,
+		80, 5, 0,     1, 1,
+		-80, 5, 0,    0, 1,
+		
+		// Back face
+		-80, -5, 1,   0, 0,
+		80, -5, 1,    1, 0,
+		80, 5, 1,     1, 1,
+		-80, 5, 1,    0, 1,
+		
+		// Top face
+		-80, 5, 0,    0, 0,
+		80, 5, 0,     1, 0,
+		80, 5, 1,     1, 1,
+		-80, 5, 1,    0, 1,
+		
+		// Bottom face
+		-80, -5, 0,   0, 0,
+		80, -5, 0,    1, 0,
+		80, -5, 1,    1, 1,
+		-80, -5, 1,   0, 1,
+		
+		// Right face
+		80, -5, 0,    0, 0,
+		80, 5, 0,     1, 0,
+		80, 5, 1,     1, 1,
+		80, -5, 1,    0, 1,
+		
+		// Left face
+		-80, -5, 0,   0, 0,
+		-80, -5, 1,   1, 0,
+		-80, 5, 1,    1, 1,
+		-80, 5, 0,    0, 1
+	  ];
+	
+	  cube_faces2 = [
+		0, 1, 2,
+		0, 2, 3,
+		
+		4, 5, 6,
+		4, 6, 7,
+		
+		8, 9, 10,
+		8, 10, 11,
+		
+		12, 13, 14,
+		12, 14, 15,
+		
+		16, 17, 18,
+		16, 18, 19,
+		
+		20, 21, 22,
+		20, 22, 23
+	
+	  ];
+
 	//land
-	object_vertex1 = createCuboidVertices(
-		1,
-		CANVAS.width,
-		70,
-		220 / 255,
-		220 / 255,
-		220 / 255
-	);
-	object_faces1 = [
-		0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 0, 3, 7, 0, 4, 7, 1, 2, 6, 1, 5, 6, 2,
-		3, 6, 3, 7, 6, 0, 1, 5, 0, 4, 5,
-	];
+	var cube_vertex = [
+		// Front face
+		-20, -8, 0,   0, 0,
+		20, -8, 0,    1, 0,
+		20, 8, 0,     1, 1,
+		-20, 8, 0,    0, 1,
+		
+		// Back face
+		-20, -8, 0.3,   0, 0,
+		20, -8, 0.3,    1, 0,
+		20, 8, 0.3,     1, 1,
+		-20, 8, 0.3,    0, 1,
+		
+		// Top face
+		-20, 8, 0,    0, 0,
+		20, 8, 0,     1, 0,
+		20, 8, 0.3,     1, 1,
+		-20, 8, 0.3,    0, 1,
+		
+		// Bottom face
+		-20, -8, 0,   0, 0,
+		20, -8, 0,    1, 0,
+		20, -8, 0.3,    1, 1,
+		-20, -8, 0.3,   0, 1,
+		
+		// Right face
+		20, -8, 0,    0, 0,
+		20, 8, 0,     1, 0,
+		20, 8, 0.3,     1, 1,
+		20, -8, 0.3,    0, 1,
+		
+		// Left face
+		-20, -8, 0,   0, 0,
+		-20, -8, 0.3,   1, 0,
+		-20, 8, 0.3,    1, 1,
+		-20, 8, 0,    0, 1
+	  ];
+	
+	  cube_faces = [
+		0, 1, 2,
+		0, 2, 3,
+		
+		4, 5, 6,
+		4, 6, 7,
+		
+		8, 9, 10,
+		8, 10, 11,
+		
+		12, 13, 14,
+		12, 14, 15,
+		
+		16, 17, 18,
+		16, 18, 19,
+		
+		20, 21, 22,
+		20, 22, 23
+	
+	  ];
 	//sticks
 	object_vertex2 = tubeVertex(0.5, 0.5, 8, 50, 0.5451, 0.2706, 0.0745);
 	object_faces2 = tubeFaces(50);
@@ -2949,18 +3231,23 @@ function main() {
 		}
 	}
 	object_faces5 = sphereFaces(50, 50);
-	var wall = new MyObject(
-		object_vertex4,
-		object_faces4,
-		shader_vertex_source,
-		shader_fragment_source
+	var wall = new MyObjectTexture(
+		cube_vertex2,
+		cube_faces2,
+		shader_vertex_source_texture,
+		shader_fragment_source_texture
 	);
-	var land = new MyObject(
-		object_vertex1,
-		object_faces1,
-		shader_vertex_source,
-		shader_fragment_source
+
+	wall.setTexture("brick.jpg");
+
+	var land = new MyObjectTexture(
+		cube_vertex,
+		cube_faces,
+		shader_vertex_source_texture,
+		shader_fragment_source_texture
 	);
+
+	land.setTexture("snow01.png");
 
 	var sticks = new MyObject(
 		object_vertex2,
@@ -3462,8 +3749,9 @@ function main() {
 		var ballMovingTowardsObject = (xCurve - nextXCurve) * direction4 > 0;
 		// Move body_kyle and body only if the ball is moving towards the object
 
-		wall.setPosition(1.5708, 0, 1.5708, 0, 20, 0);
-		land.setPosition(1.5708, 1.5708, 0, 0, -10, -3.2);
+		wall.setPosition(1.6, 0, 0, 0, 20, 2);
+		land.setPosition(0, 0, 0, 0, -0, -4);
+		land.scale(5);
 		sticks.setPosition(0, 0, 0, 0, 0, 0);
 		for (var i = 0; i < sticks.child.length; i++) {
 			sticks.child[i].setPosition(0, 0, 0, 0, 0, 4 + i * 1.5);

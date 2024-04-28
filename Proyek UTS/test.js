@@ -3030,7 +3030,7 @@ function main() {
 		shader_vertex_source_texture,
 		shader_fragment_source_texture
 	);
-	land.setTexture("grass.png");
+	land.setTexture("snow01.png");
 
 	var sticks = new MyObject(
 		object_vertex2,
