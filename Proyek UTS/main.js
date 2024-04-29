@@ -359,6 +359,74 @@ class MyObject {
       child.scale(m);
     }
   }
+
+  rotate(PHI, THETA, r) {
+    // Simpan matriks transformasi objek induk sebelum rotasi
+    var parentMatrixBefore = this.MOVEMATRIX;
+    
+    // Terapkan rotasi pada objek induk
+    this.setIdentityMove();
+    this.setRotateMove(PHI,THETA,r)
+    this.MOVEMATRIX[12] = parentMatrixBefore[12]
+    this.MOVEMATRIX[13] = parentMatrixBefore[13]
+    this.MOVEMATRIX[14] = parentMatrixBefore[14]
+    
+    //Iterasi melalui objek anak
+    for (let i = 0; i < this.child.length; i++) {
+        let child = this.child[i];
+        var childMatrixBefore = child.MOVEMATRIX;
+        
+        // Hitung posisi relatif objek anak terhadap rotasi objek induk sebelum rotasi
+        var relativePosition = [
+            child.MOVEMATRIX[12] - parentMatrixBefore[12],
+            child.MOVEMATRIX[13] - parentMatrixBefore[13],
+            child.MOVEMATRIX[14] - parentMatrixBefore[14]
+        ];
+
+        child.setIdentityMove();
+        // child.setRotateMove(PHI,THETA,r)
+        // child.MOVEMATRIX[12] = childMatrixBefore[12]
+        // child.MOVEMATRIX[13] = childMatrixBefore[13]
+        // child.MOVEMATRIX[14] = childMatrixBefore[14]
+
+        //translate ke sumbu (LOKASI PARENT) child - parent
+        var temp = LIBS.get_I4();
+        LIBS.translateX(temp, relativePosition[0])
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+        temp = LIBS.get_I4();
+        LIBS.translateY(temp, relativePosition[1])
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+        temp = LIBS.get_I4();
+        LIBS.translateZ(temp, relativePosition[2])
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+
+        //rotate
+        temp = LIBS.get_I4();
+        LIBS.rotateZ(temp, r);
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+        temp = LIBS.get_I4();
+        LIBS.rotateY(temp, THETA);
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+        temp = LIBS.get_I4();
+        LIBS.rotateX(temp, PHI);
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+
+        //kembali ke titik awal parent
+        temp = LIBS.get_I4();
+        LIBS.translateX(temp,parentMatrixBefore[12]);
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+        temp = LIBS.get_I4();
+        LIBS.translateY(temp,parentMatrixBefore[13]);
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+        temp = LIBS.get_I4();
+        LIBS.translateZ(temp,parentMatrixBefore[14]);
+        child.MOVEMATRIX = LIBS.multiply(child.MOVEMATRIX, temp);
+
+        console.log(child.MOVEMATRIX[12]);
+        console.log(child.MOVEMATRIX[13]);
+        console.log(child.MOVEMATRIX[14]);
+    }
+}
 }
 
 class MyObjectTexture {
@@ -540,6 +608,8 @@ class MyObjectTexture {
     }
   }
 }
+
+
 
 function main() {
   var CANVAS = document.getElementById("mycanvas");
@@ -4059,6 +4129,8 @@ function main() {
   var scaleDirection = 1; // Initial direction of scaling (1 for incrementing, -1 for decrementing)
   var scaleIncrement = 0.01; // Increment or decrement amount for the scale factor
 
+  var rotateSnowman = 1;
+
 
   var t = 0; // Parameter for the curve (0 to 1)
   var direction4 = 1; // Initial direction of movement
@@ -4570,6 +4642,7 @@ function main() {
     yTranslation3 += ydirection3 * 0.05;
     yTranslation4 += ydirection4 * 0.05;
     fanRotate += 0.005;
+    rotateSnowman += 0.5;
 
     // Check if within bounds, otherwise reverse direction
     if (xTranslation >= -8.5) {
@@ -4790,6 +4863,7 @@ function main() {
     snowman.child[9].setPosition(1.5, 0, 0, 0, -0.7, 3.2);
     snowman.child[10].setPosition(3, 0, 0, 0, -0.8, 2.9);
 
+    snowman.rotate(0, 0, rotateSnowman)
     snowman.moveChildrenWithParent(-13, 13, -1);
     var controlBean = rotateArbitary(merrygoaround);
     dummy += 2;
@@ -4798,6 +4872,8 @@ function main() {
       controlBean[(dummy + 1) % controlBean.length] - snowman.MOVEMATRIX[14],
       0
     );
+
+
 
     // head_kyle.rotateAllWithChild(0,0,1.5)
     //#region ResponsiveRotation
